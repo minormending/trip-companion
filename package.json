@@ -18,7 +18,9 @@
     "db:migrate": "node scripts/db.mjs migrate",
     "db:queue": "node scripts/db.mjs queue",
     "db:query": "node scripts/db.mjs query",
-    "gen:platform": "node scripts/gen-platform.mjs"
+    "gen:platform": "node scripts/gen-platform.mjs",
+    "db:provision": "node scripts/provision-supabase.mjs",
+    "auth:configure": "node scripts/configure-auth.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
