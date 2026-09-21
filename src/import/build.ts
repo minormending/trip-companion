@@ -33,10 +33,12 @@ function slugId(prefix: string, name: string, index: number): string {
  * resolved point. A trip is almost always geographically clustered, so this
  * turns "Victoria" from a coin flip into the one a few streets away.
  */
+export type ProgressFn = (stage: string, done: number, total: number) => void
+
 export async function buildTrip(
   parsed: ParsedItinerary,
   geocoder: Geocoder,
-  opts: { id?: string; title?: string; departsOn?: string } = {},
+  opts: { id?: string; title?: string; departsOn?: string; onProgress?: ProgressFn } = {},
 ): Promise<{ trip: Trip; report: BuildReport }> {
   const trip = emptyTrip(opts.id ?? `trip:${Date.now()}`, opts.title ?? parsed.title ?? 'Untitled trip')
   if (opts.departsOn) trip.departsOn = opts.departsOn
@@ -46,6 +48,11 @@ export async function buildTrip(
   const legs: Leg[] = []
   let bias: Coordinates | undefined
   let index = 0
+  const total = parsed.days.reduce(
+    (n, d) => n + d.entries.filter((e) => e.type === 'place').length,
+    0,
+  )
+  let seen = 0
 
   for (const day of parsed.days) {
     let previousPlaceId: string | undefined =
@@ -71,7 +78,9 @@ export async function buildTrip(
         continue
       }
 
+      opts.onProgress?.(`Locating ${entry.name}`, seen, total)
       const result = await geocoder.lookup(entry.name, bias)
+      seen++
       if (!result.best) {
         report.unresolved.push({ query: entry.name, dayIndex: day.index, alternatives: [] })
         continue
@@ -114,7 +123,7 @@ export async function buildTrip(
 export async function importFromText(
   text: string,
   geocoder: Geocoder,
-  opts: { id?: string; title?: string; departsOn?: string } = {},
+  opts: { id?: string; title?: string; departsOn?: string; onProgress?: ProgressFn } = {},
 ): Promise<{ trip: Trip; report: BuildReport; parsed: ParsedItinerary }> {
   const parsed = parseItinerary(text)
   const { trip, report } = await buildTrip(parsed, geocoder, opts)

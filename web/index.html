@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trip Companion</title>
+<meta name="description" content="Turns a pasted itinerary into a briefing you can print or share.">
+<style>/*__CSS__*/
+#intro form { margin-top: 1.5rem; }
+textarea { width: 100%; min-height: 15rem; font: inherit; font-size: 0.9rem; padding: 0.75rem;
+  border: 1px solid var(--rule); border-radius: 8px; background: var(--card); color: var(--ink); }
+input[type=text], input[type=date] { font: inherit; padding: 0.45rem 0.6rem; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--card); color: var(--ink); }
+label { display: block; margin: 1rem 0 0.35rem; font-size: 0.85rem; color: var(--ink-soft); }
+button.primary { font: inherit; margin-top: 1.25rem; padding: 0.55rem 1.1rem; border-radius: 8px;
+  border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+button.primary:disabled { opacity: 0.55; cursor: progress; }
+#status { font-size: 0.85rem; color: var(--ink-soft); margin: 1rem 0 0;
+  font-variant-numeric: tabular-nums; }
+#actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+#actions button { font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer; }
+#actions button:hover { border-color: var(--ink-faint); color: var(--ink); }
+footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+  font-size: 0.8rem; color: var(--ink-faint); }
+@media print { #intro, #status, #actions, footer { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="intro">
+    <h1>Trip Companion</h1>
+    <p class="sub">Paste an itinerary from anywhere. Places are located, the gaps between them are routed, and you get a briefing you can print or share. Everything runs in your browser.</p>
+    <form id="form">
+      <label for="text">Itinerary</label>
+      <textarea id="text" name="text" placeholder="Day 1&#10;09:00 Sensoji Temple&#10;Walk 12 min&#10;10:30 Tokyo Skytree&#10;&#10;Day 2&#10;08:00 Shibuya Crossing"></textarea>
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" placeholder="Tokyo, five days">
+      <label for="departs">Departure date</label>
+      <input type="date" id="departs" name="departs">
+      <button class="primary" type="submit">Build the briefing</button>
+    </form>
+  </div>
+  <p id="status" hidden></p>
+  <div id="actions" hidden>
+    <button type="button" id="share">Copy share link</button>
+    <button type="button" id="print">Print</button>
+    <button type="button" id="restart">Start over</button>
+  </div>
+  <div id="output"></div>
+  <footer>
+    Places from <a href="https://photon.komoot.io">Photon</a> and
+    <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.
+    Walking routes from <a href="https://project-osrm.org">OSRM</a>.
+    Light timings computed with the <a href="https://gml.noaa.gov/grad/solcalc/calcdetails.html">NOAA</a> solar algorithm.
+  </footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

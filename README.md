@@ -4,6 +4,18 @@ Turns a pasted itinerary into an enriched trip graph, then renders it as a
 shareable, printable briefing. Implements v1 of the product spec: import,
 routing gap-fill, tiered content cards, and the briefing surface.
 
+## Two ways to run it
+
+The same pipeline runs in Node and in the browser. Nothing in `src/` imports a
+platform API directly — persistence is injected, so the CLI writes to disk and
+the web build writes to `localStorage`.
+
+- **`src/cli.ts`** — file in, HTML out.
+- **`src/server.ts`** — the Node server, with an import form and a share view.
+- **`web/`** — the same pipeline compiled for the browser. This is what deploys
+  to GitHub Pages: no backend, no keys, geocoding and routing called directly
+  from the page.
+
 ## Running it
 
 ```bash
@@ -38,6 +50,31 @@ Everything below runs today with no API keys.
 | Entity cache | Working | File-backed, keyed to the place rather than the trip |
 | Briefing render | Working | Screen and print, with source footnotes |
 | Card prose (tiers 2–3) | Deterministic stub | The LLM provider is an interface with a working offline implementation |
+
+## Deploying
+
+`.github/workflows/pages.yml` typechecks, tests, builds `dist/` and publishes it
+to GitHub Pages on every push to `main`. Enable Pages with **Source: GitHub
+Actions** in the repository settings; the workflow needs no secrets.
+
+```bash
+npm run build:web    # dist/index.html + app.js, about 32 kB
+npm run preview:web  # build, then serve dist/ on :8788
+```
+
+Two things make a backend unnecessary:
+
+- **Photon and OSRM both send `Access-Control-Allow-Origin: *`**, so the page
+  calls them directly. Verify this still holds before assuming a deploy works;
+  it is a property of somebody else's servers, not of this code.
+- **Sharing travels in the URL fragment.** A finished trip is gzipped and
+  base64url-encoded into `#t=`, so a link reproduces the briefing with no
+  storage and no server. A 25-stop trip encodes to well under 8 kB. Fragments
+  are never sent in an HTTP request, so a shared itinerary does not reach any
+  server, including the host.
+
+A shared briefing opens read-only. Corrections belong to the traveller who was
+actually there, so the flag control is withheld from someone following a link.
 
 ## Design decisions worth knowing
 
@@ -88,6 +125,8 @@ src/
   pipeline.ts  orchestration
   cli.ts       file in, HTML out
   server.ts    import form, briefing, share view, flag endpoint
+web/           browser entry, URL-fragment sharing
+scripts/       esbuild bundle, static preview server
 ```
 
 ## Not built

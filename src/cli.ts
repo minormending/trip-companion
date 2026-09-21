@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
 import { EntityCache } from './cache/entityCache.ts'
+import { FileStore } from './cache/fileStore.ts'
 import { DeterministicProvider } from './content/providers/deterministic.ts'
 import { StaticGeocoder } from './geo/geocode.ts'
 import { defaultDeps, runPipeline, type PipelineDeps } from './pipeline.ts'
@@ -43,10 +44,10 @@ const deps: PipelineDeps = values.offline
       geocoder: new StaticGeocoder({}),
       routers: [new NullTransitProvider()],
       providers: [new DeterministicProvider()],
-      cache: await EntityCache.open(values.cache),
+      cache: await EntityCache.open(new FileStore(String(values.cache))),
     }
   : await defaultDeps({
-      ...(values.cache ? { cachePath: values.cache } : {}),
+      ...(values.cache ? { cacheStore: new FileStore(String(values.cache)) } : {}),
       ...(values.contact ? { contact: values.contact } : {}),
     })
 

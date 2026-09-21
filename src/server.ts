@@ -1,6 +1,7 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
 import { randomUUID } from 'node:crypto'
 import { EntityCache } from './cache/entityCache.ts'
+import { FileStore } from './cache/fileStore.ts'
 import type { Correction, Trip } from './domain/types.ts'
 import { defaultDeps, runPipeline } from './pipeline.ts'
 import { renderBriefing } from './render/briefing.ts'
@@ -18,7 +19,7 @@ interface StoredTrip {
 
 const trips = new Map<string, StoredTrip>()
 const corrections: Correction[] = []
-const cache = await EntityCache.open(CACHE_PATH)
+const cache = await EntityCache.open(new FileStore(CACHE_PATH))
 
 function send(res: ServerResponse, status: number, body: string, type = 'text/html; charset=utf-8') {
   res.writeHead(status, { 'content-type': type, 'cache-control': 'no-store' })
@@ -68,7 +69,7 @@ async function handleImport(req: IncomingMessage, res: ServerResponse) {
     return
   }
 
-  const deps = await defaultDeps({ cachePath: CACHE_PATH })
+  const deps = await defaultDeps({ cacheStore: new FileStore(CACHE_PATH) })
   deps.cache = cache
 
   const title = form.get('title')?.trim()

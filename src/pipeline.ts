@@ -1,11 +1,12 @@
 import { EntityCache } from './cache/entityCache.ts'
+import type { CacheStore } from './cache/store.ts'
 import { generateCards, type GenerationReport } from './content/generate.ts'
 import { DeterministicProvider } from './content/providers/deterministic.ts'
 import type { CardProvider } from './content/providers/types.ts'
 import { staleCards } from './domain/graph.ts'
 import type { Tier, Trip } from './domain/types.ts'
 import { PhotonGeocoder, type Geocoder } from './geo/geocode.ts'
-import { importFromText, type BuildReport } from './import/build.ts'
+import { importFromText, type BuildReport, type ProgressFn } from './import/build.ts'
 import { renderBriefing, type RenderOptions } from './render/briefing.ts'
 import { fillLegs, type FillReport } from './routing/fill.ts'
 import { OsrmProvider } from './routing/osrm.ts'
@@ -30,6 +31,7 @@ export interface PipelineOptions {
   departsOn?: string
   now?: Date
   render?: RenderOptions
+  onProgress?: ProgressFn
 }
 
 export async function runPipeline(
@@ -40,9 +42,13 @@ export async function runPipeline(
   const imported = await importFromText(text, deps.geocoder, {
     ...(opts.title ? { title: opts.title } : {}),
     ...(opts.departsOn ? { departsOn: opts.departsOn } : {}),
+    ...(opts.onProgress ? { onProgress: opts.onProgress } : {}),
   })
 
+  opts.onProgress?.('Routing the gaps between stops', 0, 1)
   const filled = await fillLegs(imported.trip, deps.routers)
+
+  opts.onProgress?.('Writing the cards', 0, 1)
 
   const generated = await generateCards(filled.trip, {
     providers: deps.providers,
@@ -64,12 +70,14 @@ export async function runPipeline(
 }
 
 /** Live dependencies: keyless geocoding and walking routes, no paid providers. */
-export async function defaultDeps(opts: { cachePath?: string; contact?: string } = {}): Promise<PipelineDeps> {
+export async function defaultDeps(
+  opts: { cacheStore?: CacheStore; contact?: string } = {},
+): Promise<PipelineDeps> {
   return {
     geocoder: new PhotonGeocoder(opts.contact ? { contact: opts.contact } : {}),
     routers: [new OsrmProvider(), new NullTransitProvider()],
     providers: [new DeterministicProvider()],
-    cache: await EntityCache.open(opts.cachePath),
+    cache: await EntityCache.open(opts.cacheStore),
   }
 }
 

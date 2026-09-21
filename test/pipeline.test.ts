@@ -4,6 +4,7 @@ import { readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { EntityCache } from '../src/cache/entityCache.ts'
+import { FileStore } from '../src/cache/fileStore.ts'
 import { DeterministicProvider } from '../src/content/providers/deterministic.ts'
 import { StaticGeocoder, type GeocodeCandidate } from '../src/geo/geocode.ts'
 import { runPipeline, regenerationTargets, type PipelineDeps } from '../src/pipeline.ts'
@@ -91,7 +92,7 @@ test('photo cards are computed for the departure date', async () => {
 test('the entity cache persists across runs and to disk', async () => {
   const path = join(tmpdir(), `trip-cache-${Date.now()}.json`)
   try {
-    const cache = await EntityCache.open(path)
+    const cache = await EntityCache.open(new FileStore(path))
     const provider = new StubProvider('sourced', ['how_to_pay'], {
       title: 'Paying',
       body: 'Exact change only.',
@@ -103,7 +104,7 @@ test('the entity cache persists across runs and to disk', async () => {
     assert.ok(first.reports.content.generated > 0)
     await cache.flush()
 
-    const reopened = await EntityCache.open(path)
+    const reopened = await EntityCache.open(new FileStore(path))
     assert.ok(reopened.size > 0, 'cache survived a restart')
 
     const second = await runPipeline(ITINERARY, { ...deps, cache: reopened }, {

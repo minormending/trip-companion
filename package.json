@@ -8,10 +8,14 @@
     "brief": "node src/cli.ts",
     "serve": "node src/server.ts",
     "test": "node --test \"test/**/*.test.ts\"",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "build:web": "node scripts/build-web.ts",
+    "preview:web": "node scripts/build-web.ts && node --run serve:dist",
+    "serve:dist": "node scripts/serve-dist.ts"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
+    "esbuild": "^0.28.2",
     "typescript": "^5.8.3"
   },
   "engines": {
