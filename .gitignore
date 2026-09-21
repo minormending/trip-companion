@@ -5,3 +5,4 @@ out/
 *.tsbuildinfo
 .DS_Store
 dist/
+restroom-import-preview.txt

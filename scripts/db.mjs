@@ -27,6 +27,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SETS = {
   platform: { dir: 'supabase/platform', schema: 'public' },
   trip: { dir: 'supabase/trip', schema: 'trip' },
+  restroom: { dir: 'supabase/restroom', schema: 'restroom' },
 }
 
 const [command, ...rest] = process.argv.slice(2)

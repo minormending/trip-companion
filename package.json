@@ -20,7 +20,8 @@
     "db:query": "node scripts/db.mjs query",
     "gen:platform": "node scripts/gen-platform.mjs",
     "db:provision": "node scripts/provision-supabase.mjs",
-    "auth:configure": "node scripts/configure-auth.mjs"
+    "auth:configure": "node scripts/configure-auth.mjs",
+    "import:restroom": "node scripts/import-restroom.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
