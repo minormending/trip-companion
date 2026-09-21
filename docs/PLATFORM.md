@@ -1,33 +1,12 @@
-# One database, several apps
+# This app in the shared database
 
-Supabase's free plan allows **two active projects per account** — across all
-organisations, so making another organisation does not help. Paused projects do
-not count against it.
+trip-companion owns the `trip` schema of a database shared with other apps,
+over a `public` layer holding profiles, rate limiting and the moderation queue.
 
-Rather than spend a slot per app, this database holds a shared layer in `public`
-and one schema per app. Adding an app costs a schema, not a project.
-
-```
-shared project
-├── public      profiles · rate_limit · apps · moderators · flags · feedback
-├── trip        trip-companion
-└── restroom    restroom-map (to be moved in)
-```
-
-## Why schemas and not a shared `public`
-
-orchard-map's `provision-supabase.mjs` argues against putting a second app into
-an existing database, and it is right about what it describes: those migrations
-collide on `profiles`, `flags`, `feedback`, `rate_limit` and `reports`, and two
-statements in the grants migration would reach into a live application.
-
-Every one of those is a collision **in `public`**. A schema per app removes them
-while keeping the one thing worth sharing — a single identity, one rate limiter,
-one moderation queue.
-
-What you give up: apps share an auth pool, so signing into one signs you into
-all of them; and the free tier's 500 MB is shared. Both are fine for a portfolio
-and would not be for products with separate audiences.
+**How the arrangement works, how to add an app, and how to move one in are in
+[map-kit's runbook](https://github.com/minormending/map-kit/blob/main/docs/SHARED-DATABASE.md).**
+It is the shared knowledge, and it lives with the shared code rather than in
+one tenant's repo. What follows is only what is specific to this app.
 
 ## Migration sets
 
@@ -63,42 +42,21 @@ app would mean altering a constraint every other app depends on.
 
 Worth contributing back to map-kit as a multi-app variant.
 
-## Adding an app
+## Platform migrations live here
 
-1. `supabase/<app>/0001_schema.sql`: create the schema, grant `usage`, revoke
-   default table privileges, and insert a row into `public.apps`.
-2. Add the set to `SETS` in `scripts/db.mjs`.
-3. Expose the schema to PostgREST, and set `db: { schema: '<app>' }` in that
-   app's Supabase client. A schema that exists in Postgres is invisible to the
-   API until it is listed, and the failure is a confusing 404 from a table you
-   can see in the dashboard. It looks like a dashboard-only setting but it is a
-   Management API field:
+`supabase/platform/` is applied once per database and is shared by every app in
+it, so a change here reaches restroom-map too. The shared SQL is generated from
+map-kit rather than written by hand:
 
-   ```bash
-   node scripts/expose-schema.mjs <app> --apply
-   ```
-4. Writes that need checking go through `security definer` functions, not table
-   grants. `public.rl_take()` is already there; namespace your keys with the app
-   slug so a noisy app cannot spend another's budget.
+```bash
+npm run gen:platform
+```
 
-## Moving restroom-map in
+`0003_apps.sql`, `0004_moderation.sql`, `0005_lock_shared_layer.sql` and
+`0006_target_types.sql` are ours. Moderation deviates from the kit in two ways,
+both forced by sharing: an `app` column, and per-app `target_types` on
+`public.apps` instead of a single check constraint listing every app's types.
 
-Pause it first — a paused project stops counting against the limit, and the data
-stays put until you export it.
-
-1. `pg_dump` the old project, schema-only and data separately.
-2. Its app tables become `restroom.*`. Its `public.profiles`, `flags`,
-   `feedback` and `rate_limit` are **dropped**, not moved: the shared layer
-   already has them.
-3. Remap `profiles.id` — the user ids differ, because `auth.users` is per
-   project. Anyone who signed into the old project has to sign in again, and
-   their submissions need their `reporter_id` remapped by email or orphaned to
-   null. This is the expensive part and the reason to pick the destination
-   database before an app has users, not after.
-4. Restore into `restroom`, register it in `public.apps`, add its schema to the
-   exposed list, repoint `PUBLIC_SUPABASE_URL`.
-5. Keep the old project paused rather than deleted until the new one has served
-   real traffic.
-
-Step 3 is why trip-companion is going in first: it has no users yet, so it costs
-nothing to be the one that proves the shape.
+That this app happens to hold the platform migrations is history — it was first
+into the database. If a third app arrives and that feels wrong, the right home
+is map-kit, alongside the SQL they are generated from.
