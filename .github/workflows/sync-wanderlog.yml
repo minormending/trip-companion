@@ -12,9 +12,21 @@
 #   SUPABASE_REFRESH_TOKEN  from "Copy sync token" in the web app
 name: Sync Wanderlog
 
+# The schedule is off until this workflow can actually complete. Two things
+# have to be true first, and neither is today:
+#
+#   1. `go install .../cmd/wlog@latest` below resolves. The module has no
+#      cmd/wlog package, so the install step fails before anything else runs.
+#      See docs/WANDERLOG.md — fetching /api/tripPlans directly would remove
+#      this dependency rather than wait on it.
+#   2. The five secrets listed above exist. Only PUBLIC_SUPABASE_URL and
+#      PUBLIC_SUPABASE_ANON_KEY are set, and those are the deploy's, not these.
+#
+# Left as workflow_dispatch so it can still be run by hand when testing a fix.
+# Restore the cron in the same commit that makes both true.
 on:
-  schedule:
-    - cron: '17 5 * * *'
+  # schedule:
+  #   - cron: '17 5 * * *'
   workflow_dispatch:
 
 jobs:
