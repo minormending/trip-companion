@@ -10,7 +10,8 @@
    the hidden attribute silently stops working. Guard it once, globally. */
 [hidden] { display: none !important; }
 #intro form { margin-top: 1.5rem; }
-textarea { width: 100%; min-height: 15rem; font: inherit; font-size: 0.9rem; padding: 0.75rem;
+/* Scoped: an unscoped textarea rule also inflated the inline claim field. */
+#intro textarea { width: 100%; min-height: 15rem; font: inherit; font-size: 0.9rem; padding: 0.75rem;
   border: 1px solid var(--rule); border-radius: 8px; background: var(--card); color: var(--ink); }
 input[type=text], input[type=date] { font: inherit; padding: 0.45rem 0.6rem; border: 1px solid var(--rule);
   border-radius: 6px; background: var(--card); color: var(--ink); }
@@ -34,9 +35,18 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
 #actions button { font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
   border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer; }
 #actions button:hover { border-color: var(--ink-faint); color: var(--ink); }
+.claim { margin-top: 0.6rem; }
+.claim textarea { width: 100%; font: inherit; font-size: 0.875rem; padding: 0.5rem;
+  border: 1px solid var(--rule); border-radius: 8px; background: var(--surface, transparent);
+  color: var(--ink); resize: vertical; }
+.claim textarea[aria-invalid="true"] { border-color: var(--stop); }
+.claim-actions { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
+.claim-actions button { font: inherit; font-size: 0.78rem; padding: 0.2rem 0.6rem;
+  border: 1px solid var(--rule); border-radius: 999px; background: transparent;
+  color: var(--ink-soft); cursor: pointer; }
 footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   font-size: 0.8rem; color: var(--ink-faint); }
-@media print { #intro, #status, #actions, #confirm, footer { display: none; } }
+@media print { #intro, #status, #actions, #confirm, .claim, footer { display: none; } }
 </style>
 </head>
 <body>
@@ -60,6 +70,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
     <button type="button" id="share">Copy share link</button>
     <button type="button" id="print">Print</button>
     <button type="button" id="restart">Start over</button>
+    <button type="button" id="export" hidden>Export reports</button>
   </div>
   <div id="output"></div>
   <footer>

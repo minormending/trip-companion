@@ -11,7 +11,8 @@
     "typecheck": "tsc -b --noEmit",
     "build:web": "node scripts/build-web.ts",
     "preview:web": "node scripts/build-web.ts && node --run serve:dist",
-    "serve:dist": "node scripts/serve-dist.ts"
+    "serve:dist": "node scripts/serve-dist.ts",
+    "review": "node scripts/review.ts"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",

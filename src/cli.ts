@@ -5,6 +5,8 @@ import { EntityCache } from './cache/entityCache.ts'
 import { FileStore } from './cache/fileStore.ts'
 import { DeterministicProvider } from './content/providers/deterministic.ts'
 import { StaticGeocoder } from './geo/geocode.ts'
+import { CorrectionStore } from './corrections/store.ts'
+import { FileCorrections } from './corrections/fileStore.ts'
 import { defaultDeps, runPipeline, type PipelineDeps } from './pipeline.ts'
 import { NullTransitProvider } from './routing/transit.ts'
 
@@ -15,6 +17,7 @@ const { values, positionals } = parseArgs({
     title: { type: 'string', short: 't' },
     departs: { type: 'string', short: 'd' },
     cache: { type: 'string', default: '.cache/entities.json' },
+    corrections: { type: 'string', default: '.cache/corrections.json' },
     contact: { type: 'string' },
     offline: { type: 'boolean', default: false },
     interactive: { type: 'boolean', default: false },
@@ -29,6 +32,7 @@ if (values.help || positionals.length === 0) {
   -t, --title <text>      trip title
   -d, --departs <date>    departure date, YYYY-MM-DD
       --cache <path>      entity cache (default .cache/entities.json)
+      --corrections <p>   traveller reports (default .cache/corrections.json)
       --contact <email>   sent to Photon in the User-Agent, per its usage policy
       --offline           no network: no geocoding, no routing
       --interactive       include the flag and regenerate controls
@@ -50,6 +54,8 @@ const deps: PipelineDeps = values.offline
       ...(values.cache ? { cacheStore: new FileStore(String(values.cache)) } : {}),
       ...(values.contact ? { contact: values.contact } : {}),
     })
+
+deps.corrections = await CorrectionStore.open(new FileCorrections(String(values.corrections)))
 
 const result = await runPipeline(text, deps, {
   ...(values.title ? { title: values.title } : {}),
@@ -81,6 +87,10 @@ console.log(`  legs     ${fill.routed} routed, ${fill.walkFallback} walk-fallbac
 console.log(`  cards    ${content.generated} generated, ${content.fromCache} from cache`)
 if (content.refusals.length > 0) {
   console.log(`  refused  ${content.refusals.length} operational cards could not be substantiated`)
+}
+if (result.withdrawn.length > 0) {
+  console.log(`  REPORTS  ${result.withdrawn.length} card(s) withdrawn after traveller reports:`)
+  for (const w of result.withdrawn) console.log(`    - ${w.subjectName}: ${w.kind}`)
 }
 for (const problem of content.sourceProblems) {
   console.log(`  SOURCE   ${problem.provider} unreachable: ${problem.reason}`)

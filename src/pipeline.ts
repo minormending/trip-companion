@@ -1,10 +1,12 @@
 import { EntityCache } from './cache/entityCache.ts'
 import type { CacheStore } from './cache/store.ts'
-import { generateCards, type GenerationReport } from './content/generate.ts'
+import { generateCards, type GenerationReport, type Refusal } from './content/generate.ts'
 import { DeterministicProvider } from './content/providers/deterministic.ts'
 import { OverpassProvider } from './content/providers/overpass.ts'
 import { WikipediaProvider } from './content/providers/wikipedia.ts'
 import type { CardProvider } from './content/providers/types.ts'
+import { applyCorrections } from './corrections/loop.ts'
+import type { CorrectionStore } from './corrections/store.ts'
 import { staleCards } from './domain/graph.ts'
 import type { Tier, Trip } from './domain/types.ts'
 import { PhotonGeocoder, type Geocoder } from './geo/geocode.ts'
@@ -22,6 +24,8 @@ import { NullTransitProvider } from './routing/transit.ts'
 import type { RoutingProvider } from './routing/types.ts'
 
 export interface PipelineDeps {
+  /** Traveller corrections. Absent means nothing has been reported yet. */
+  corrections?: CorrectionStore
   geocoder: Geocoder
   routers: RoutingProvider[]
   providers: CardProvider[]
@@ -31,6 +35,8 @@ export interface PipelineDeps {
 export interface PipelineResult {
   trip: Trip
   html: string
+  /** Cards withdrawn by traveller reports, already excluded from `trip`. */
+  withdrawn: Refusal[]
   reports: { build: BuildReport; fill: FillReport; content: GenerationReport }
 }
 
@@ -88,15 +94,22 @@ export async function enrichTrip(
     ...(opts.now ? { now: opts.now } : {}),
   })
 
-  const html = renderBriefing(generated.trip, {
-    refusals: generated.report.refusals,
+  // Corrections apply last, so a fix accepted on somebody else's trip reaches
+  // this one. This is the step that makes quality compound.
+  const applied = deps.corrections
+    ? applyCorrections(generated.trip, deps.corrections)
+    : { trip: generated.trip, withdrawn: [], suppressed: [], corrected: [] }
+
+  const html = renderBriefing(applied.trip, {
+    refusals: [...generated.report.refusals, ...applied.withdrawn],
     ...(opts.now ? { now: opts.now } : {}),
     ...opts.render,
   })
 
   return {
-    trip: generated.trip,
+    trip: applied.trip,
     html,
+    withdrawn: applied.withdrawn,
     reports: { build, fill: filled.report, content: generated.report },
   }
 }

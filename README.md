@@ -50,6 +50,7 @@ Everything below runs today with no API keys.
 | Tier policy | Working | Operational cards are refused without a source |
 | Voice enforcement | Working | The spec's "never" list, enforced in code |
 | Entity cache | Working | File-backed, keyed to the place rather than the trip |
+| Correction loop | Working | Flags carry a claim; two withdraw a card; review folds the fix back in |
 | Briefing render | Working | Screen and print, with source footnotes |
 | Operational cards | Working | Recorded OpenStreetMap tags via Overpass, cited per element |
 | Background cards | Working | Wikipedia summaries, cited |
@@ -102,6 +103,28 @@ location returns tonight's golden hour followed by *tomorrow morning's*, so "the
 last window of the day" is the wrong day. Sampling is anchored to local solar
 midnight, derived from longitude, which orders them correctly without needing a
 timezone.
+
+**The correction loop is what makes quality compound.** A flag carries the
+traveller's own words and the card body they were looking at, so review can see
+what they saw. Two independent reports — or one with evidence — withdraw the
+card, and the briefing says it was withdrawn rather than quietly dropping it: a
+card that vanishes teaches nothing, one that says it was doubted tells you to
+check. Review accepts a correction into the entity store, and every later
+briefing through that place inherits it.
+
+One flag is deliberately not enough; travellers mistake a card for the place
+next door. Three would leave a wrong operational card standing through most of
+a season, which is the failure the loop exists to prevent.
+
+```bash
+npm run review -- --list
+npm run review -- --import reports.json          # exported from the web app
+npm run review -- --accept <id> --body "…"       # folds it into the entity store
+```
+
+There is no backend in v1, so reports live in the traveller's browser and leave
+it through **Export reports**. That is also the seeding path the spec describes
+for cold start.
 
 **The cache is keyed to the entity, not the trip.** `src/content/keys.ts`
 rounds coordinates to ~100m so the same landmark entered two different ways
