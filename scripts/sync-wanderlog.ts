@@ -1,7 +1,5 @@
-import { execFile } from 'node:child_process'
 import { readFile } from 'node:fs/promises'
 import { parseArgs } from 'node:util'
-import { promisify } from 'node:util'
 import { createClient } from '@supabase/supabase-js'
 import { EntityCache } from '../src/cache/entityCache.ts'
 import { DeterministicProvider } from '../src/content/providers/deterministic.ts'
@@ -9,11 +7,10 @@ import { OverpassProvider } from '../src/content/providers/overpass.ts'
 import { WikipediaProvider } from '../src/content/providers/wikipedia.ts'
 import { generateCards } from '../src/content/generate.ts'
 import { tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
+import { fetchTrip, tripUrl } from '../src/import/wanderlogApi.ts'
 import { fillLegs } from '../src/routing/fill.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
-
-const run = promisify(execFile)
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
@@ -28,39 +25,37 @@ const { values, positionals } = parseArgs({
 if (values.help || (positionals.length === 0 && !values.file)) {
   console.log(`Sync a Wanderlog trip into Trip Companion.
 
-  node scripts/sync-wanderlog.ts <trip-key>     fetch via the wlog CLI
+  node scripts/sync-wanderlog.ts <trip-key>     fetch the trip document
   node scripts/sync-wanderlog.ts -f trip.json   use a document you already have
   node scripts/sync-wanderlog.ts <key> --dry-run
 
-Your Wanderlog session never leaves this machine. wlog reads it from its own
-config; this script only ever sees the trip document wlog prints.
+A trip key is a capability: the document route serves it without a login, so
+this needs no Wanderlog credential. Prefer the **view key** — it carries the
+same itinerary and cannot be used to change the trip. It is the one under
+Share, not the one in the address bar while you are editing.
 
 Environment:
   SUPABASE_URL             project url
   SUPABASE_ANON_KEY        anon key (safe to expose; RLS is the protection)
   SUPABASE_REFRESH_TOKEN   your session, from "Copy sync token" in the web app
-  WANDERLOG_SESSION        optional, passed through to wlog if it is set
+  WANDERLOG_SESSION        optional; only for a trip not shared by key at all.
+                           Setting it puts a credential in this process, so the
+                           scheduled sync does not.
 `)
   process.exit(values.help ? 0 : 2)
 }
 
 async function loadDocument(): Promise<unknown> {
   if (values.file) return JSON.parse(await readFile(values.file, 'utf8')) as unknown
+
   const key = String(positionals[0])
-  try {
-    // wlog reads its own stored session; we never handle the cookie.
-    const { stdout } = await run('wlog', ['trip', 'get', key], {
-      maxBuffer: 32 * 1024 * 1024,
-      env: process.env,
-    })
-    return JSON.parse(stdout) as unknown
-  } catch (err) {
-    const message = (err as { code?: string; message?: string }).code === 'ENOENT'
-      ? 'wlog is not on PATH. Install it with: go install github.com/KRamdath/wanderlog-cli/cmd/wlog@latest'
-      : `wlog trip get failed: ${(err as Error).message}`
-    console.error(message)
+  const result = await fetchTrip(key, { session: process.env['WANDERLOG_SESSION'] })
+  if (!result.ok) {
+    // Say which URL was asked, so the next step is to open it and look.
+    console.error(`Could not read that trip: ${result.reason}\n  ${tripUrl(key)}`)
     process.exit(1)
   }
+  return result.document
 }
 
 const document = await loadDocument()

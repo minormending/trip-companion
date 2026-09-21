@@ -1,29 +1,27 @@
 # Daily Wanderlog sync.
 #
-# This runs in YOUR repository, so the Wanderlog session sits in YOUR secrets
-# and never reaches the Trip Companion database. That is the whole point of the
-# arrangement: we hold trip data, you hold the credential.
+# This runs in YOUR repository and pushes into YOUR Supabase project. It no
+# longer holds a Wanderlog credential at all: the trip document route serves a
+# trip to whoever has its key, so the key *is* the authorisation and there is
+# no cookie to store, rotate or leak.
+#
+# Use a trip's **view key** — the one under Share, not the one in the address
+# bar while editing. It carries the same itinerary and cannot change the trip,
+# so the worst a leaked secret here can do is let somebody read a holiday.
 #
 # Required secrets:
-#   WANDERLOG_SESSION       the connect.sid value (see wanderlog-cli docs/AUTH.md)
-#   WANDERLOG_TRIP_KEYS     space-separated trip keys to sync
+#   WANDERLOG_TRIP_KEYS     space-separated view keys to sync
 #   SUPABASE_URL
 #   SUPABASE_ANON_KEY
 #   SUPABASE_REFRESH_TOKEN  from "Copy sync token" in the web app
 name: Sync Wanderlog
 
-# The schedule is off until this workflow can actually complete. Two things
-# have to be true first, and neither is today:
+# The schedule is off until the secrets above exist. Right now this repository
+# has only PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY, which belong to
+# the deploy, so a cron would do nothing but mail a failure every morning.
 #
-#   1. `go install .../cmd/wlog@latest` below resolves. The module has no
-#      cmd/wlog package, so the install step fails before anything else runs.
-#      See docs/WANDERLOG.md — fetching /api/tripPlans directly would remove
-#      this dependency rather than wait on it.
-#   2. The five secrets listed above exist. Only PUBLIC_SUPABASE_URL and
-#      PUBLIC_SUPABASE_ANON_KEY are set, and those are the deploy's, not these.
-#
-# Left as workflow_dispatch so it can still be run by hand when testing a fix.
-# Restore the cron in the same commit that makes both true.
+# Restore the cron in the same commit that adds them. workflow_dispatch stays,
+# so the path can be exercised by hand first.
 on:
   # schedule:
   #   - cron: '17 5 * * *'
@@ -38,23 +36,23 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
       - run: npm ci
-      - name: Install wlog
-        run: go install github.com/KRamdath/wanderlog-cli/cmd/wlog@latest
       - name: Sync each trip
         env:
-          # wlog reads this instead of touching disk, which is what its docs
-          # recommend for CI and sandboxed agents.
-          WANDERLOG_SESSION: ${{ secrets.WANDERLOG_SESSION }}
+          # Read as a variable rather than interpolated into the script below.
+          # `${{ }}` substitution happens before the shell sees the line, so a
+          # secret containing shell metacharacters would run as code.
+          TRIP_KEYS: ${{ secrets.WANDERLOG_TRIP_KEYS }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           SUPABASE_REFRESH_TOKEN: ${{ secrets.SUPABASE_REFRESH_TOKEN }}
         run: |
           set -euo pipefail
-          for key in ${{ secrets.WANDERLOG_TRIP_KEYS }}; do
+          if [ -z "${TRIP_KEYS:-}" ]; then
+            echo "WANDERLOG_TRIP_KEYS is empty — nothing to sync." >&2
+            exit 1
+          fi
+          for key in $TRIP_KEYS; do
             echo "::group::$key"
             node scripts/sync-wanderlog.ts "$key"
             echo "::endgroup::"
