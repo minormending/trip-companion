@@ -1,0 +1,49 @@
+# Daily Wanderlog sync.
+#
+# This runs in YOUR repository, so the Wanderlog session sits in YOUR secrets
+# and never reaches the Trip Companion database. That is the whole point of the
+# arrangement: we hold trip data, you hold the credential.
+#
+# Required secrets:
+#   WANDERLOG_SESSION       the connect.sid value (see wanderlog-cli docs/AUTH.md)
+#   WANDERLOG_TRIP_KEYS     space-separated trip keys to sync
+#   SUPABASE_URL
+#   SUPABASE_ANON_KEY
+#   SUPABASE_REFRESH_TOKEN  from "Copy sync token" in the web app
+name: Sync Wanderlog
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - run: npm ci
+      - name: Install wlog
+        run: go install github.com/KRamdath/wanderlog-cli/cmd/wlog@latest
+      - name: Sync each trip
+        env:
+          # wlog reads this instead of touching disk, which is what its docs
+          # recommend for CI and sandboxed agents.
+          WANDERLOG_SESSION: ${{ secrets.WANDERLOG_SESSION }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_REFRESH_TOKEN: ${{ secrets.SUPABASE_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          for key in ${{ secrets.WANDERLOG_TRIP_KEYS }}; do
+            echo "::group::$key"
+            node scripts/sync-wanderlog.ts "$key"
+            echo "::endgroup::"
+          done

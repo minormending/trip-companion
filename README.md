@@ -58,6 +58,39 @@ Everything below runs today with no API keys.
 | Background cards | Working | Wikipedia summaries, cited |
 | Card prose (remaining kinds) | Deterministic stub | The LLM provider is an interface with a working offline implementation |
 
+## Signing in, and connecting Wanderlog
+
+Signing in is optional. With no backend configured the app is exactly what it
+was before one existed — everything local, nothing shared — and that mode is
+supported, not degraded. The build even swaps the Supabase client for a stub so
+a local-only bundle stays about 52kB rather than 270kB.
+
+Signed in, the same interfaces are backed by Supabase instead of localStorage,
+so the domain layer never learns there is a backend. That unblocks three things
+that were stuck: corrections reach somebody, the entity cache compounds across
+travellers rather than per browser, and a warmed cache survives Overpass being
+down.
+
+```bash
+supabase link --project-ref <ref>
+supabase db push
+SUPABASE_URL=... SUPABASE_ANON_KEY=... npm run build:web
+```
+
+**Wanderlog connects without us ever holding a Wanderlog credential.** Its
+session cookie is full account access and cannot be scoped or revoked per app,
+so it stays in your own vault; the CLI reads it locally and pushes only trip
+data. See [docs/WANDERLOG.md](docs/WANDERLOG.md) for why a browser could not do
+this even if it should, and for the one-time and daily paths.
+
+```bash
+node scripts/sync-wanderlog.ts <trip-key> --dry-run
+```
+
+An imported Wanderlog trip needs **no geocoding**: its places are Google Places
+objects with geometry already attached, so the confirmation step that exists
+because "Meiji Jingu" resolves to a stadium has nothing to disambiguate.
+
 ## Deploying
 
 `.github/workflows/pages.yml` typechecks, tests, builds `dist/` and publishes it

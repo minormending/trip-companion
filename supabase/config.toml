@@ -1,0 +1,28 @@
+# Minimal local config. `supabase link --project-ref <ref>` points the CLI at
+# your hosted project; `supabase db push` applies migrations/ to it.
+project_id = "trip-companion"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+# Must match the deployed Pages URL, or magic-link redirects bounce.
+site_url = "http://localhost:8788"
+additional_redirect_urls = [
+  "http://localhost:8788",
+  "https://minormending.github.io/trip-companion/",
+]
+jwt_expiry = 3600

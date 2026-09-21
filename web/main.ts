@@ -15,6 +15,9 @@ import { applyChoices, enrichTrip, resolveTrip, type PipelineDeps } from '../src
 import { renderBriefing } from '../src/render/briefing.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
+import { supabase } from '../src/backend/client.ts'
+import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
+import { mountAuth } from './auth.ts'
 import { decodeTrip, encodeTrip } from './share.ts'
 
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T
@@ -33,11 +36,35 @@ const modeBtn = $<HTMLButtonElement>('mode')
 const nowPane = $<HTMLDivElement>('now')
 const resumePane = $<HTMLDivElement>('resume')
 
+const authPane = $<HTMLDivElement>('auth')
+
 const TRIP_KEY = 'trip-companion:trip'
 const CHECKIN_KEY = 'trip-companion:checkins'
 
 let checkIns: CheckIn[] = []
 let companionMode = false
+
+let signedInUserId: string | null = null
+
+/**
+ * Signed in, the shared Supabase stores back the same interfaces the local
+ * ones do, so the domain layer never learns there is a backend. Signed out it
+ * is localStorage, exactly as before.
+ */
+async function openStores(force = false): Promise<void> {
+  const db = supabase()
+  if (force) {
+    cache = null
+    corrections = null
+  }
+  if (db && signedInUserId) {
+    cache ??= await EntityCache.open(new SupabaseCacheStore(db))
+    corrections ??= await CorrectionStore.open(new SupabaseCorrections(db, signedInUserId))
+    return
+  }
+  cache ??= await EntityCache.open(new LocalStorageStore())
+  corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
+}
 
 function readLocal<T>(key: string, fallback: T): T {
   try {
@@ -322,9 +349,8 @@ async function build(event: SubmitEvent): Promise<void> {
   setStatus('Starting…')
 
   try {
-    cache ??= await EntityCache.open(new LocalStorageStore())
+    await openStores()
     checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
-    corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
     const title = String(data.get('title') ?? '').trim()
     const departs = String(data.get('departs') ?? '').trim()
     const options = {
@@ -345,7 +371,7 @@ async function build(event: SubmitEvent): Promise<void> {
     }
 
     const result = await enrichTrip(trip, d, resolved.report, options)
-    await cache.flush()
+    await cache?.flush()
 
     const { build: b, fill: f, content: c } = result.reports
     setStatus(
@@ -385,8 +411,7 @@ async function restoreFromHash(): Promise<boolean> {
   // strip the check-in along with it. A trip whose id matches the one saved on
   // this device is ours.
   const saved = readLocal<{ trip: Trip; refusals: Refusal[] } | null>(TRIP_KEY, null)
-  cache ??= await EntityCache.open(new LocalStorageStore())
-  corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
+  await openStores()
   checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
 
   if (saved?.trip?.id === trip.id) {
@@ -537,8 +562,7 @@ function offerSavedTrip(): void {
 
   open.addEventListener('click', () => {
     void (async () => {
-      cache ??= await EntityCache.open(new LocalStorageStore())
-      corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
+      await openStores()
       checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
       resumePane.hidden = true
       companionMode = true
@@ -563,6 +587,16 @@ function offerSavedTrip(): void {
 void (async () => {
   if (!(await restoreFromHash())) offerSavedTrip()
 })()
+
+mountAuth(authPane, (user) => {
+  const next = user?.id ?? null
+  if (next === signedInUserId) return
+  signedInUserId = next
+  // Swapping identity swaps which stores are in play, so they are reopened.
+  void openStores(true).then(() => {
+    if (baseTrip) render(true)
+  })
+})
 
 // Registered last so a failure here never blocks the app starting.
 if ('serviceWorker' in navigator) {

@@ -9,6 +9,14 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
 await mkdir(dist, { recursive: true })
 
+/**
+ * The anon key is designed to ship in a browser bundle; row-level security is
+ * what protects the data, not the secrecy of this key. Both blank builds the
+ * local-only app, which is a supported mode rather than a broken one.
+ */
+const supabaseUrl = process.env['SUPABASE_URL'] ?? ''
+const supabaseAnonKey = process.env['SUPABASE_ANON_KEY'] ?? ''
+
 const built = await esbuild.build({
   entryPoints: [join(root, 'web/main.ts')],
   bundle: true,
@@ -17,6 +25,15 @@ const built = await esbuild.build({
   target: ['es2022'],
   write: false,
   logLevel: 'warning',
+  define: {
+    __SUPABASE_URL__: JSON.stringify(supabaseUrl),
+    __SUPABASE_ANON_KEY__: JSON.stringify(supabaseAnonKey),
+  },
+  // With no backend configured the client is never constructed, so the real
+  // library is swapped for a stub rather than shipped as dead weight.
+  ...(supabaseUrl
+    ? {}
+    : { alias: { '@supabase/supabase-js': join(root, 'web/supabase-stub.ts') } }),
 })
 
 const output = built.outputFiles?.[0]
@@ -81,4 +98,8 @@ await writeFile(join(dist, 'sw.js'), workerCode, 'utf8')
 // underscore and slows every deploy for no benefit here.
 await writeFile(join(dist, '.nojekyll'), '', 'utf8')
 
-console.log(`dist/ built — ${bundleName} ${(output.contents.byteLength / 1024).toFixed(1)} kB`)
+console.log(
+  `dist/ built \u2014 ${bundleName} ${(output.contents.byteLength / 1024).toFixed(1)} kB, ` +
+    `sw.js precaching ${precache.length} files, ` +
+    `backend ${supabaseUrl ? 'configured' : 'not configured (local-only mode)'}`,
+)
