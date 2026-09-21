@@ -27,6 +27,11 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build:web
+        env:
+          # Blank secrets build the local-only app, which is a supported mode:
+          # the bundle drops to ~52kB and nothing requires an account.
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

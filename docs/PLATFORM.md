@@ -41,6 +41,10 @@ node scripts/db.mjs status  trip
 node scripts/db.mjs migrate trip
 ```
 
+The live database is `minormending-apps` (`gwlgmuiorzwfsimlfvuk`), us-east-1.
+Auth is per project and therefore shared: `scripts/configure-auth.mjs` holds a
+redirect allow list covering every app's site, not just this one.
+
 map-kit's runner creates `schema_migrations` unqualified, so it lands wherever
 `search_path` points. `db.mjs` points it at each set's own schema, which is what
 stops two apps colliding — both number their migrations from `0001`.
@@ -64,8 +68,15 @@ Worth contributing back to map-kit as a multi-app variant.
 1. `supabase/<app>/0001_schema.sql`: create the schema, grant `usage`, revoke
    default table privileges, and insert a row into `public.apps`.
 2. Add the set to `SETS` in `scripts/db.mjs`.
-3. Add the schema to **Exposed schemas** in the project's API settings, and set
-   `db: { schema: '<app>' }` in that app's Supabase client.
+3. Expose the schema to PostgREST, and set `db: { schema: '<app>' }` in that
+   app's Supabase client. A schema that exists in Postgres is invisible to the
+   API until it is listed, and the failure is a confusing 404 from a table you
+   can see in the dashboard. It looks like a dashboard-only setting but it is a
+   Management API field:
+
+   ```bash
+   node scripts/expose-schema.mjs <app> --apply
+   ```
 4. Writes that need checking go through `security definer` functions, not table
    grants. `public.rl_take()` is already there; namespace your keys with the app
    slug so a noisy app cannot spend another's budget.
