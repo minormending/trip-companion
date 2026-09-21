@@ -114,3 +114,26 @@ test('an inferred leg says so rather than implying it was routed', () => {
   assert.ok(html.includes('straight-line estimate, not routed'))
   assert.ok(html.includes('12.0 km'))
 })
+
+test('a card titled after its own place does not repeat the heading', () => {
+  const t = trip(
+    [place('p1', 'Sensoji Temple', 0, 0)],
+    [],
+    [{ ...card('how_to_pay', 'operational', 'Free to enter.'), title: 'Sensoji Temple' }],
+  )
+  const html = renderBriefing(t, { now: NOW })
+  assert.equal(
+    (html.match(/Sensoji Temple/g) ?? []).length,
+    1,
+    'the stop heading says it once; the card does not say it again',
+  )
+})
+
+test('a card with its own distinct title still shows it', () => {
+  const t = trip(
+    [place('p1', 'Sensoji Temple', 0, 0)],
+    [],
+    [{ ...card('watch_for', 'practical', 'Queue splits here.'), title: 'The left queue' }],
+  )
+  assert.ok(renderBriefing(t, { now: NOW }).includes('<h3>The left queue</h3>'))
+})

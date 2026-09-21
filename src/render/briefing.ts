@@ -61,6 +61,7 @@ function renderCard(
   notes: Footnotes,
   opts: RenderOptions,
   mode?: TransportMode,
+  subjectName?: string,
 ): string {
   const tier = card.provenance.tier
   const tone = TIER_PERSONALITY[tier]
@@ -72,7 +73,11 @@ function renderCard(
     `<div class="card-head">${guide}` +
       `<span class="card-kind">${escapeHtml(KIND_LABEL[card.kind] ?? card.kind)}</span></div>`,
   )
-  if (card.title && card.title !== KIND_LABEL[card.kind]) {
+  // Sourced providers title their cards with the place name, which already
+  // sits directly above as the stop heading. Repeating it is pure noise.
+  const redundant =
+    card.title === KIND_LABEL[card.kind] || (subjectName !== undefined && card.title === subjectName)
+  if (card.title && !redundant) {
     parts.push(`<h3>${escapeHtml(card.title)}</h3>`)
   }
   parts.push(`<p>${escapeHtml(card.body)}</p>`)
@@ -125,8 +130,11 @@ function renderLeg(trip: Trip, leg: Leg, notes: Footnotes, opts: RenderOptions):
   if (leg.operator) bits.push(escapeHtml(leg.operator))
   if (leg.inferred) bits.push('<em>straight-line estimate, not routed</em>')
 
+  const from = placeById(trip, leg.fromPlaceId)
+  const to = placeById(trip, leg.toPlaceId)
+  const legName = from && to ? `${from.name} to ${to.name}` : undefined
   const cards = cardsForLeg(trip, leg.id)
-    .map((c) => renderCard(c, notes, opts, leg.mode))
+    .map((c) => renderCard(c, notes, opts, leg.mode, legName))
     .join('')
   return `<div class="leg">${bits.join(' · ')}</div>${cards}`
 }
@@ -168,7 +176,7 @@ export function renderBriefing(trip: Trip, opts: RenderOptions = {}): string {
         ? `<span class="time">${escapeHtml(place.arrive)}</span>`
         : ''
       const cards = cardsForPlace(trip, place.id)
-        .map((c) => renderCard(c, notes, opts))
+        .map((c) => renderCard(c, notes, opts, undefined, place.name))
         .join('')
       blocks.push(
         `<div class="stop"><div class="stop-head">${head}<h3>${escapeHtml(place.name)}</h3></div>` +
