@@ -76,10 +76,13 @@ schema per app, because the free plan allows two projects per account and a
 schema is cheaper than a project. See [docs/PLATFORM.md](docs/PLATFORM.md).
 
 ```bash
-npm run db:migrate platform   # once per database
-npm run db:migrate trip
+npm run db:migrate trip       # this app's schema
 PUBLIC_SUPABASE_URL=... PUBLIC_SUPABASE_ANON_KEY=... npm run build:web
 ```
+
+The shared `public` layer is migrated from
+[apps-db](https://github.com/minormending/apps-db), which owns it, and must be
+applied first.
 
 The shared layer is generated from [map-kit](https://github.com/minormending/map-kit)
 rather than reinvented, which is also how reporting got a rate limiter: two

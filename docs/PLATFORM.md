@@ -42,21 +42,13 @@ app would mean altering a constraint every other app depends on.
 
 Worth contributing back to map-kit as a multi-app variant.
 
-## Platform migrations live here
+## The shared layer is not here any more
 
-`supabase/platform/` is applied once per database and is shared by every app in
-it, so a change here reaches restroom-map too. The shared SQL is generated from
-map-kit rather than written by hand:
+`public` — profiles, rate limiting, the app registry, the moderation queue —
+is owned by [apps-db](https://github.com/minormending/apps-db), along with
+provisioning, the schema-exposure script and a nightly audit that checks the
+running database is still locked down.
 
-```bash
-npm run gen:platform
-```
-
-`0003_apps.sql`, `0004_moderation.sql`, `0005_lock_shared_layer.sql` and
-`0006_target_types.sql` are ours. Moderation deviates from the kit in two ways,
-both forced by sharing: an `app` column, and per-app `target_types` on
-`public.apps` instead of a single check constraint listing every app's types.
-
-That this app happens to hold the platform migrations is history — it was first
-into the database. If a third app arrives and that feels wrong, the right home
-is map-kit, alongside the SQL they are generated from.
+It used to live in this repo, which was first into the database rather than its
+owner. Migrate the shared layer from there before this app's schema: `trip`
+references `profiles`, `rate_limit` and `apps`.

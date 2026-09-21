@@ -25,10 +25,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 /** Migration sets. `schema` is where that set's tracking table lives. */
 const SETS = {
-  platform: { dir: 'supabase/platform', schema: 'public' },
   trip: { dir: 'supabase/trip', schema: 'trip' },
-  // restroom-map owns its own schema and runs its migrations from its own
-  // repo. Two repos writing one schema_migrations table is a race nobody wins.
+  // Only this app's schema. The shared `public` layer is migrated from
+  // apps-db, and each other app from its own repo — two repos writing one
+  // schema_migrations table is a race nobody wins.
 }
 
 const [command, ...rest] = process.argv.slice(2)
@@ -41,8 +41,8 @@ function usage(message) {
   node scripts/db.mjs queue
   node scripts/db.mjs query "<sql>"
 
-Apply platform before any app set: the app schemas reference profiles,
-rate_limit and apps, and will fail without them.`)
+The shared public layer lives in apps-db and must be migrated from there
+first: this schema references profiles, rate_limit and apps.`)
   process.exit(2)
 }
 
