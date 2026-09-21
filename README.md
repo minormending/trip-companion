@@ -51,6 +51,8 @@ Everything below runs today with no API keys.
 | Voice enforcement | Working | The spec's "never" list, enforced in code |
 | Entity cache | Working | File-backed, keyed to the place rather than the trip |
 | Correction loop | Working | Flags carry a claim; two withdraw a card; review folds the fix back in |
+| Offline companion | Working | Service worker shell, installable, in-transit view, manual check-in |
+| Geofenced check-in | Not possible on the web | Needs native; see below |
 | Briefing render | Working | Screen and print, with source footnotes |
 | Operational cards | Working | Recorded OpenStreetMap tags via Overpass, cited per element |
 | Background cards | Working | Wikipedia summaries, cited |
@@ -103,6 +105,29 @@ location returns tonight's golden hour followed by *tomorrow morning's*, so "the
 last window of the day" is the wrong day. Sampling is anchored to local solar
 midnight, derived from longitude, which orders them correctly without needing a
 timezone.
+
+**Geofencing is not deferred by choice; the web cannot do it.** The Geolocation
+API stops when the page is backgrounded and is not exposed to service workers,
+and there is no Geofencing API — only an
+[open W3C request](https://github.com/w3c/geolocation/issues/214) for one. So
+automatic check-in genuinely requires a native app.
+
+What does not require native is the part Phase 6 actually asks about. Its
+question is whether in-situ beats the printed page, and its kill signal is
+travellers sticking with the PDF. An offline bundle, an in-transit view and
+manual check-in answer that, and the spec already requires manual check-in as
+the fallback for when location permission is refused — which it often is. So
+the fallback is the baseline, and geofencing is a convenience on top of a
+product that has to work without it.
+
+Verified by stopping the dev server and reloading, rather than by simulating
+offline: the shell came back from the service worker cache, the saved trip
+reopened, and check-in kept working with the origin unreachable.
+
+**The companion shows only what is ahead.** `computeNow` drops everything
+behind the traveller — a companion that shows the whole trip is just the
+briefing again — and reorders what is left by consequence. Standing on a
+platform, a card about where to board outranks the history of the building.
 
 **The correction loop is what makes quality compound.** A flag carries the
 traveller's own words and the card body they were looking at, so review can see

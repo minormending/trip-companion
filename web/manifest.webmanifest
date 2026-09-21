@@ -1,0 +1,15 @@
+{
+  "name": "Trip Companion",
+  "short_name": "Companion",
+  "description": "Your itinerary as a briefing you can use offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdfcf9",
+  "theme_color": "#993c1d",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

@@ -4,6 +4,7 @@ import { DeterministicProvider } from '../src/content/providers/deterministic.ts
 import { OverpassProvider } from '../src/content/providers/overpass.ts'
 import { WikipediaProvider } from '../src/content/providers/wikipedia.ts'
 import type { Refusal } from '../src/content/generate.ts'
+import { checkIn, computeNow, type CheckIn } from '../src/companion/now.ts'
 import { applyCorrections, recordFlag } from '../src/corrections/loop.ts'
 import { CorrectionStore } from '../src/corrections/store.ts'
 import { LocalStorageCorrections } from '../src/corrections/webStore.ts'
@@ -28,6 +29,32 @@ const shareBtn = $<HTMLButtonElement>('share')
 const printBtn = $<HTMLButtonElement>('print')
 const restartBtn = $<HTMLButtonElement>('restart')
 const exportBtn = $<HTMLButtonElement>('export')
+const modeBtn = $<HTMLButtonElement>('mode')
+const nowPane = $<HTMLDivElement>('now')
+const resumePane = $<HTMLDivElement>('resume')
+
+const TRIP_KEY = 'trip-companion:trip'
+const CHECKIN_KEY = 'trip-companion:checkins'
+
+let checkIns: CheckIn[] = []
+let companionMode = false
+
+function readLocal<T>(key: string, fallback: T): T {
+  try {
+    const raw = globalThis.localStorage?.getItem(key)
+    return raw ? (JSON.parse(raw) as T) : fallback
+  } catch {
+    return fallback
+  }
+}
+
+function writeLocal(key: string, value: unknown): void {
+  try {
+    globalThis.localStorage?.setItem(key, JSON.stringify(value))
+  } catch {
+    /* private mode: the trip is still usable for this session */
+  }
+}
 
 let cache: EntityCache | null = null
 let corrections: CorrectionStore | null = null
@@ -80,6 +107,11 @@ function mountBriefing(html: string): void {
 function show(trip: Trip, refusals: Refusal[], interactive: boolean): void {
   baseTrip = trip
   baseRefusals = refusals
+  if (interactive) {
+    // Saved so the companion opens on a platform with no signal, which is the
+    // only situation in which it is actually needed.
+    writeLocal(TRIP_KEY, { trip, refusals })
+  }
   render(interactive)
 }
 
@@ -89,13 +121,111 @@ function render(interactive: boolean): void {
   const applied = corrections
     ? applyCorrections(baseTrip, corrections)
     : { trip: baseTrip, withdrawn: [] as Refusal[] }
+
   mountBriefing(
     renderBriefing(applied.trip, {
       refusals: [...baseRefusals, ...applied.withdrawn],
       interactive,
     }),
   )
+  renderNow(applied.trip)
+  modeBtn.hidden = false
+  modeBtn.textContent = companionMode ? 'Full briefing' : 'Companion'
+  nowPane.hidden = !companionMode
+  output.hidden = companionMode
   exportBtn.hidden = !corrections || corrections.size === 0
+}
+
+/**
+ * The in-transit view. Everything already behind the traveller is gone, and
+ * what can strand them is at the top: standing on a platform, a card about
+ * where to board outranks the history of the building.
+ */
+function renderNow(trip: Trip): void {
+  const state = computeNow(trip, checkIns)
+  nowPane.replaceChildren()
+
+  if (!navigator.onLine) {
+    const offline = document.createElement('p')
+    offline.className = 'now-offline'
+    offline.textContent = 'Offline \u2014 showing what was saved before you left'
+    nowPane.append(offline)
+  }
+
+  const progress = document.createElement('p')
+  progress.className = 'now-progress'
+  progress.textContent = `${state.reached} of ${state.total} stops reached`
+  nowPane.append(progress)
+
+  if (state.complete || !state.next) {
+    const done = document.createElement('div')
+    done.className = 'now-done'
+    done.textContent = 'Every stop reached. The full briefing is still here if you want it.'
+    nowPane.append(done)
+    return
+  }
+
+  const next = document.createElement('h2')
+  next.className = 'now-next'
+  next.textContent = state.next.name
+  nowPane.append(next)
+
+  const leg = document.createElement('p')
+  leg.className = 'now-leg'
+  if (state.leg) {
+    const bits: string[] = []
+    if (state.leg.durationMinutes !== undefined) bits.push(`${state.leg.durationMinutes} min`)
+    if (state.leg.distanceMetres !== undefined) {
+      bits.push(
+        state.leg.distanceMetres >= 1000
+          ? `${(state.leg.distanceMetres / 1000).toFixed(1)} km`
+          : `${state.leg.distanceMetres} m`,
+      )
+    }
+    const mode = document.createElement('span')
+    mode.className = 'mode'
+    mode.textContent = state.leg.mode
+    leg.append(mode, document.createTextNode(bits.length ? ` \u00b7 ${bits.join(' \u00b7 ')}` : ''))
+  } else if (state.next.arrive) {
+    leg.textContent = `Due at ${state.next.arrive}`
+  } else {
+    leg.textContent = 'First stop'
+  }
+  nowPane.append(leg)
+
+  const here = document.createElement('button')
+  here.className = 'now-here'
+  here.type = 'button'
+  here.textContent = `I'm at ${state.next.name}`
+  here.addEventListener('click', () => {
+    checkIns = checkIn(checkIns, state.next!.id)
+    writeLocal(CHECKIN_KEY, checkIns)
+    render(true)
+  })
+  nowPane.append(here)
+
+  // Rendered through the same renderer as the briefing, so tier treatment,
+  // provenance and guide behaviour are identical in both views rather than
+  // reimplemented and drifting apart. The cards are re-pointed at the next
+  // stop so they group under it.
+  const asStop: Trip = {
+    ...trip,
+    places: [{ ...state.next, dayIndex: 1 }],
+    legs: [],
+    cards: state.cards.map((card) => ({
+      ...card,
+      attachesTo: { kind: 'place' as const, placeId: state.next!.id },
+    })),
+  }
+  const fragment = new DOMParser().parseFromString(
+    renderBriefing(asStop, { interactive: true }),
+    'text/html',
+  )
+  const host = document.createElement('div')
+  for (const card of Array.from(fragment.querySelectorAll('.stop .card'))) {
+    host.append(document.importNode(card, true))
+  }
+  nowPane.append(host)
 }
 
 function describe(candidate: GeocodeCandidate, relativeTo: GeocodeCandidate): string {
@@ -193,6 +323,7 @@ async function build(event: SubmitEvent): Promise<void> {
 
   try {
     cache ??= await EntityCache.open(new LocalStorageStore())
+    checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
     corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
     const title = String(data.get('title') ?? '').trim()
     const departs = String(data.get('departs') ?? '').trim()
@@ -242,16 +373,32 @@ async function build(event: SubmitEvent): Promise<void> {
 async function restoreFromHash(): Promise<boolean> {
   const match = /[#&]t=([^&]+)/.exec(location.hash)
   if (!match?.[1]) return false
-  setStatus('Opening a shared briefing…')
+  setStatus('Opening a briefing\u2026')
   const trip = await decodeTrip(match[1])
   if (!trip) {
-    setStatus('That shared link could not be read.')
+    setStatus('That link could not be read.')
     return false
   }
+
+  // Building a trip leaves its own share link in the address bar, so a reload
+  // would otherwise demote the traveller's own briefing to somebody else's and
+  // strip the check-in along with it. A trip whose id matches the one saved on
+  // this device is ours.
+  const saved = readLocal<{ trip: Trip; refusals: Refusal[] } | null>(TRIP_KEY, null)
+  cache ??= await EntityCache.open(new LocalStorageStore())
+  corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
+  checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
+
+  if (saved?.trip?.id === trip.id) {
+    show(trip, saved.refusals ?? [], true)
+    setStatus('')
+    return true
+  }
+
   // A shared briefing is somebody else's record, so the flag and regenerate
   // controls are withheld: corrections belong to the traveller who was there.
   show(trip, [], false)
-  setStatus('Shared briefing — read only.')
+  setStatus('Shared briefing \u2014 read only.')
   return true
 }
 
@@ -346,12 +493,21 @@ shareBtn.addEventListener('click', () => {
   )
 })
 
+modeBtn.addEventListener('click', () => {
+  companionMode = !companionMode
+  render(true)
+})
+
 printBtn.addEventListener('click', () => window.print())
 
 restartBtn.addEventListener('click', () => {
   history.replaceState(null, '', location.pathname)
   baseTrip = null
   baseRefusals = []
+  companionMode = false
+  nowPane.hidden = true
+  modeBtn.hidden = true
+  output.hidden = false
   output.replaceChildren()
   confirm.replaceChildren()
   confirm.hidden = true
@@ -360,4 +516,60 @@ restartBtn.addEventListener('click', () => {
   setStatus('')
 })
 
-void restoreFromHash()
+/**
+ * A trip saved on the last visit opens without a network, which is the whole
+ * point: the companion is needed exactly where there is no signal.
+ */
+function offerSavedTrip(): void {
+  const saved = readLocal<{ trip: Trip; refusals: Refusal[] } | null>(TRIP_KEY, null)
+  if (!saved?.trip?.places?.length) return
+
+  resumePane.replaceChildren()
+  const line = document.createElement('p')
+  line.style.margin = '0 0 0.6rem'
+  line.textContent = `You have "${saved.trip.title}" saved on this device.`
+  const open = document.createElement('button')
+  open.type = 'button'
+  open.textContent = 'Open it'
+  const discard = document.createElement('button')
+  discard.type = 'button'
+  discard.textContent = 'Discard'
+
+  open.addEventListener('click', () => {
+    void (async () => {
+      cache ??= await EntityCache.open(new LocalStorageStore())
+      corrections ??= await CorrectionStore.open(new LocalStorageCorrections())
+      checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
+      resumePane.hidden = true
+      companionMode = true
+      show(saved.trip, saved.refusals ?? [], true)
+    })()
+  })
+  discard.addEventListener('click', () => {
+    try {
+      globalThis.localStorage?.removeItem(TRIP_KEY)
+      globalThis.localStorage?.removeItem(CHECKIN_KEY)
+    } catch {
+      /* nothing to clear */
+    }
+    resumePane.hidden = true
+  })
+
+  resumePane.append(line, open, discard)
+  resumePane.hidden = false
+}
+
+// Wrapped: the bundle is an IIFE, which cannot carry a top-level await.
+void (async () => {
+  if (!(await restoreFromHash())) offerSavedTrip()
+})()
+
+// Registered last so a failure here never blocks the app starting.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('sw.js').catch(() => undefined)
+  })
+}
+
+addEventListener('online', () => render(true))
+addEventListener('offline', () => render(true))

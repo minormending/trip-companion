@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="Trip Companion">
+<rect width="192" height="192" rx="40" fill="#fdfcf9"/>
+<g transform="translate(96 104) scale(4.6) translate(-11.5 -11.5)">
+<polygon points="2,13 11,4 11,14" fill="#f5c4b3"/>
+<polygon points="11,4 20,13 11,14" fill="#f0997b"/>
+<polygon points="2,13 11,14 20,13 11,19" fill="#d85a30"/>
+</g>
+</svg>

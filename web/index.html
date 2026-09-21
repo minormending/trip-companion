@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trip Companion</title>
 <meta name="description" content="Turns a pasted itinerary into a briefing you can print or share.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#993c1d">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Companion">
 <style>/*__CSS__*/
 /* An id rule with an explicit display outranks the UA's [hidden] rule, so
    the hidden attribute silently stops working. Guard it once, globally. */
@@ -44,9 +49,25 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
 .claim-actions button { font: inherit; font-size: 0.78rem; padding: 0.2rem 0.6rem;
   border: 1px solid var(--rule); border-radius: 999px; background: transparent;
   color: var(--ink-soft); cursor: pointer; }
+#now { margin: 0 0 2rem; }
+.now-progress { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 0.35rem; }
+.now-next { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 0.2rem; }
+.now-leg { color: var(--ink-soft); font-size: 0.95rem; margin: 0 0 1rem; }
+.now-leg .mode { color: var(--ink); font-weight: 500; text-transform: capitalize; }
+.now-here { font: inherit; padding: 0.7rem 1.3rem; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent);
+  font-weight: 500; margin-bottom: 1.5rem; }
+.now-done { padding: 1rem; border: 1px dashed var(--rule); border-radius: 10px;
+  color: var(--ink-soft); }
+.now-offline { font-size: 0.8rem; color: var(--warn); background: var(--warn-soft);
+  padding: 0.35rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 1rem; }
+#resume { border: 1px solid var(--rule); border-radius: 10px; padding: 1rem; margin-top: 1.5rem; }
+#resume button { font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer;
+  margin-right: 0.4rem; }
 footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   font-size: 0.8rem; color: var(--ink-faint); }
-@media print { #intro, #status, #actions, #confirm, .claim, footer { display: none; } }
+@media print { #intro, #status, #actions, #confirm, #now, #resume, .claim, footer { display: none; } }
 </style>
 </head>
 <body>
@@ -67,12 +88,15 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   <p id="status" hidden></p>
   <div id="confirm" hidden></div>
   <div id="actions" hidden>
+    <button type="button" id="mode">Companion</button>
     <button type="button" id="share">Copy share link</button>
     <button type="button" id="print">Print</button>
     <button type="button" id="restart">Start over</button>
     <button type="button" id="export" hidden>Export reports</button>
   </div>
+  <div id="now" hidden></div>
   <div id="output"></div>
+  <div id="resume" hidden></div>
   <footer>
     Places and recorded facts from <a href="https://photon.komoot.io">Photon</a>,
     <a href="https://overpass-api.de">Overpass</a> and
