@@ -4,6 +4,9 @@ Turns a pasted itinerary into an enriched trip graph, then renders it as a
 shareable, printable briefing. Implements v1 of the product spec: import,
 routing gap-fill, tiered content cards, and the briefing surface.
 
+**[Try it](https://minormending.github.io/trip-companion/)** — the browser build,
+installable as an app, and usable with no account.
+
 ## Two ways to run it
 
 The same pipeline runs in Node and in the browser. Nothing in `src/` imports a
@@ -13,8 +16,8 @@ the web build writes to `localStorage`.
 - **`src/cli.ts`** — file in, HTML out.
 - **`src/server.ts`** — the Node server, with an import form and a share view.
 - **`web/`** — the same pipeline compiled for the browser. This is what deploys
-  to GitHub Pages: no backend, no keys, geocoding and routing called directly
-  from the page.
+  to [GitHub Pages](https://minormending.github.io/trip-companion/): no backend,
+  no keys, geocoding and routing called directly from the page.
 
 ## Running it
 
