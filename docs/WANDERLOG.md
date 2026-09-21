@@ -47,14 +47,20 @@ the trip itself.
 The CLI does the same fetch, and is what the scheduled sync uses:
 
 ```bash
-go install github.com/minormending/wanderlog-cli/cmd/wlog@latest
+go install github.com/KRamdath/wanderlog-cli/cmd/wlog@latest
 wlog auth login --email you@example.com     # or --cookie for SSO accounts
 wlog trip list                              # find the key
 ```
 
-> The CLI currently has no `cmd/wlog` entry point, so that install fails —
-> `internal/cli` exports `Run` but nothing calls it. Until a `main.go` lands,
-> use the browser route above.
+> Two things about that line. The path is `KRamdath/wanderlog-cli` even though
+> the repository lives at `minormending/wanderlog-cli`: Go resolves by the
+> module path in `go.mod`, which still names the original owner, not by the URL
+> you cloned from.
+>
+> And it fails regardless — the module has no `cmd/wlog` package. `internal/cli`
+> exports `Run` and nothing calls it. Until a `main.go` lands, use the browser
+> route above; `.github/workflows/sync-wanderlog.yml` installs the same path and
+> will fail at the same step.
 
 Then, in this repo:
 
