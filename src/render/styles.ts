@@ -54,6 +54,9 @@ h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.15rem; }
   margin: 0.6rem 0;
 }
 .card p { margin: 0.2rem 0 0; }
+.card-head { display: flex; align-items: center; gap: 0.4rem; }
+.guide { flex: none; fill: var(--accent); }
+.card[data-tier="operational"] .guide { fill: var(--ink-faint); }
 .card-kind {
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -103,6 +106,9 @@ h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.15rem; }
   .day { break-before: page; }
   .day:first-of-type { break-before: auto; }
   .card[data-tier="safety"] { border: 2px solid #000; }
+  /* Paper is scarce and operational content earns the space before the
+     guide does. Open question in the spec; currently resolved as "no". */
+  .guide { display: none; }
   a { text-decoration: none; color: inherit; }
 }
 `

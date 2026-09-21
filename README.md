@@ -42,7 +42,9 @@ Everything below runs today with no API keys.
 | Import | Working | Heuristic parser: day headers, 12/24h times, numbered and bulleted lists, transport lines, rating and URL noise |
 | Geocoding | Working | Photon, keyless, English names, biased toward the previous resolved place |
 | Ambiguity detection | Working | Flags candidates >300m apart for confirmation before enrichment spends anything |
-| Walking routes | Working | OSRM, keyless |
+| Walking routes | Working | OSRM for distance; duration derived, see below |
+| Place confirmation | Working | Ambiguous matches are offered as a choice before anything is enriched |
+| Guide character | System built, art placeholder | Tone ladder and fold states wired; the mark itself is commissioned work |
 | Transit routes | Interface only | No provider configured; legs degrade honestly rather than guessing |
 | Photo cards | Working | Computed from NOAA solar position, not generated |
 | Tier policy | Working | Operational cards are refused without a source |
@@ -105,6 +107,28 @@ verifications.
 implements the "never" list. Violations are fatal for safety and operational
 cards and advisory for colour, because the cost of being wrong differs by two
 orders of magnitude between them.
+
+**The OSRM demo server lies about walking time.** Its public instance is built
+with a single car profile and ignores the profile in the URL: `/foot`,
+`/driving` and `/cycling` return byte-identical routes at about 20km/h. The
+distances follow real streets and are usable; the durations are driving times.
+So `src/routing/osrm.ts` derives walking duration from distance at 4.5km/h and
+ignores the server's clock. Point it at an instance actually built with a foot
+profile and pass `trustDurations: true`.
+
+**Confirmation happens before enrichment, not after.** `resolveTrip` stops
+after geocoding; `enrichTrip` does the routing and cards. Ambiguous places are
+offered as a choice in between, so nothing is ever computed against the wrong
+building. Choosing the shrine rather than the stadium turns a 2.3km transit leg
+into a walk, which is the whole point.
+
+**The guide's art is a placeholder and lives in one constant.**
+`src/render/guide.ts` holds the fold system: `resting` for quiet tiers,
+`bird`, `plane` and `boat` on legs by mode. Folds are narrowed to forms people
+recognise as origami — rail, bus and metro share the bird, because a folded
+"train carriage" reads as a generic box at 20px and forcing a fold per mode
+makes the system feel arbitrary. Safety cards render no guide at all, and the
+print stylesheet drops it entirely.
 
 **Routers supply the skeleton, content supplies the texture.** Mode is guessed
 from straight-line distance before any router is called, so a 400m hop never

@@ -6,6 +6,9 @@
 <title>Trip Companion</title>
 <meta name="description" content="Turns a pasted itinerary into a briefing you can print or share.">
 <style>/*__CSS__*/
+/* An id rule with an explicit display outranks the UA's [hidden] rule, so
+   the hidden attribute silently stops working. Guard it once, globally. */
+[hidden] { display: none !important; }
 #intro form { margin-top: 1.5rem; }
 textarea { width: 100%; min-height: 15rem; font: inherit; font-size: 0.9rem; padding: 0.75rem;
   border: 1px solid var(--rule); border-radius: 8px; background: var(--card); color: var(--ink); }
@@ -18,12 +21,22 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
 #status { font-size: 0.85rem; color: var(--ink-soft); margin: 1rem 0 0;
   font-variant-numeric: tabular-nums; }
 #actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+#confirm { margin: 1.5rem 0; }
+#confirm h2 { margin-top: 0; }
+.choice { border: 1px solid var(--rule); border-radius: 10px; padding: 0.85rem 1rem; margin: 0.75rem 0;
+  background: var(--card); }
+.choice > p { margin: 0 0 0.5rem; font-size: 0.85rem; color: var(--ink-soft); }
+.choice strong { color: var(--ink); }
+.choice label { display: flex; gap: 0.5rem; align-items: baseline; margin: 0.3rem 0;
+  font-size: 0.925rem; color: var(--ink); cursor: pointer; }
+.choice label input { margin: 0; flex: none; }
+.choice .where { color: var(--ink-faint); font-size: 0.85rem; }
 #actions button { font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
   border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer; }
 #actions button:hover { border-color: var(--ink-faint); color: var(--ink); }
 footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   font-size: 0.8rem; color: var(--ink-faint); }
-@media print { #intro, #status, #actions, footer { display: none; } }
+@media print { #intro, #status, #actions, #confirm, footer { display: none; } }
 </style>
 </head>
 <body>
@@ -42,6 +55,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
     </form>
   </div>
   <p id="status" hidden></p>
+  <div id="confirm" hidden></div>
   <div id="actions" hidden>
     <button type="button" id="share">Copy share link</button>
     <button type="button" id="print">Print</button>

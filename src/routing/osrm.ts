@@ -8,16 +8,33 @@ const PROFILE: Partial<Record<TransportMode, string>> = {
 }
 
 /**
+ * A deliberately unhurried pace: a traveller with a bag, stopping at
+ * crossings. Erring slow is the safe direction — a briefing that overstates
+ * a walk costs someone a few idle minutes, one that understates it costs
+ * them the train.
+ */
+const WALKING_KMH = 4.5
+
+/**
  * OSRM covers street routing only — no timetables, no transit. It is keyless,
  * which makes walking legs free, and walking is the majority of legs in a
  * city itinerary.
+ *
+ * The public demo instance is built with a single car profile and ignores the
+ * profile in the URL: /foot, /driving and /cycling return byte-identical
+ * routes at roughly 20km/h. Its distances follow real streets and are usable,
+ * but its durations are driving times. So walking durations are derived from
+ * distance here rather than taken from the response, and `trustDurations`
+ * stays off until pointed at an instance actually built with a foot profile.
  */
 export class OsrmProvider implements RoutingProvider {
   readonly name = 'osrm'
   readonly #base: string
+  readonly #trustDurations: boolean
 
-  constructor(opts: { endpoint?: string } = {}) {
+  constructor(opts: { endpoint?: string; trustDurations?: boolean } = {}) {
     this.#base = opts.endpoint ?? 'https://router.project-osrm.org'
+    this.#trustDurations = opts.trustDurations ?? false
   }
 
   supports(mode: TransportMode): boolean {
@@ -42,11 +59,15 @@ export class OsrmProvider implements RoutingProvider {
       if (body.code !== 'Ok' || !route?.duration || route.distance === undefined) {
         return { ok: false, reason: 'osrm found no route' }
       }
+      const metres = Math.round(route.distance)
+      const derived = req.mode === 'walk' && !this.#trustDurations
       return {
         ok: true,
         mode: req.mode,
-        durationMinutes: Math.round(route.duration / 60),
-        distanceMetres: Math.round(route.distance),
+        durationMinutes: derived
+          ? Math.max(1, Math.round(metres / 1000 / WALKING_KMH * 60))
+          : Math.round(route.duration / 60),
+        distanceMetres: metres,
       }
     } catch (err) {
       return { ok: false, reason: `osrm unreachable: ${(err as Error).message}` }

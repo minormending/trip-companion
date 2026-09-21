@@ -1,4 +1,4 @@
-import type { Geocoder } from '../geo/geocode.ts'
+import type { GeocodeCandidate, Geocoder } from '../geo/geocode.ts'
 import { emptyTrip } from '../domain/graph.ts'
 import type { Coordinates, Leg, Place, Trip } from '../domain/types.ts'
 import { timezoneForCountry } from '../geo/timezones.ts'
@@ -7,15 +7,26 @@ import { parseItinerary, type ParsedItinerary } from './parse.ts'
 export interface UnresolvedPlace {
   query: string
   dayIndex: number
-  /** Populated when the geocoder found options but none was clearly best. */
-  alternatives: Array<{ name: string; label?: string }>
+}
+
+/**
+ * An ambiguous match, carrying enough to actually offer the choice: which
+ * place in the trip it is, what was picked, and what else it could be.
+ * Reported before routing or card generation so the wrong building never
+ * gets enriched.
+ */
+export interface PendingConfirmation {
+  placeId: string
+  query: string
+  dayIndex: number
+  chosen: GeocodeCandidate
+  alternatives: GeocodeCandidate[]
 }
 
 export interface BuildReport {
   resolved: number
   unresolved: UnresolvedPlace[]
-  /** Ambiguous matches a human should confirm before enrichment spends money. */
-  needsConfirmation: UnresolvedPlace[]
+  needsConfirmation: PendingConfirmation[]
 }
 
 function slugId(prefix: string, name: string, index: number): string {
@@ -82,7 +93,7 @@ export async function buildTrip(
       const result = await geocoder.lookup(entry.name, bias)
       seen++
       if (!result.best) {
-        report.unresolved.push({ query: entry.name, dayIndex: day.index, alternatives: [] })
+        report.unresolved.push({ query: entry.name, dayIndex: day.index })
         continue
       }
 
@@ -100,12 +111,11 @@ export async function buildTrip(
 
       if (result.ambiguous) {
         report.needsConfirmation.push({
+          placeId: id,
           query: entry.name,
           dayIndex: day.index,
-          alternatives: result.alternatives.map((a) => ({
-            name: a.name,
-            ...(a.label ? { label: a.label } : {}),
-          })),
+          chosen: result.best,
+          alternatives: result.alternatives,
         })
       }
 
@@ -128,4 +138,31 @@ export async function importFromText(
   const parsed = parseItinerary(text)
   const { trip, report } = await buildTrip(parsed, geocoder, opts)
   return { trip, report, parsed }
+}
+
+/**
+ * Applies a traveller's confirmations. Runs before routing and card
+ * generation, so nothing has yet been computed against the wrong coordinates.
+ */
+export function applyChoices(
+  trip: Trip,
+  choices: Array<{ placeId: string; candidate: GeocodeCandidate }>,
+): Trip {
+  if (choices.length === 0) return trip
+  const byId = new Map(choices.map((c) => [c.placeId, c.candidate]))
+
+  return {
+    ...trip,
+    places: trip.places.map((place) => {
+      const pick = byId.get(place.id)
+      if (!pick) return place
+      const next: Place = { ...place, coords: pick.coords }
+      if (pick.countryCode) {
+        next.region = pick.countryCode
+        const tz = timezoneForCountry(pick.countryCode)
+        if (tz) next.timezone = tz
+      }
+      return next
+    }),
+  }
 }

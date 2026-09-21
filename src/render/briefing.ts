@@ -4,10 +4,12 @@ import {
   type Leg,
   type Place,
   type Source,
+  type TransportMode,
   type Trip,
   TIER_PERSONALITY,
 } from '../domain/types.ts'
 import type { Refusal } from '../content/generate.ts'
+import { guideForCard } from './guide.ts'
 import { BRIEFING_CSS } from './styles.ts'
 
 export interface RenderOptions {
@@ -15,6 +17,8 @@ export interface RenderOptions {
   now?: Date
   /** Adds the flag and regenerate controls. Off for the shared storybook view. */
   interactive?: boolean
+  /** False strips the guide entirely, leaving the plain briefing. */
+  guide?: boolean
 }
 
 const KIND_LABEL: Record<string, string> = {
@@ -51,13 +55,22 @@ class Footnotes {
   }
 }
 
-function renderCard(card: Card, notes: Footnotes, opts: RenderOptions): string {
+function renderCard(
+  card: Card,
+  notes: Footnotes,
+  opts: RenderOptions,
+  mode?: TransportMode,
+): string {
   const tier = card.provenance.tier
   const tone = TIER_PERSONALITY[tier]
   const stale = isStale(card, opts.now)
   const parts: string[] = []
 
-  parts.push(`<span class="card-kind">${escapeHtml(KIND_LABEL[card.kind] ?? card.kind)}</span>`)
+  const guide = opts.guide === false ? '' : guideForCard(tier, tone, mode)
+  parts.push(
+    `<div class="card-head">${guide}` +
+      `<span class="card-kind">${escapeHtml(KIND_LABEL[card.kind] ?? card.kind)}</span></div>`,
+  )
   if (card.title && card.title !== KIND_LABEL[card.kind]) {
     parts.push(`<h3>${escapeHtml(card.title)}</h3>`)
   }
@@ -112,7 +125,7 @@ function renderLeg(trip: Trip, leg: Leg, notes: Footnotes, opts: RenderOptions):
   if (leg.inferred) bits.push('<em>straight-line estimate, not routed</em>')
 
   const cards = cardsForLeg(trip, leg.id)
-    .map((c) => renderCard(c, notes, opts))
+    .map((c) => renderCard(c, notes, opts, leg.mode))
     .join('')
   return `<div class="leg">${bits.join(' · ')}</div>${cards}`
 }

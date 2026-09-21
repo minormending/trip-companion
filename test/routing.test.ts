@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { fillLegs, guessMode } from '../src/routing/fill.ts'
+import { OsrmProvider } from '../src/routing/osrm.ts'
 import { FixedTransitProvider, NullTransitProvider } from '../src/routing/transit.ts'
 import type { RouteRequest, RouteResult, RoutingProvider } from '../src/routing/types.ts'
 import type { TransportMode } from '../src/domain/types.ts'
@@ -114,4 +115,71 @@ test('the walking fallback does not apply across implausible distances', async (
   assert.equal(walker.calls, 0)
   assert.equal(report.walkFallback, 0)
   assert.equal(report.inferred, 1)
+})
+
+test('walking durations are derived from distance, not the demo server clock', async () => {
+  // The public OSRM demo is built with a car profile and ignores /foot, so its
+  // duration for this 2281m route is 411s: 20km/h, which is not a walk.
+  const fakeOsrm = {
+    async fetch() {
+      return {
+        ok: true,
+        json: async () => ({ code: 'Ok', routes: [{ duration: 411, distance: 2281 }] }),
+      }
+    },
+  }
+  const original = globalThis.fetch
+  globalThis.fetch = fakeOsrm.fetch as unknown as typeof fetch
+  try {
+    const provider = new OsrmProvider()
+    const result = await provider.route({
+      from: { lat: 35.6748, lon: 139.6996 },
+      to: { lat: 35.6714, lon: 139.6952 },
+      mode: 'walk',
+    })
+    assert.ok(result.ok)
+    assert.equal(result.distanceMetres, 2281, 'street-network distance is kept')
+    assert.equal(result.durationMinutes, 30, '2.281km at 4.5km/h, not 7 minutes')
+  } finally {
+    globalThis.fetch = original
+  }
+})
+
+test('a real foot-profile instance can have its durations trusted', async () => {
+  const original = globalThis.fetch
+  globalThis.fetch = (async () => ({
+    ok: true,
+    json: async () => ({ code: 'Ok', routes: [{ duration: 1680, distance: 2281 }] }),
+  })) as unknown as typeof fetch
+  try {
+    const provider = new OsrmProvider({ trustDurations: true })
+    const result = await provider.route({
+      from: { lat: 0, lon: 0 },
+      to: { lat: 0, lon: 1 },
+      mode: 'walk',
+    })
+    assert.ok(result.ok)
+    assert.equal(result.durationMinutes, 28)
+  } finally {
+    globalThis.fetch = original
+  }
+})
+
+test('a very short walk still reports at least a minute', async () => {
+  const original = globalThis.fetch
+  globalThis.fetch = (async () => ({
+    ok: true,
+    json: async () => ({ code: 'Ok', routes: [{ duration: 9, distance: 40 }] }),
+  })) as unknown as typeof fetch
+  try {
+    const result = await new OsrmProvider().route({
+      from: { lat: 0, lon: 0 },
+      to: { lat: 0, lon: 1 },
+      mode: 'walk',
+    })
+    assert.ok(result.ok)
+    assert.equal(result.durationMinutes, 1)
+  } finally {
+    globalThis.fetch = original
+  }
 })
