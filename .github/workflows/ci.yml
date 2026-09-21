@@ -27,10 +27,11 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # What package.json claims to support: the exact floor, the latest of that
-    # line, and the ceiling. The floor was wrong for months — `>=22.6`, which
-    # cannot run an unflagged .ts file — precisely because nothing ever ran on
-    # it. A claim no job tests is a guess.
+    # Every line package.json claims to support, with nothing asserted that a
+    # job does not run: the 22 floor exactly, the latest 22.x, and 24. The
+    # floor was wrong for months — `>=22.6`, which cannot run an unflagged .ts
+    # file — precisely because nothing ever ran on it. A claim no job tests is
+    # a guess, so the range and this matrix are meant to be changed together.
     #
     # 22.18.0 is pinned rather than floated because it is the boundary itself:
     # the release that unflagged type stripping on the 22 line. `22` floats on

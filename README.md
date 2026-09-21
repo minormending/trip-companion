@@ -27,10 +27,12 @@ npm test
 node src/cli.ts fixtures/tokyo.txt --departs 2026-11-03 --contact you@example.com
 ```
 
-Node 22.18+ or 23.6+ required — TypeScript runs natively via type stripping, so
-there is no build step. Those are the releases that enabled it without a flag
-(23.6.0 first, then backported to 22.18.0 LTS); nothing here passes
-`--experimental-strip-types`, so anything older cannot start the scripts at all.
+Node 22.18+ or 24+ required — TypeScript runs natively via type stripping, so
+there is no build step. 22.18.0 is the release that enabled it without a flag on
+the 22 LTS line, and nothing here passes `--experimental-strip-types`, so
+anything older cannot start the scripts at all. Node 23.6 qualifies on the same
+grounds, but the 23 line reached end of life in June 2025; the range leaves it
+out rather than promise a version nobody should be running.
 
 The server is the v1 surface:
 
