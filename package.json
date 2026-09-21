@@ -25,7 +25,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=22.6"
+    "node": "^22.18.0 || >=23.6.0"
   },
   "dependencies": {
     "@minormending/map-kit": "github:minormending/map-kit",

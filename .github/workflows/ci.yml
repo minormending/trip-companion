@@ -27,11 +27,19 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Both ends of what package.json claims to support. The floor was wrong
+    # for months — `>=22.6`, which cannot run an unflagged .ts file — precisely
+    # because nothing ever ran on it. A claim no job tests is a guess.
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    name: test (node ${{ matrix.node }})
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
       - run: npm run typecheck
