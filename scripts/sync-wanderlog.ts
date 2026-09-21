@@ -74,6 +74,16 @@ if (bare.places.length === 0) {
 }
 
 console.log(`${bare.title}: ${report.places} places across ${report.sections} sections`)
+if (report.unscheduled > 0) {
+  console.log(`  ${report.unscheduled} in standing lists rather than on a day`)
+}
+// Both of these want a human, so they are said out loud rather than counted.
+for (const name of report.skipped) {
+  console.log(`  SKIPPED ${name} — no coordinates in the document`)
+}
+for (const conflict of report.regionConflicts) {
+  console.log(`  CHECK   ${conflict.name} — tagged ${conflict.region}, unlike the rest of the trip`)
+}
 
 // Wanderlog places already carry Google geometry, so there is no geocoding
 // step here at all — and none of the ambiguity that comes with one.
