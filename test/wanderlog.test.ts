@@ -1,106 +1,109 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { coordsFrom, noteText, tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
 
-/** Shaped from the CLI's documented types: sections carry displayHeading, and
- *  places are Google Places objects stored verbatim. */
-const DOC = {
-  key: 'abc123xyz',
-  title: 'Tokyo in autumn',
-  startDate: '2026-11-03T00:00:00Z',
-  itinerary: {
-    sections: [
-      {
-        id: 391150968,
-        displayHeading: 'Tuesday, November 3rd',
-        type: 'normal',
-        blocks: [
-          {
-            startTime: '09:00',
-            text: { ops: [{ insert: 'go at sunrise to beat the crowds\n' }] },
-            place: {
-              place_id: 'ChIJ8T1GpMGOGGARDYGSgpooDWw',
-              name: 'Sensō-ji',
-              geometry: { location: { lat: 35.7147651, lng: 139.7966553 } },
-              formatted_address: '2 Chome-3-1 Asakusa, Taito City, Tokyo, Japan',
-              address_components: [{ types: ['country'], short_name: 'JP', long_name: 'Japan' }],
-            },
-          },
-          {
-            place: {
-              place_id: 'ChIJ35ov0dCOGGARKvdDH7NPHX0',
-              name: 'Tokyo Skytree',
-              geometry: { location: { lat: 35.7100627, lng: 139.8107004 } },
-              address_components: [{ types: ['country'], short_name: 'JP', long_name: 'Japan' }],
-            },
-          },
-        ],
-      },
-      {
-        id: 391150969,
-        displayHeading: 'Places to visit',
-        type: 'unscheduled',
-        blocks: [
-          {
-            place: {
-              name: 'Nishiki Market',
-              geometry: { location: { lat: 35.0050, lng: 135.7649 } },
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
+/**
+ * A verbatim excerpt of a real trip, fetched from
+ * /api/tripPlans/<key>?clientSchemaVersion=2 while signed in.
+ *
+ * Nothing about its shape is edited: photo blobs, review text and image keys
+ * are removed for size, every remaining key and value is exactly as Wanderlog
+ * served it. That matters more than it sounds. The fixture this replaced was
+ * written from the CLI's documented types and got both load-bearing field
+ * names wrong — `displayHeading` for `heading`, `data` for `tripPlan` — so the
+ * whole suite passed against an importer that returned zero places from any
+ * real document. A fixture invented from the same source as the code under
+ * test only proves the two agree.
+ */
+const PRAGUE = JSON.parse(
+  readFileSync(new URL('./fixtures/wanderlog-prague.json', import.meta.url), 'utf8'),
+)
 
-test('a Wanderlog document becomes a trip with no geocoding at all', () => {
-  const { trip, report } = tripFromWanderlog(DOC)
+test('a real Wanderlog document yields its places with no geocoding at all', () => {
+  const { trip, report } = tripFromWanderlog(PRAGUE)
 
-  assert.equal(report.places, 2)
-  assert.equal(trip.places.length, 2)
-  assert.equal(trip.places[0]?.name, 'Sensō-ji')
+  assert.equal(report.sections, 14)
+  assert.equal(report.places, 101)
+  assert.equal(trip.places.length, 101)
+  assert.deepEqual(report.skipped, [])
+
   // The coordinates come from the itinerary the traveller already curated, so
   // there is nothing to disambiguate and no wrong building to pick.
-  assert.deepEqual(trip.places[0]?.coords, { lat: 35.7147651, lon: 139.7966553 })
+  const castle = trip.places.find((p) => p.name === 'St. Vitus Cathedral')
+  assert.deepEqual(castle?.coords, { lat: 50.090891799999994, lon: 14.4005114 })
 })
 
-test('country and timezone are derived from the place, not looked up', () => {
-  const { trip } = tripFromWanderlog(DOC)
-  assert.equal(trip.places[0]?.region, 'jp')
-  assert.equal(trip.places[0]?.timezone, 'Asia/Tokyo')
+test('the payload is found under tripPlan, where the trip route puts it', () => {
+  const { trip } = tripFromWanderlog(PRAGUE)
+  assert.equal(trip.title, 'Trip to Prague')
+  assert.equal(trip.departsOn, '2026-10-14')
+  assert.equal(wanderlogKey(PRAGUE), 'yhnizmwsthhmdhdj')
 })
 
-test('standing buckets are not treated as days', () => {
-  const { trip } = tripFromWanderlog(DOC)
-  const names = trip.places.map((p) => p.name)
-  assert.ok(!names.includes('Nishiki Market'), '"Places to visit" is not a day')
-  assert.ok(trip.places.every((p) => p.dayIndex === 1))
+test('days are the dayPlan sections, in date order', () => {
+  const { trip } = tripFromWanderlog(PRAGUE)
+  const byDay = (d: number) => trip.places.filter((p) => p.dayIndex === d)
+
+  assert.deepEqual(
+    [1, 2, 3, 4, 5].map((d) => byDay(d).length),
+    [1, 14, 9, 6, 3],
+  )
+  assert.equal(byDay(1)[0]?.name, 'John F. Kennedy International Airport')
+  assert.equal(byDay(2)[0]?.name, 'Václav Havel Airport Prague')
+  assert.equal(byDay(5).at(-1)?.name, 'Václav Havel Airport Prague')
+  assert.equal(trip.places.some((p) => (p.dayIndex ?? 0) > 5), false)
+})
+
+test('standing buckets keep their places but take no day', () => {
+  const { trip, report } = tripFromWanderlog(PRAGUE)
+
+  // `type` cannot tell a day from a bucket here: eleven sections say "normal"
+  // and only five are days. Several bucket entries are notes about places that
+  // were deliberately *dropped* from the itinerary, so putting them on a day
+  // would stage thirty rejected candidates ahead of the real trip.
+  assert.equal(report.unscheduled, 68)
+  const lane = trip.places.find((p) => p.name === 'Golden Lane')
+  assert.ok(lane, 'a bucket place is still imported')
+  assert.equal(lane?.dayIndex, undefined)
 })
 
 test('times are normalised and carried across', () => {
-  const { trip } = tripFromWanderlog(DOC)
-  assert.equal(trip.places[0]?.arrive, '09:00')
-  assert.equal(trip.places[1]?.arrive, undefined)
+  const { trip } = tripFromWanderlog(PRAGUE)
+  const opera = trip.places.find((p) => p.name === 'State Opera')
+  assert.equal(opera?.arrive, '19:00')
+  assert.equal(trip.places.find((p) => p.name === 'Charles Bridge')?.arrive, undefined)
 })
 
-test('the title and departure date come from the document', () => {
-  const { trip } = tripFromWanderlog(DOC)
-  assert.equal(trip.title, 'Tokyo in autumn')
-  assert.equal(trip.departsOn, '2026-11-03')
+test('country and timezone are derived from the place, not looked up', () => {
+  const { trip } = tripFromWanderlog(PRAGUE)
+  const clock = trip.places.find((p) => p.name === 'Prague Astronomical Clock')
+  assert.equal(clock?.region, 'cz')
+  assert.equal(clock?.timezone, 'Europe/Prague')
+})
+
+test('a country that disagrees with the trip is reported, never corrected', () => {
+  const { report } = tripFromWanderlog(PRAGUE)
+  const names = report.regionConflicts.map((c) => c.name)
+
+  // Genuine: the trip leaves from New York.
+  assert.ok(names.includes('John F. Kennedy International Airport'))
+  // An upstream data error: Google tags this Prague garden US. Reported so a
+  // human can see it, and left alone, because guessing which of the two kinds
+  // this is would be inventing a fact about somebody's trip.
+  assert.ok(names.includes('South Gardens of Prague Castle'))
+  assert.ok(report.regionConflicts.every((c) => c.region === 'us'))
 })
 
 test('an explicit title overrides the document', () => {
-  assert.equal(tripFromWanderlog(DOC, { title: 'Mine' }).trip.title, 'Mine')
+  assert.equal(tripFromWanderlog(PRAGUE, { title: 'Mine' }).trip.title, 'Mine')
 })
 
-test('the trip key is found for re-sync', () => {
-  assert.equal(wanderlogKey(DOC), 'abc123xyz')
-  assert.equal(wanderlogKey({ data: DOC }), 'abc123xyz')
+test('a response wrapped in data is unwrapped too', () => {
+  const inner = (PRAGUE as { tripPlan: unknown }).tripPlan
+  assert.equal(tripFromWanderlog({ data: inner }).report.places, 101)
+  assert.equal(wanderlogKey({ data: inner }), 'yhnizmwsthhmdhdj')
   assert.equal(wanderlogKey({}), undefined)
-})
-
-test('a response wrapped in data is unwrapped', () => {
-  assert.equal(tripFromWanderlog({ data: DOC }).report.places, 2)
 })
 
 test('Quill deltas and bare strings both yield note text', () => {
@@ -117,24 +120,47 @@ test('coordinates are read from Google geometry or a flattened pair', () => {
   assert.equal(coordsFrom({ name: 'no coords' }), undefined)
 })
 
-test('a place with no usable coordinates is skipped, not invented', () => {
+test('a place with no usable coordinates is named in the report, not invented', () => {
   const doc = {
-    itinerary: {
-      sections: [
-        {
-          displayHeading: 'Day 1',
-          type: 'normal',
-          blocks: [
-            { place: { name: 'Nowhere' } },
-            { place: { name: 'Somewhere', geometry: { location: { lat: 1, lng: 2 } } } },
-          ],
-        },
-      ],
+    tripPlan: {
+      itinerary: {
+        sections: [
+          {
+            heading: 'Day 1',
+            mode: 'dayPlan',
+            date: '2026-01-01',
+            blocks: [
+              { place: { name: 'Nowhere' } },
+              { place: { name: 'Somewhere', geometry: { location: { lat: 1, lng: 2 } } } },
+            ],
+          },
+        ],
+      },
+    },
+  }
+  const { trip, report } = tripFromWanderlog(doc)
+  assert.deepEqual(trip.places.map((p) => p.name), ['Somewhere'])
+  assert.deepEqual(report.skipped, ['Nowhere'])
+})
+
+test('displayHeading still works, for whatever payload the CLI types describe', () => {
+  const doc = {
+    data: {
+      title: 'Older shape',
+      itinerary: {
+        sections: [
+          {
+            displayHeading: 'Tuesday',
+            type: 'normal',
+            blocks: [{ place: { name: 'A', geometry: { location: { lat: 1, lng: 1 } } } }],
+          },
+        ],
+      },
     },
   }
   const { trip } = tripFromWanderlog(doc)
-  assert.equal(trip.places.length, 1)
-  assert.equal(trip.places[0]?.name, 'Somewhere')
+  // No section says dayPlan, so every section is treated as a day, as before.
+  assert.deepEqual(trip.places.map((p) => [p.name, p.dayIndex]), [['A', 1]])
 })
 
 test('an unrecognisable document yields an empty trip rather than throwing', () => {
@@ -143,21 +169,15 @@ test('an unrecognisable document yields an empty trip rather than throwing', () 
   assert.equal(tripFromWanderlog([]).trip.places.length, 0)
 })
 
-test('nesting the walk does not reach into an unrelated section', () => {
+test('the walk does not reach into an unrelated section', () => {
   const doc = {
-    itinerary: {
-      sections: [
-        {
-          displayHeading: 'Day 1',
-          type: 'normal',
-          blocks: [{ place: { name: 'A', geometry: { location: { lat: 1, lng: 1 } } } }],
-        },
-        {
-          displayHeading: 'Day 2',
-          type: 'normal',
-          blocks: [{ place: { name: 'B', geometry: { location: { lat: 2, lng: 2 } } } }],
-        },
-      ],
+    tripPlan: {
+      itinerary: {
+        sections: [
+          { heading: 'Day 1', mode: 'dayPlan', blocks: [{ place: { name: 'A', geometry: { location: { lat: 1, lng: 1 } } } }] },
+          { heading: 'Day 2', mode: 'dayPlan', blocks: [{ place: { name: 'B', geometry: { location: { lat: 2, lng: 2 } } } }] },
+        ],
+      },
     },
   }
   const { trip } = tripFromWanderlog(doc)

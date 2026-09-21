@@ -1,0 +1,4963 @@
+{
+ "success": true,
+ "tripPlan": {
+  "key": "yhnizmwsthhmdhdj",
+  "title": "Trip to Prague ",
+  "startDate": "2026-10-14",
+  "endDate": "2026-10-18",
+  "days": 5,
+  "itinerary": {
+   "sections": [
+    {
+     "id": 513802071,
+     "heading": "Notes",
+     "type": "textOnly",
+     "mode": "placeList",
+     "blocks": []
+    },
+    {
+     "id": 583257265,
+     "heading": "Flights",
+     "type": "flights",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 912025696,
+       "type": "flight",
+       "flightInfo": {
+        "airline": {
+         "iata": "DL",
+         "icao": "DAL",
+         "name": "Delta Air Lines",
+         "localizedName": "Delta Air Lines"
+        },
+        "number": 78
+       },
+       "depart": {
+        "type": "depart",
+        "date": "2026-10-14",
+        "time": "18:45",
+        "airport": {
+         "iata": "JFK",
+         "name": "New York John F. Kennedy International Airport",
+         "cityName": "New York",
+         "googlePlace": {
+          "address_components": [
+           {
+            "long_name": "New York",
+            "short_name": "NY",
+            "types": [
+             "administrative_area_level_1",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Queens",
+            "short_name": "Queens",
+            "types": [
+             "sublocality_level_1",
+             "sublocality",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Queens County",
+            "short_name": "Queens County",
+            "types": [
+             "administrative_area_level_2",
+             "political"
+            ]
+           },
+           {
+            "long_name": "United States",
+            "short_name": "US",
+            "types": [
+             "country",
+             "political"
+            ]
+           },
+           {
+            "long_name": "11430",
+            "short_name": "11430",
+            "types": [
+             "postal_code"
+            ]
+           }
+          ],
+          "formatted_address": "Queens, NY 11430, USA",
+          "geometry": {
+           "location": {
+            "lat": 40.64131109999999,
+            "lng": -73.77813909999999
+           },
+           "viewport": {
+            "south": 40.63391,
+            "west": -73.82221,
+            "north": 40.66351,
+            "east": -73.76345
+           }
+          },
+          "name": "John F. Kennedy International Airport",
+          "place_id": "ChIJR0lA1VBmwokR8BGfSBOyT-w",
+          "types": [
+           "airport",
+           "point_of_interest",
+           "establishment"
+          ]
+         }
+        }
+       },
+       "arrive": {
+        "type": "arrive",
+        "date": "2026-10-15",
+        "time": "09:00",
+        "airport": {
+         "iata": "PRG",
+         "name": "Prague Vaclav Havel Airport",
+         "cityName": "Prague",
+         "latitude": 50.10179100000001,
+         "longitude": 14.2631811,
+         "googlePlace": {
+          "address_components": [
+           {
+            "long_name": "Aviatická",
+            "short_name": "Aviatická",
+            "types": [
+             "route"
+            ]
+           },
+           {
+            "long_name": "Praha 6",
+            "short_name": "Praha 6",
+            "types": [
+             "sublocality_level_1",
+             "sublocality",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Czechia",
+            "short_name": "CZ",
+            "types": [
+             "country",
+             "political"
+            ]
+           },
+           {
+            "long_name": "161 00",
+            "short_name": "161 00",
+            "types": [
+             "postal_code"
+            ]
+           }
+          ],
+          "formatted_address": "Aviatická, 161 00 Praha 6, Czechia",
+          "geometry": {
+           "location": {
+            "lat": 50.10179100000001,
+            "lng": 14.2631811
+           },
+           "viewport": {
+            "south": 50.09819,
+            "west": 14.25904,
+            "north": 50.11258,
+            "east": 14.2756
+           }
+          },
+          "name": "Letiště Václava Havla Praha",
+          "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
+          "types": [
+           "airport",
+           "point_of_interest",
+           "establishment"
+          ]
+         }
+        }
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 986258394,
+       "type": "flight",
+       "flightInfo": {
+        "airline": {
+         "iata": "DL",
+         "icao": "DAL",
+         "name": "Delta Air Lines",
+         "localizedName": "Delta Air Lines"
+        },
+        "number": 79
+       },
+       "depart": {
+        "type": "depart",
+        "date": "2026-10-18",
+        "time": "11:00",
+        "airport": {
+         "iata": "PRG",
+         "name": "Vaclav Havel Airport Prague",
+         "cityName": "Prague",
+         "googlePlace": {
+          "address_components": [
+           {
+            "long_name": "Aviatická",
+            "short_name": "Aviatická",
+            "types": [
+             "route"
+            ]
+           },
+           {
+            "long_name": "Praha 6",
+            "short_name": "Praha 6",
+            "types": [
+             "sublocality_level_1",
+             "sublocality",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Czechia",
+            "short_name": "CZ",
+            "types": [
+             "country",
+             "political"
+            ]
+           },
+           {
+            "long_name": "161 00",
+            "short_name": "161 00",
+            "types": [
+             "postal_code"
+            ]
+           }
+          ],
+          "formatted_address": "Aviatická, 161 00 Praha 6, Czechia",
+          "geometry": {
+           "location": {
+            "lat": 50.10179100000001,
+            "lng": 14.2631811
+           },
+           "viewport": {
+            "south": 50.09819,
+            "west": 14.25904,
+            "north": 50.11258,
+            "east": 14.2756
+           }
+          },
+          "name": "Letiště Václava Havla Praha",
+          "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
+          "types": [
+           "airport",
+           "point_of_interest",
+           "establishment"
+          ]
+         }
+        }
+       },
+       "arrive": {
+        "type": "arrive",
+        "date": "2026-10-18",
+        "time": "14:23",
+        "airport": {
+         "iata": "JFK",
+         "name": "New York John F. Kennedy International Airport",
+         "cityName": "New York",
+         "googlePlace": {
+          "address_components": [
+           {
+            "long_name": "New York",
+            "short_name": "NY",
+            "types": [
+             "administrative_area_level_1",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Queens",
+            "short_name": "Queens",
+            "types": [
+             "sublocality_level_1",
+             "sublocality",
+             "political"
+            ]
+           },
+           {
+            "long_name": "Queens County",
+            "short_name": "Queens County",
+            "types": [
+             "administrative_area_level_2",
+             "political"
+            ]
+           },
+           {
+            "long_name": "United States",
+            "short_name": "US",
+            "types": [
+             "country",
+             "political"
+            ]
+           },
+           {
+            "long_name": "11430",
+            "short_name": "11430",
+            "types": [
+             "postal_code"
+            ]
+           }
+          ],
+          "formatted_address": "Queens, NY 11430, USA",
+          "geometry": {
+           "location": {
+            "lat": 40.64131109999999,
+            "lng": -73.77813909999999
+           },
+           "viewport": {
+            "south": 40.63391,
+            "west": -73.82221,
+            "north": 40.66351,
+            "east": -73.76345
+           }
+          },
+          "name": "John F. Kennedy International Airport",
+          "place_id": "ChIJR0lA1VBmwokR8BGfSBOyT-w",
+          "types": [
+           "airport",
+           "point_of_interest",
+           "establishment"
+          ]
+         }
+        }
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 421512620,
+     "heading": "Hotels and lodging",
+     "type": "hotels",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 5155764,
+       "type": "place",
+       "place": {
+        "name": "Hotel Royal Plaza",
+        "place_id": "ChIJnyXlNQCVC0cR_seVx2VNEQA",
+        "geometry": {
+         "location": {
+          "lat": 50.0781218,
+          "lng": 14.4319911
+         }
+        },
+        "formatted_address": "Římská 71/4/120 00, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "hotel"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "hotel": {
+        "checkIn": "2026-10-15",
+        "checkOut": "2026-10-18",
+        "travelerNames": [],
+        "confirmationNumber": null
+       }
+      }
+     ]
+    },
+    {
+     "id": 387077212,
+     "heading": "Places to visit",
+     "type": "normal",
+     "mode": "placeList",
+     "date": null,
+     "blocks": [
+      {
+       "id": 698625783,
+       "type": "place",
+       "place": {
+        "name": "Kino Lucerna",
+        "place_id": "ChIJPfrSysuVC0cR4JolCQsOVfc",
+        "geometry": {
+         "location": {
+          "lat": 50.0813695,
+          "lng": 14.4254026
+         }
+        },
+        "formatted_address": "Vodičkova 704 /36/110 00, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "movie_theater",
+         "historical_landmark"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 216110741,
+       "type": "place",
+       "place": {
+        "name": "Franz Kafka - Rotating Head by David Cerny",
+        "place_id": "ChIJSfv87u2UC0cRMLvFpMvuPNY",
+        "geometry": {
+         "location": {
+          "lat": 50.0816514,
+          "lng": 14.420821
+         }
+        },
+        "formatted_address": "Charvátova, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "tourist_attraction",
+         "monument",
+         "sculpture"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 814182814,
+       "type": "place",
+       "place": {
+        "name": "Jerusalem Synagogue",
+        "place_id": "ChIJO_W-fZOUC0cRramNCQnVkuA",
+        "geometry": {
+         "location": {
+          "lat": 50.0847038,
+          "lng": 14.432020399999999
+         }
+        },
+        "formatted_address": "Jeruzalémská 1310/7, Jeruzalémská 7, Nové Město, 110 00 Praha 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "synagogue",
+         "ethnographic_museum",
+         "museum",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 966210115,
+       "type": "place",
+       "place": {
+        "name": "Žižkov Tunnel",
+        "place_id": "ChIJfQpjiKGUC0cR11PcweWcBsM",
+        "geometry": {
+         "location": {
+          "lat": 50.087625599999996,
+          "lng": 14.4530572
+         }
+        },
+        "formatted_address": "Žižkovský tunel, 130 00 Praha 3-Žižkov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 3-Žižkov",
+          "short_name": "Prague 3-Žižkov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 475824759,
+       "type": "place",
+       "place": {
+        "name": "Holešovice Market",
+        "place_id": "ChIJNdK6c7qUC0cRIDJjoyBB2Z8",
+        "geometry": {
+         "location": {
+          "lat": 50.0997529,
+          "lng": 14.4447139
+         }
+        },
+        "formatted_address": "Bubenské nábř. 306, 170 00 Praha 7-Holešovice, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Holešovice",
+          "short_name": "Prague 7-Holešovice",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "market",
+         "produce_market",
+         "store",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 816375145,
+       "type": "place",
+       "place": {
+        "name": "Strahov Monastery",
+        "place_id": "ChIJu2niIWeTC0cR8Bp28z1iNc8",
+        "geometry": {
+         "location": {
+          "lat": 50.0861478,
+          "lng": 14.389251499999999
+         }
+        },
+        "formatted_address": "Strahovské nádvoří 1/132, 118 00 Praha 1-Strahov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Strahov",
+          "short_name": "Prague 1-Strahov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "monastery",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 79643287,
+       "type": "place",
+       "place": {
+        "name": "Strahov Library",
+        "place_id": "ChIJTaiY3xqVC0cRs0KSAKWl-WU",
+        "geometry": {
+         "location": {
+          "lat": 50.0863503,
+          "lng": 14.3886969
+         }
+        },
+        "formatted_address": "Strahovské nádvoří 132/1, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "library",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 382244164,
+       "type": "place",
+       "place": {
+        "name": "Strahov Monastery Brewery",
+        "place_id": "ChIJe8lQ7hqVC0cR3EOY08YhPhc",
+        "geometry": {
+         "location": {
+          "lat": 50.0868543,
+          "lng": 14.388361199999999
+         }
+        },
+        "formatted_address": "Strahovské nádvoří 301, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "brewery",
+         "bistro",
+         "brewpub",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 533570320,
+       "type": "place",
+       "place": {
+        "name": "Loreto",
+        "place_id": "ChIJC5zY0RuVC0cRUQlKCL3UIoI",
+        "geometry": {
+         "location": {
+          "lat": 50.089239,
+          "lng": 14.391509999999998
+         }
+        },
+        "formatted_address": "Loretánské nám. 7, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "art_gallery",
+         "museum",
+         "pilgrimages_place",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 349827061,
+       "type": "place",
+       "place": {
+        "name": "Zahrada Černínského paláce",
+        "place_id": "ChIJ____GxqVC0cRDWatP8R2bEk",
+        "geometry": {
+         "location": {
+          "lat": 50.089634499999995,
+          "lng": 14.3897667
+         }
+        },
+        "formatted_address": "Hradčany, 118 00 Prague 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1",
+          "short_name": "Prague 1",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "park",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 544855858,
+       "type": "place",
+       "place": {
+        "name": "National Gallery Prague – Trade Fair Palace",
+        "place_id": "ChIJXxfnk8iUC0cRrg0wjivvhdQ",
+        "geometry": {
+         "location": {
+          "lat": 50.1018276,
+          "lng": 14.4326414
+         }
+        },
+        "formatted_address": "Dukelských Hrdinů 530/47, 170 00 Praha 7-Holešovice, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Holešovice",
+          "short_name": "Prague 7-Holešovice",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "art_gallery",
+         "museum",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 679157772,
+       "type": "place",
+       "place": {
+        "name": "National Gallery Prague - Convent of St. Agnes",
+        "place_id": "ChIJ-_yAZoUUc0ERO6HHbIUkp7Y",
+        "geometry": {
+         "location": {
+          "lat": 50.092085399999995,
+          "lng": 14.424059399999999
+         }
+        },
+        "formatted_address": "U Milosrdných 17, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "museum",
+         "monastery",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: the doc keeps arrival day museum-free (\"no museum today; you have been awake since 03:00 body time\"). It lists St Agnes as a Sunday option, but the 11:00 flight home rules that out.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 205528140,
+       "type": "place",
+       "place": {
+        "name": "Bánh Mì Makers - Dlouhá",
+        "place_id": "ChIJufPyQFWUC0cRClLO24UsFFI",
+        "geometry": {
+         "location": {
+          "lat": 50.0911839,
+          "lng": 14.427038399999999
+         }
+        },
+        "formatted_address": "Dlouhá 39, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "vietnamese_restaurant",
+         "asian_restaurant",
+         "bistro"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: the doc's arrival lunch is Mr. Banh Mi on Rumunska, six minutes from the hotel, rather than crossing to Old Town to eat.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 499708285,
+       "type": "place",
+       "place": {
+        "name": "Municipal house",
+        "place_id": "ChIJL0C4HuuUC0cREJonDZJQMWo",
+        "geometry": {
+         "location": {
+          "lat": 50.0877208,
+          "lng": 14.427790799999999
+         }
+        },
+        "formatted_address": "Náměstí Republiky 5, 111 21 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "concert_hall",
+         "attraction",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday. The doc only uses the Municipal House interior as a Saturday rain plan, alongside the Mucha Museum.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 648449877,
+       "type": "place",
+       "place": {
+        "name": "The Powder Tower",
+        "place_id": "ChIJBfIPBeuUC0cRphNG7F-4SZM",
+        "geometry": {
+         "location": {
+          "lat": 50.087272999999996,
+          "lng": 14.427788699999999
+         }
+        },
+        "formatted_address": "Nám. Republiky 5, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: not in the doc's arrival day, which keeps the afternoon to a loose wander through Josefov and down to the embankment.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 170786836,
+       "type": "place",
+       "place": {
+        "name": "House of the Black Madonna",
+        "place_id": "ChIJ79swveuUC0cRs9LdalPGnAs",
+        "geometry": {
+         "location": {
+          "lat": 50.086991399999995,
+          "lng": 14.425408299999999
+         }
+        },
+        "formatted_address": "Ovocný trh 569/19, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "museum",
+         "store",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: not in the doc's arrival day.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 517056255,
+       "type": "place",
+       "place": {
+        "name": "The Estates Theatre",
+        "place_id": "ChIJKatTv-iUC0cRCTSHs2hbV3Q",
+        "geometry": {
+         "location": {
+          "lat": 50.0859782,
+          "lng": 14.4236651
+         }
+        },
+        "formatted_address": "Železná, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "performing_arts_theater",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: not in the doc's arrival day. Note the doc's two theatre nights are the State Opera (Fri) and the National Theatre (Sat).\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 119828626,
+       "type": "place",
+       "place": {
+        "name": "Pilsner Urquell: The Original Beer Experience",
+        "place_id": "ChIJdVni0CyVC0cRjvWug8Q-6jE",
+        "geometry": {
+         "location": {
+          "lat": 50.084061399999996,
+          "lng": 14.422819899999999
+         }
+        },
+        "formatted_address": "28. října 377/13, 110 00 Můstek, Czechia",
+        "address_components": [
+         {
+          "long_name": "Můstek",
+          "short_name": "Můstek",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "tourist_attraction",
+         "gift_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Thursday: not in the doc's arrival day. The doc's beer plan is three distinct real pubs instead - tank Pilsner at Lokal, house lagers at Vinohradsky pivovar, the 1499 dark at U Fleku.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 630589952,
+       "type": "place",
+       "place": {
+        "name": "Golden Lane",
+        "place_id": "ChIJS7rJFh-VC0cR6yEQX6AGf9U",
+        "geometry": {
+         "location": {
+          "lat": 50.092049499999995,
+          "lng": 14.4040813
+         }
+        },
+        "formatted_address": "Pražský hrad Hrad III, nádvoří, 119 00 Praha 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Friday: the doc skips this on purpose as minor, and notes the Castle Circuit ticket stays valid the next day if you want it back.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 566685146,
+       "type": "place",
+       "place": {
+        "name": "St. George's Basilica",
+        "place_id": "ChIJjzZaLB6VC0cRxNlBNtYnc9s",
+        "geometry": {
+         "location": {
+          "lat": 50.091231099999995,
+          "lng": 14.402393799999999
+         }
+        },
+        "formatted_address": "Hradčany, 119 08 Prague 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1",
+          "short_name": "Prague 1",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "basilica",
+         "catholic_church",
+         "church",
+         "historic_site",
+         "historical_landmark",
+         "monastery",
+         "places_of_interest",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Friday: the doc skips this on purpose as minor, and notes the Castle Circuit ticket stays valid the next day if you want it back.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 269085632,
+       "type": "place",
+       "place": {
+        "name": "South Gardens of Prague Castle",
+        "place_id": "ChIJQ_jnTw-VC0cRLrRQFgMfwUI",
+        "geometry": {
+         "location": {
+          "lat": 50.0915567,
+          "lng": 14.4052299
+         }
+        },
+        "formatted_address": "Hradčany, 119 00 Prague 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1",
+          "short_name": "Prague 1",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "garden"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Moved off Friday: the doc routes down Nerudova instead, to reach the Torto pastry stop. Gardens close for the season on 1 Nov and run ~10:00-18:00 in October.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 887186971,
+       "type": "place",
+       "place": {
+        "name": "Hradčanské náměstí",
+        "place_id": "ChIJM5-NYQCVC0cRt1rXwBKtDqo",
+        "geometry": {
+         "location": {
+          "lat": 50.0894596,
+          "lng": 14.3971302
+         }
+        },
+        "formatted_address": "Hradčanské nám., 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Changing of the guard, First Courtyard, 12:00 daily - fanfare, flag exchange, drills, ~15 min. Dropped from Friday to make room for the 13:00 Lobkowicz concert and a real lunch; it needs 11:45 arrival for a view, so it costs 30 min not 15. Sentries change hourly at the gates anyway, so you will likely catch a simpler one in passing.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 285404327,
+       "type": "place",
+       "place": {
+        "name": "Bistró Loreta",
+        "place_id": "ChIJlbgRsBuVC0cRRXGNi6-AdSQ",
+        "geometry": {
+         "location": {
+          "lat": 50.0880663,
+          "lng": 14.3912698
+         }
+        },
+        "formatted_address": "Loretánské nám. 109/3, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bistro",
+         "coffee_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Duck burger, hidden courtyard with a fountain, ~330 CZK. Ask what the daily soup is first - sometimes a beef broth. Dropped from Friday: it is at the far west end of the castle and the 13:00 concert is at the far east end.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 33491893,
+       "type": "place",
+       "place": {
+        "name": "Torto",
+        "place_id": "ChIJs4TKhGOVC0cRJDz3mhegxLI",
+        "geometry": {
+         "location": {
+          "lat": 50.0870172,
+          "lng": 14.4058996
+         }
+        },
+        "formatted_address": "Lázeňská 15, 118 00 Malá Strana, Czechia",
+        "address_components": [
+         {
+          "long_name": "Malá Strana",
+          "short_name": "Malá Strana",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bakery",
+         "cake_shop",
+         "coffee_shop",
+         "patisserie"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Plum poppyseed strudel and a savory snek, weekdays to 17:00, no seating. Lazenska 15, Mala Strana. Dropped from Friday once lunch moved to 14:30 - a pastry straight after a late lunch is one stop too many. Easy to slot back in if you skip a sit-down lunch.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 159135020,
+       "type": "place",
+       "place": {
+        "name": "Café Savoy",
+        "place_id": "ChIJL8LeE_uUC0cRj_E1IjqlnKc",
+        "geometry": {
+         "location": {
+          "lat": 50.080971999999996,
+          "lng": 14.4072993
+         }
+        },
+        "formatted_address": "Vítězná 124/5, 150 00 Malá Strana, Czechia",
+        "address_components": [
+         {
+          "long_name": "Malá Strana",
+          "short_name": "Malá Strana",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant",
+         "bakery",
+         "coffee_shop",
+         "pastry_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Grand cafe on Vitezna, one of Prague's best and not a tourist room. Considered for Friday lunch but passed over for Baracnicka rychta, which is closer to the Old Castle Steps and gets you eating ~15 min sooner. Book ahead if you go.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 374695694,
+       "type": "place",
+       "place": {
+        "name": "National Theatre",
+        "place_id": "ChIJKatTv-iUC0cR_ptOFAQG8Z0",
+        "geometry": {
+         "location": {
+          "lat": 50.0808458,
+          "lng": 14.4135753
+         }
+        },
+        "formatted_address": "Národní 2/110 00, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "performing_arts_theater",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "The Bartered Bride (Smetana) was the Saturday night plan - dropped because the remaining seats were either expensive or cheap with bad sightlines. The building itself is worth ten minutes if you pass it; the interior only opens to ticket holders.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 104015963,
+       "type": "place",
+       "place": {
+        "name": "Lobkowicz Palace",
+        "place_id": "ChIJH3y4L-CUC0cRxLvVqnWQK2Q",
+        "geometry": {
+         "location": {
+          "lat": 50.091648299999996,
+          "lng": 14.4049502
+         }
+        },
+        "formatted_address": "Jiřská 3, 119 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "art_museum",
+         "art_gallery",
+         "event_venue",
+         "historical_landmark",
+         "history_museum",
+         "museum",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "21 galleries, 90 min audio tour, ~360-590 CZK. Dropped: it costs more than the National Gallery joint ticket (300 CZK for Schwarzenberg AND Sternberg) for a weaker painting collection, and reviews call it family-portrait heavy - 'little work of major interest'. Its unique assets are Beethoven's hand-annotated manuscripts, Mozart's re-orchestration of Handel's Messiah, and Bruegel the Elder's Haymaking (one of the surviving Seasons cycle). Worth 60 min on a free afternoon if the Bruegel or the manuscripts pull you. The 13:00 daily concert here runs to 830 CZK as a combo, 600 alone.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 553695379,
+       "type": "place",
+       "place": {
+        "name": "Baráčnická rychta",
+        "place_id": "ChIJtUZY7h2VC0cRYFBpxTBtzhU",
+        "geometry": {
+         "location": {
+          "lat": 50.0879626,
+          "lng": 14.4001644
+         }
+        },
+        "formatted_address": "Tržiště 23, 118 00 Malá Strana, Czechia",
+        "address_components": [
+         {
+          "long_name": "Malá Strana",
+          "short_name": "Malá Strana",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant",
+         "czech_restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Local institution hidden in a courtyard off Trziste, Mala Strana. Cheap, Czech, no tourist markup. Was Friday lunch until the day was rebuilt around Schwarzenberg - Bistro Loreta is now 5 min from the gallery, where Baracnicka rychta is a 15 min walk downhill. Still the better pick if you would rather eat in Mala Strana.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 9295069,
+       "type": "place",
+       "place": {
+        "name": "Old Royal Palace",
+        "place_id": "ChIJK6ulKxyVC0cRsRQZ5ZzlOEA",
+        "geometry": {
+         "location": {
+          "lat": 50.0906905,
+          "lng": 14.401145999999999
+         }
+        },
+        "formatted_address": "Třetí nádvoří Pražského hradu 48, 119 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "places_of_interest",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Vladislav Hall (largest secular Gothic hall in central Europe) and the defenestration window. ~30 min. Dropped to fit Sternberg onto Friday: the two National Gallery palaces cannot open before 10:00 and need ~3h together, so only one hour is left for the castle interior before them. Covered by the same 450 CZK Castle Circuit as St Vitus, so it costs nothing extra if you have time in the free afternoon.\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 826131369,
+       "type": "place",
+       "place": {
+        "name": "Vinohradský pivovar",
+        "place_id": "ChIJSS5HtsGTC0cRd2-ab7U-9Tw",
+        "geometry": {
+         "location": {
+          "lat": 50.0753237,
+          "lng": 14.4575982
+         }
+        },
+        "formatted_address": "106, Korunní 2506, 101 00 Praha 10, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 10-Vinohrady",
+          "short_name": "Prague 10-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "brewery",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "House-brewed lagers on Korunni 106, open to midnight. Was Friday dinner. Swapped for Vinohradsky Parlament once the plan moved from beer to Moravian wine: the brewery has exactly ONE wine by the glass (Pinot Chardonnay Sedlak, 89 Kc) and it is a white, wrong for game. Still the better choice if you want beer - their Vinohradska 11 svetly (72 Kc/0.5l) and Black Panda tmavy (75 Kc) are house-brewed and distinct from Lokal's tank Prazdroj and U Fleku's 1499 dark.\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 480881524,
+     "heading": "",
+     "type": "normal",
+     "mode": "placeList",
+     "date": null,
+     "blocks": [
+      {
+       "id": 787580562,
+       "type": "place",
+       "place": {
+        "name": "Letenský zámeček a zahrádky na Letné",
+        "place_id": "ChIJQ-gQ9cOUC0cRKjt0E674sks",
+        "geometry": {
+         "location": {
+          "lat": 50.096184199999996,
+          "lng": 14.4257359
+         }
+        },
+        "formatted_address": "Letenské sady 341, 170 00 Praha 7-Letná, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Letná",
+          "short_name": "Prague 7-Letná",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "beer_garden",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 649008472,
+       "type": "place",
+       "place": {
+        "name": "ENERGY PUB Riegrovy sady",
+        "place_id": "ChIJxVEGjZqUC0cR2NIcdyBK-fA",
+        "geometry": {
+         "location": {
+          "lat": 50.080538,
+          "lng": 14.4429787
+         }
+        },
+        "formatted_address": "Riegrovy sady 28, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "beer_garden",
+         "bar"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 355775771,
+     "heading": "Winery Half Day",
+     "type": "normal",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 826507996,
+       "type": "place",
+       "place": {
+        "name": "Rašinovo Nábřeží",
+        "place_id": "ChIJEfTNvCCVC0cRm1_MmmPF5J4",
+        "geometry": {
+         "location": {
+          "lat": 50.071395599999995,
+          "lng": 14.414209699999999
+         }
+        },
+        "formatted_address": "Rašínovo nábř., 128 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "park"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "08:45",
+       "endTime": null
+      },
+      {
+       "id": 429492110,
+       "type": "place",
+       "place": {
+        "name": "Přístaviště Troja - Císařský ostrov",
+        "place_id": "ChIJKTEImn-VC0cR4t3-ixIPAYU",
+        "geometry": {
+         "location": {
+          "lat": 50.1111716,
+          "lng": 14.4165192
+         }
+        },
+        "formatted_address": "Císařský ostrov 170 00, 170 00 Praha 7-Bubeneč, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Bubeneč",
+          "short_name": "Prague 7-Bubeneč",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "marina"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "10:30",
+       "endTime": null
+      },
+      {
+       "id": 577791442,
+       "type": "place",
+       "place": {
+        "name": "Vinice a Vinotéka sv. Kláry - Botanická zahrada Praha",
+        "place_id": "ChIJ97yrKNTqC0cRwQO-yB8X4Rw",
+        "geometry": {
+         "location": {
+          "lat": 50.117700799999994,
+          "lng": 14.4152092
+         }
+        },
+        "formatted_address": "Pod Havránkou 34/7, 171 00 Praha-Troja, Czechia",
+        "address_components": [
+         {
+          "long_name": "Troja",
+          "short_name": "Troja",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "winery",
+         "wine_bar",
+         "wine_store"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "11:00",
+       "endTime": null
+      },
+      {
+       "id": 53195551,
+       "type": "place",
+       "place": {
+        "name": "Přístaviště Troja - Císařský ostrov",
+        "place_id": "ChIJKTEImn-VC0cR4t3-ixIPAYU",
+        "geometry": {
+         "location": {
+          "lat": 50.1111716,
+          "lng": 14.4165192
+         }
+        },
+        "formatted_address": "Císařský ostrov 170 00, 170 00 Praha 7-Bubeneč, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Bubeneč",
+          "short_name": "Prague 7-Bubeneč",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "marina"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "13:15",
+       "endTime": null
+      },
+      {
+       "id": 298083625,
+       "type": "place",
+       "place": {
+        "name": "Rašinovo Nábřeží",
+        "place_id": "ChIJEfTNvCCVC0cRm1_MmmPF5J4",
+        "geometry": {
+         "location": {
+          "lat": 50.071395599999995,
+          "lng": 14.414209699999999
+         }
+        },
+        "formatted_address": "Rašínovo nábř., 128 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "park"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "15:00",
+       "endTime": null
+      }
+     ]
+    },
+    {
+     "id": 950104656,
+     "heading": "Kutna Hora Day Trip",
+     "type": "normal",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 794884026,
+       "type": "place",
+       "place": {
+        "name": "Wilsonova 300/8",
+        "place_id": "ChIJb_st4pOUC0cRLLXNOgcNvxs",
+        "geometry": {
+         "location": {
+          "lat": 50.083214399999996,
+          "lng": 14.435065499999999
+         }
+        },
+        "formatted_address": "Wilsonova 300/8, 110 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 705259251,
+       "type": "place",
+       "place": {
+        "name": "Sedlec Ossuary",
+        "place_id": "ChIJT8VaY_xADEcRjlDxpcrJDDI",
+        "geometry": {
+         "location": {
+          "lat": 49.961738499999996,
+          "lng": 15.2881713
+         }
+        },
+        "formatted_address": "Zámecká, 284 03 Kutná Hora 3, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "catholic_church",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 833970656,
+       "type": "place",
+       "place": {
+        "name": "St Barbara's Church",
+        "place_id": "ChIJ6QpxzaZBDEcR26HsPg_tnKE",
+        "geometry": {
+         "location": {
+          "lat": 49.944911,
+          "lng": 15.26362
+         }
+        },
+        "formatted_address": "Barborská, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "church",
+         "catholic_cathedral",
+         "catholic_church",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 812005597,
+       "type": "place",
+       "place": {
+        "name": "Jesuit College",
+        "place_id": "ChIJV-Ul76ZBDEcREkn_nARgoVI",
+        "geometry": {
+         "location": {
+          "lat": 49.9462428,
+          "lng": 15.264069
+         }
+        },
+        "formatted_address": "Barborská 24, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 203561085,
+       "type": "place",
+       "place": {
+        "name": "Restaurace Dačický",
+        "place_id": "ChIJkUqyQaZBDEcRxIuFpeNjnnw",
+        "geometry": {
+         "location": {
+          "lat": 49.948304,
+          "lng": 15.2647187
+         }
+        },
+        "formatted_address": "Rakova 8, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "czech_restaurant",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 264929846,
+       "type": "place",
+       "place": {
+        "name": "Italian Court Kutna Hora",
+        "place_id": "ChIJH0XgwadBDEcR-3l0JcZCGWI",
+        "geometry": {
+         "location": {
+          "lat": 49.948333299999994,
+          "lng": 15.2683333
+         }
+        },
+        "formatted_address": "Havlíčkovo nám. 552/1, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "hiking_area",
+         "museum",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 210527644,
+       "type": "place",
+       "place": {
+        "name": "Plague Column",
+        "place_id": "ChIJqT5TKqZBDEcR8xF0caQ8kDI",
+        "geometry": {
+         "location": {
+          "lat": 49.9494233,
+          "lng": 15.266860999999999
+         }
+        },
+        "formatted_address": "Šultysova, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "memorial",
+         "hiking_area",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 22458502,
+       "type": "place",
+       "place": {
+        "name": "Bobsleigh Kutna Hora",
+        "place_id": "ChIJ5eI2Hg9BDEcRHyVq2huTlzo",
+        "geometry": {
+         "location": {
+          "lat": 49.945513899999995,
+          "lng": 15.2781603
+         }
+        },
+        "formatted_address": "Čáslavská, 284 01 Kutná Hora 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "summer_toboggan_run",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 355130729,
+       "type": "place",
+       "place": {
+        "name": "Wilsonova 300/8",
+        "place_id": "ChIJb_st4pOUC0cRLLXNOgcNvxs",
+        "geometry": {
+         "location": {
+          "lat": 50.083214399999996,
+          "lng": 14.435065499999999
+         }
+        },
+        "formatted_address": "Wilsonova 300/8, 110 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 742452521,
+     "heading": "Views",
+     "type": "normal",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 587796361,
+       "type": "place",
+       "place": {
+        "name": "Letná Viewpoint",
+        "place_id": "ChIJWZvrGkyVC0cRY3NsrbPyf5Q",
+        "geometry": {
+         "location": {
+          "lat": 50.0958536,
+          "lng": 14.4254257
+         }
+        },
+        "formatted_address": "Letenské sady 170 00, 170 00 Praha 7-Holešovice, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 7-Holešovice",
+          "short_name": "Prague 7-Holešovice",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "observation_deck"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 6381109,
+       "type": "place",
+       "place": {
+        "name": "National Monument at Vítkov",
+        "place_id": "ChIJZ5ERZaKUC0cRry0Q82U8Sr0",
+        "geometry": {
+         "location": {
+          "lat": 50.0883569,
+          "lng": 14.449522
+         }
+        },
+        "formatted_address": "U Památníku 1900, 130 00 Praha 3-Žižkov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 3-Žižkov",
+          "short_name": "Prague 3-Žižkov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "museum",
+         "hiking_area",
+         "military_cemetery",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 641586781,
+       "type": "place",
+       "place": {
+        "name": "Riegrovy Sady View",
+        "place_id": "ChIJ-49zLkWVC0cRQvGGqlNgHa4",
+        "geometry": {
+         "location": {
+          "lat": 50.0796954,
+          "lng": 14.440230099999999
+         }
+        },
+        "formatted_address": "Riegrovy sady 120 00, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "scenic_spot"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 843418142,
+       "type": "place",
+       "place": {
+        "name": "Vyšehradská vyhlídka",
+        "place_id": "ChIJ57ummV2UC0cR0dhzNC9YeoU",
+        "geometry": {
+         "location": {
+          "lat": 50.063686399999995,
+          "lng": 14.416402699999999
+         }
+        },
+        "formatted_address": "128 00 Prague 2, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2",
+          "short_name": "Prague 2",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "vista"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 510710726,
+       "type": "place",
+       "place": {
+        "name": "Vyhlídka Hradčanské náměstí",
+        "place_id": "ChIJ47MP5TyVC0cRNQAul65e4Z0",
+        "geometry": {
+         "location": {
+          "lat": 50.0890213,
+          "lng": 14.398292
+         }
+        },
+        "formatted_address": "Hradčanské nám., 118 00 Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Hradčany",
+          "short_name": "Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "observation_deck"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 857710344,
+       "type": "place",
+       "place": {
+        "name": "Statue of Bedřich Smetana",
+        "place_id": "ChIJRZ6Yl-WUC0cRMZ3MWXOXi4w",
+        "geometry": {
+         "location": {
+          "lat": 50.0853348,
+          "lng": 14.4129238
+         }
+        },
+        "formatted_address": "Novotného lávka, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historical_landmark",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 78603288,
+       "type": "place",
+       "place": {
+        "name": "Vyhlídka Na Opyši",
+        "place_id": "ChIJ1TiMROCUC0cRS-m_HciiaxE",
+        "geometry": {
+         "location": {
+          "lat": 50.091667,
+          "lng": 14.405759699999999
+         }
+        },
+        "formatted_address": "Jiřská, 119 00 Malá Strana, Czechia",
+        "address_components": [
+         {
+          "long_name": "Malá Strana",
+          "short_name": "Malá Strana",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "observation_deck"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 248905932,
+       "type": "place",
+       "place": {
+        "name": "Staré zámecké schody",
+        "place_id": "ChIJ_04RjOCUC0cRthohkW5Y-Ho",
+        "geometry": {
+         "location": {
+          "lat": 50.0921252,
+          "lng": 14.4076781
+         }
+        },
+        "formatted_address": "Prague 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1",
+          "short_name": "Prague 1",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 390990090,
+     "heading": "Food",
+     "type": "normal",
+     "mode": "placeList",
+     "blocks": [
+      {
+       "id": 795303010,
+       "type": "place",
+       "place": {
+        "name": "Sisters Bistro v Dlouhé",
+        "place_id": "ChIJFdxr38GUC0cRBt4Vys9tIms",
+        "geometry": {
+         "location": {
+          "lat": 50.0908066,
+          "lng": 14.4269622
+         }
+        },
+        "formatted_address": "39, Dlouhá 727, Staré Město, 110 00 Praha, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bistro"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 442119515,
+       "type": "place",
+       "place": {
+        "name": "Lahůdky Zlatý Kříž",
+        "place_id": "ChIJzZUTj0WVC0cR3s3kEb0nVS0",
+        "geometry": {
+         "location": {
+          "lat": 50.082577799999996,
+          "lng": 14.422415599999999
+         }
+        },
+        "formatted_address": "Jungmannova 34, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 211705861,
+       "type": "place",
+       "place": {
+        "name": "Ferdinanda",
+        "place_id": "ChIJ2aiF-JKUC0cR4EVXRfMHjYM",
+        "geometry": {
+         "location": {
+          "lat": 50.082000799999996,
+          "lng": 14.4309418
+         }
+        },
+        "formatted_address": "Politických vězňů 1597/19, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 213314595,
+       "type": "place",
+       "place": {
+        "name": "Fermé",
+        "place_id": "ChIJnyvTcp2UC0cRxNM0iYgE6gQ",
+        "geometry": {
+         "location": {
+          "lat": 50.078963599999994,
+          "lng": 14.4535026
+         }
+        },
+        "formatted_address": "Lucemburská 1492/11, 130 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bar",
+         "cocktail_bar",
+         "hamburger_restaurant",
+         "tapas_bar"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 176826144,
+       "type": "place",
+       "place": {
+        "name": "Bánh Mì Makers - Smíchov",
+        "place_id": "ChIJGZ1j3zaVC0cR9MX9soh0ZBc",
+        "geometry": {
+         "location": {
+          "lat": 50.067560699999994,
+          "lng": 14.406756699999999
+         }
+        },
+        "formatted_address": "Nádražní 9, 150 00 Praha 5-Smíchov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 5-Smíchov",
+          "short_name": "Prague 5-Smíchov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "vietnamese_restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 354057885,
+       "type": "place",
+       "place": {
+        "name": "Mr. Banh Mi",
+        "place_id": "ChIJ6TVbKo-UC0cRskO6dIxIDL0",
+        "geometry": {
+         "location": {
+          "lat": 50.0742045,
+          "lng": 14.434526199999999
+         }
+        },
+        "formatted_address": "Rumunská 23/30, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "vietnamese_restaurant",
+         "asian_restaurant",
+         "fast_food_restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 58341292,
+       "type": "place",
+       "place": {
+        "name": "Sisters Bistro ve Spálené",
+        "place_id": "ChIJQ20TcCuVC0cR5UNMMBKd7gk",
+        "geometry": {
+         "location": {
+          "lat": 50.080888099999996,
+          "lng": 14.4198633
+         }
+        },
+        "formatted_address": "Spálená 75/16, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "deli"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 233807937,
+       "type": "place",
+       "place": {
+        "name": "Libeřské lahůdky",
+        "place_id": "ChIJQ0ELHwCVC0cRXTm-HLQvkwI",
+        "geometry": {
+         "location": {
+          "lat": 50.0756181,
+          "lng": 14.431007699999999
+         }
+        },
+        "formatted_address": "Jugoslávská 675/3, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "deli"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 487787527,
+       "type": "place",
+       "place": {
+        "name": "Libeřské lahůdky",
+        "place_id": "ChIJIZ6iifKUC0cRuUeH__a9QTI",
+        "geometry": {
+         "location": {
+          "lat": 50.079695099999995,
+          "lng": 14.4226227
+         }
+        },
+        "formatted_address": "Vodičkova 730/9, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "deli",
+         "bakery",
+         "pastry_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 390714535,
+       "type": "place",
+       "place": {
+        "name": "Libeřské lahůdky Na Poříčí",
+        "place_id": "ChIJjyrZ07-UC0cRzhYWaOcQ_-0",
+        "geometry": {
+         "location": {
+          "lat": 50.0901323,
+          "lng": 14.434934499999999
+         }
+        },
+        "formatted_address": "Biskupská 1065/1, 110 00 Petrská čtvrť, Czechia",
+        "address_components": [
+         {
+          "long_name": "Petrská čtvrť",
+          "short_name": "Petrská čtvrť",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "deli"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 346224126,
+       "type": "place",
+       "place": {
+        "name": "Libeřské lahůdky Anděl",
+        "place_id": "ChIJt_J6eleUC0cRHRdg-MiF2Yc",
+        "geometry": {
+         "location": {
+          "lat": 50.0694087,
+          "lng": 14.4055009
+         }
+        },
+        "formatted_address": "Ostrovského 33/2, 150 00 Praha 5-Smíchov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 5-Smíchov",
+          "short_name": "Prague 5-Smíchov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "deli"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 637918124,
+       "type": "place",
+       "place": {
+        "name": "Kozlovna Apropos",
+        "place_id": "ChIJq2o5AuaUC0cRqTzwlxUr05g",
+        "geometry": {
+         "location": {
+          "lat": 50.0873505,
+          "lng": 14.4152483
+         }
+        },
+        "formatted_address": "Křižovnická 4, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "czech_restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      },
+      {
+       "id": 853462947,
+       "type": "place",
+       "place": {
+        "name": "MATOKA Georgian, Bakery & Coffee ☕🍰",
+        "place_id": "ChIJ7wZsmoeVC0cRjzQu3cN5pcY",
+        "geometry": {
+         "location": {
+          "lat": 50.077194299999995,
+          "lng": 14.430616599999999
+         }
+        },
+        "formatted_address": "Anglická 1, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bakery",
+         "coffee_shop",
+         "georgian_restaurant",
+         "halal_restaurant",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": 559982966,
+     "heading": "",
+     "type": "normal",
+     "mode": "dayPlan",
+     "date": "2026-10-14",
+     "blocks": [
+      {
+       "id": 150994921,
+       "type": "place",
+       "place": {
+        "name": "John F. Kennedy International Airport",
+        "place_id": "ChIJR0lA1VBmwokR8BGfSBOyT-w",
+        "geometry": {
+         "location": {
+          "lat": 40.6446124,
+          "lng": -73.7797278
+         }
+        },
+        "formatted_address": "Queens, NY 11430",
+        "address_components": [
+         {
+          "long_name": "Queens",
+          "short_name": "Queens",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "United States of America",
+          "short_name": "US",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "international_airport",
+         "airport"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "15:30",
+       "endTime": null
+      }
+     ]
+    },
+    {
+     "id": 596990874,
+     "heading": "",
+     "type": "normal",
+     "mode": "dayPlan",
+     "date": "2026-10-15",
+     "blocks": [
+      {
+       "id": 93141433,
+       "type": "place",
+       "place": {
+        "name": "Václav Havel Airport Prague",
+        "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
+        "geometry": {
+         "location": {
+          "lat": 50.101791,
+          "lng": 14.263181099999999
+         }
+        },
+        "formatted_address": "Aviatická, 161 00 Praha 6, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 6",
+          "short_name": "Prague 6",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "international_airport"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "10:00",
+       "endTime": null
+      },
+      {
+       "id": 642643049,
+       "type": "place",
+       "place": {
+        "name": "Hotel Royal Plaza",
+        "place_id": "ChIJnyXlNQCVC0cR_seVx2VNEQA",
+        "geometry": {
+         "location": {
+          "lat": 50.0781218,
+          "lng": 14.4319911
+         }
+        },
+        "formatted_address": "Římská 71/4/120 00, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "hotel"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": null,
+       "endTime": null
+      },
+      {
+       "id": 343802639,
+       "type": "place",
+       "place": {
+        "name": "Mr. Banh Mi",
+        "place_id": "ChIJ6TVbKo-UC0cRskO6dIxIDL0",
+        "geometry": {
+         "location": {
+          "lat": 50.0742045,
+          "lng": 14.434526199999999
+         }
+        },
+        "formatted_address": "Rumunská 23/30, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "vietnamese_restaurant",
+         "asian_restaurant",
+         "fast_food_restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Grilled pork banh mi, 6 min from the hotel; fast, which suits an arrival day.\n"
+         }
+        ]
+       },
+       "startTime": "11:00",
+       "endTime": null
+      },
+      {
+       "id": 598235250,
+       "type": "place",
+       "place": {
+        "name": "Old Town Square",
+        "place_id": "ChIJIfpRNOmUC0cRxHIewgck75c",
+        "geometry": {
+         "location": {
+          "lat": 50.0875692,
+          "lng": 14.421187499999998
+         }
+        },
+        "formatted_address": "Staroměstské nám., 110 00 Josefov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Josefov",
+          "short_name": "Josefov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "plaza",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": null,
+       "endTime": null
+      },
+      {
+       "id": 644535742,
+       "type": "place",
+       "place": {
+        "name": "Prague Astronomical Clock",
+        "place_id": "ChIJSS_AOemUC0cRlgaiWrJEe_E",
+        "geometry": {
+         "location": {
+          "lat": 50.0870215,
+          "lng": 14.4207065
+         }
+        },
+        "formatted_address": "Staroměstské nám. 1, 110 00 Josefov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Josefov",
+          "short_name": "Josefov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "tourist_attraction",
+         "places_of_interest"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "12:00",
+       "endTime": null
+      },
+      {
+       "id": 743327353,
+       "type": "place",
+       "place": {
+        "name": "National Gallery Prague - Convent of St. Agnes",
+        "place_id": "ChIJ-_yAZoUUc0ERO6HHbIUkp7Y",
+        "geometry": {
+         "location": {
+          "lat": 50.092085399999995,
+          "lng": 14.424059399999999
+         }
+        },
+        "formatted_address": "U Milosrdných 17, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "museum",
+         "monastery",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "12:30",
+       "endTime": null
+      },
+      {
+       "id": 737838645,
+       "type": "place",
+       "place": {
+        "name": "Kolacherie Kampus Hybernská",
+        "place_id": "ChIJlaLytFqVC0cRduQ0NbCdwzo",
+        "geometry": {
+         "location": {
+          "lat": 50.0870578,
+          "lng": 14.429896999999999
+         }
+        },
+        "formatted_address": "Hybernská 998/4, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bakery",
+         "cafe"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Kolace specialist that doubles as a bookshop, open to 18:00. Order poppyseed and plum, white poppyseed, tvaroh with blueberry. \n"
+         }
+        ]
+       },
+       "startTime": "14:15",
+       "endTime": null
+      },
+      {
+       "id": 782177223,
+       "type": "place",
+       "place": {
+        "name": "Albert",
+        "place_id": "ChIJJSHqbYiVC0cRM_xtwSNUTfk",
+        "geometry": {
+         "location": {
+          "lat": 50.0824941,
+          "lng": 14.4265938
+         }
+        },
+        "formatted_address": "Václavské nám. 21/831, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "supermarket",
+         "grocery_store",
+         "hypermarket"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "groceries, open to 21:00, on the way to the metro. Mattoni (neperliva = still), Studentska pecet, kefir, nakladany hermelin. Bring a tote; bags cost extra.\n"
+         }
+        ]
+       },
+       "startTime": "14:30",
+       "endTime": null
+      },
+      {
+       "id": 800288540,
+       "type": "place",
+       "place": {
+        "name": "Hotel Royal Plaza",
+        "place_id": "ChIJnyXlNQCVC0cR_seVx2VNEQA",
+        "geometry": {
+         "location": {
+          "lat": 50.0781218,
+          "lng": 14.4319911
+         }
+        },
+        "formatted_address": "Římská 71/4/120 00, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "hotel"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "15:00",
+       "endTime": null
+      },
+      {
+       "id": 1746859,
+       "type": "place",
+       "place": {
+        "name": "Church of St Giles",
+        "place_id": "ChIJT-u53-6UC0cRMJYTTeSVQXw",
+        "geometry": {
+         "location": {
+          "lat": 50.0850234,
+          "lng": 14.4186109
+         }
+        },
+        "formatted_address": "Husova 234/8, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "catholic_church",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Vivaldi "
+         },
+         {
+          "attributes": {
+           "link": "https://pragueclassicalconcerts.com/en/detail/giles-vivaldi-four-seasons-old-prague/26-10-15-1630?page=4"
+          },
+          "insert": "https://pragueclassicalconcerts.com/en/detail/giles-vivaldi-four-seasons-old-prague/26-10-15-1630?page=4"
+         },
+         {
+          "insert": " PAID\n"
+         }
+        ]
+       },
+       "startTime": "16:30",
+       "endTime": "17:30"
+      },
+      {
+       "id": 494616525,
+       "type": "place",
+       "place": {
+        "name": "Klementinum",
+        "place_id": "ChIJNUIyNe-UC0cRnw1-EJKuNLI",
+        "geometry": {
+         "location": {
+          "lat": 50.0865979,
+          "lng": 14.4160186
+         }
+        },
+        "formatted_address": "Mariánské nám. 5, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "historic_site",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "walk through the courtyard en route to St Giles, then down Karlova and left onto Husova.\n"
+         }
+        ]
+       },
+       "startTime": null,
+       "endTime": null
+      },
+      {
+       "id": 432541795,
+       "type": "place",
+       "place": {
+        "name": "Prague Boats",
+        "place_id": "ChIJu8KkicGVC0cRt9qe-k-QwlQ",
+        "geometry": {
+         "location": {
+          "lat": 50.0920559,
+          "lng": 14.4165946
+         }
+        },
+        "formatted_address": "Dvořákovo nábř., 110 00 Josefov, Czechia",
+        "address_components": [
+         {
+          "long_name": "Josefov",
+          "short_name": "Josefov",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "boat_tour_agency"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "attributes": {
+           "link": "https://www.prague-boats.cz/one-hour-river-cruise/"
+          },
+          "insert": "https://www.prague-boats.cz/one-hour-river-cruise/"
+         },
+         {
+          "insert": " PAID\n"
+         }
+        ]
+       },
+       "startTime": "18:00",
+       "endTime": "19:00"
+      },
+      {
+       "id": 244518546,
+       "type": "place",
+       "place": {
+        "name": "Lokál U Bílé kuželky",
+        "place_id": "ChIJuVem_OOUC0cRoOO82yHgp6k",
+        "geometry": {
+         "location": {
+          "lat": 50.087663899999995,
+          "lng": 14.407539
+         }
+        },
+        "formatted_address": "Míšeňská 12, 110 00 Malá Strana, Czechia",
+        "address_components": [
+         {
+          "long_name": "Malá Strana",
+          "short_name": "Malá Strana",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "czech_restaurant",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "19:30",
+       "endTime": "20:30"
+      },
+      {
+       "id": 101794357,
+       "type": "place",
+       "place": {
+        "name": "Charles Bridge",
+        "place_id": "ChIJn7WO5eWUC0cRJrHT0TiXIHU",
+        "geometry": {
+         "location": {
+          "lat": 50.086477099999996,
+          "lng": 14.4114366
+         }
+        },
+        "formatted_address": "Karlův most, 110 00 Praha 1, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1",
+          "short_name": "Prague 1",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bridge",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "20:30 walk back. Lit up and half empty at this hour, then Metro A home from Staromestska.\n"
+         }
+        ]
+       },
+       "startTime": null,
+       "endTime": null
+      }
+     ]
+    },
+    {
+     "id": 943161118,
+     "heading": "",
+     "type": "normal",
+     "mode": "dayPlan",
+     "date": "2026-10-16",
+     "blocks": [
+      {
+       "id": 293390416,
+       "type": "place",
+       "place": {
+        "name": "Antonínovo pekařství",
+        "place_id": "ChIJR6CeRACVC0cR1BIz1Ivnx1Q",
+        "geometry": {
+         "location": {
+          "lat": 50.0749053,
+          "lng": 14.437722899999999
+         }
+        },
+        "formatted_address": "Náměstí Míru 585/11, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bakery",
+         "coffee_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "07:45 breakfast, opens 07:00. Makovy and tvaroh kolace, black coffee. TAKE A CHLEBICEK FOR YOUR POCKET \n"
+         }
+        ]
+       },
+       "startTime": "07:45",
+       "endTime": "08:20"
+      },
+      {
+       "id": 556844235,
+       "type": "place",
+       "place": {
+        "name": "St. Vitus Cathedral",
+        "place_id": "ChIJW08COB6VC0cRoonZ8lA4rWk",
+        "geometry": {
+         "location": {
+          "lat": 50.090891799999994,
+          "lng": 14.4005114
+         }
+        },
+        "formatted_address": "III. nádvoří 48/2, 119 01 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "cathedral",
+         "church",
+         "place_of_worship",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "attributes": {
+           "link": "https://www.getyourguide.com/prague-castle-l2720/prague-prague-castle-ticket-t406279?ranking_uuid=c674dfd2-e79d-40f8-a937-a3c9858600f0&date_from=2026-10-16"
+          },
+          "insert": "https://www.getyourguide.com/prague-castle-l2720/prague-prague-castle-ticket-t406279?ranking_uuid=c674dfd2-e79d-40f8-a937-a3c9858600f0&date_from=2026-10-16"
+         },
+         {
+          "insert": " PAID\n"
+         }
+        ]
+       },
+       "startTime": "09:00",
+       "endTime": "10:00"
+      },
+      {
+       "id": 661813685,
+       "type": "place",
+       "place": {
+        "name": "National Gallery Prague – Schwarzenberg Palace",
+        "place_id": "ChIJYVARJByVC0cRsrDlS6ur2dY",
+        "geometry": {
+         "location": {
+          "lat": 50.089236899999996,
+          "lng": 14.3967817
+         }
+        },
+        "formatted_address": "Hradčanské nám. 2, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "art_gallery",
+         "exhibit",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Old Masters I: Cranach, Durer, El Greco, Holbein, Gossaert, Rubens, Spranger, Brandl. On Hradcanske namesti, the public square OUTSIDE the castle gates - no security queue, no Circuit ticket. Opens 10:00 (Tue-Sun). Joint ticket 300 CZK also covers Sternberg on Saturday, bought on the day at either ticket office.\n"
+         }
+        ]
+       },
+       "startTime": "10:15",
+       "endTime": "11:45"
+      },
+      {
+       "id": 116908387,
+       "type": "place",
+       "place": {
+        "name": "Šternberský Palace",
+        "place_id": "ChIJEaVWxx6VC0cRuYeLPYsks4E",
+        "geometry": {
+         "location": {
+          "lat": 50.0903705,
+          "lng": 14.3966657
+         }
+        },
+        "formatted_address": "Hradčanské nám. 57/15, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "art_gallery",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Old Masters II, 3 min across the square from Schwarzenberg. Durer's Feast of the Rose Garlands (1506), plus Rembrandt, Goya, the Brueghels, Tintoretto, Ribera, Tiepolo, Bronzino. The stronger of the two collections. Opens 10:00 Tue-Sun; same 300 CZK joint ticket as Schwarzenberg.\n"
+         }
+        ]
+       },
+       "startTime": "11:45",
+       "endTime": "13:15"
+      },
+      {
+       "id": 190456915,
+       "type": "place",
+       "place": {
+        "name": "Bistró Loreta",
+        "place_id": "ChIJlbgRsBuVC0cRRXGNi6-AdSQ",
+        "geometry": {
+         "location": {
+          "lat": 50.0880663,
+          "lng": 14.3912698
+         }
+        },
+        "formatted_address": "Loretánské nám. 109/3, 118 00 Praha 1-Hradčany, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Hradčany",
+          "short_name": "Prague 1-Hradčany",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bistro",
+         "coffee_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "12:40 lunch, 5 min west of Schwarzenberg. Hidden courtyard with a fountain. Duck burger; ask what the daily soup is first, it is sometimes a beef broth. ~330 CZK.\n"
+         }
+        ]
+       },
+       "startTime": "13:25",
+       "endTime": "14:30"
+      },
+      {
+       "id": 243000349,
+       "type": "place",
+       "place": {
+        "name": "VINOTÉKA U LACHTANA",
+        "place_id": "ChIJaz0kLduVC0cRCdSfpZuV71s",
+        "geometry": {
+         "location": {
+          "lat": 50.075888199999994,
+          "lng": 14.441776299999999
+         }
+        },
+        "formatted_address": "Budečská 822/29, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "wine_bar",
+         "beer_garden",
+         "espresso_bar",
+         "restaurant",
+         "wine_cellar",
+         "wine_store"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "16:00, opens exactly then. Mon-Fri 16:00-22:00, CLOSED Sat and Sun - the only window on this trip. 5 min from the hotel on Budecska 29, 4.8 stars. NOT a bottle run: carry-on only means wine cannot come home from a shop (liquids over 100ml fail security). It is a proper wine bar as well as a vinoteka, so treat this as a tasting - ask them to walk you through Moravian varieties, which also sets you up for the Frankovka at dinner. If you do want wine home, the only route is airside duty free at PRG on Sunday (sealed bag, direct flight so no re-screening), and the Moravian selection there is thin.\n"
+         }
+        ]
+       },
+       "startTime": "16:00",
+       "endTime": "16:40"
+      },
+      {
+       "id": 527141753,
+       "type": "place",
+       "place": {
+        "name": "Hotel Royal Plaza",
+        "place_id": "ChIJnyXlNQCVC0cR_seVx2VNEQA",
+        "geometry": {
+         "location": {
+          "lat": 50.0781218,
+          "lng": 14.4319911
+         }
+        },
+        "formatted_address": "Římská 71/4/120 00, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "hotel"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "17:00",
+       "endTime": "18:30"
+      },
+      {
+       "id": 988846450,
+       "type": "place",
+       "place": {
+        "name": "State Opera",
+        "place_id": "ChIJE5AKFJKUC0cRY2EE_Oh9MhY",
+        "geometry": {
+         "location": {
+          "lat": 50.0807207,
+          "lng": 14.432691799999999
+         }
+        },
+        "formatted_address": "Wilsonova 4, 110 00 Praha 1-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 1-Vinohrady",
+          "short_name": "Prague 1-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "opera_house",
+         "performing_arts_theater",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "The Story of Manon\n"
+         }
+        ]
+       },
+       "startTime": "19:00",
+       "endTime": "21:30"
+      },
+      {
+       "id": 662519061,
+       "type": "place",
+       "place": {
+        "name": "Vinohradský Parlament Restaurant",
+        "place_id": "ChIJJQeVZI-UC0cREeV8jNifDCs",
+        "geometry": {
+         "location": {
+          "lat": 50.0754229,
+          "lng": 14.438329
+         }
+        },
+        "formatted_address": "Korunní 1, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant",
+         "gastropub",
+         "pub"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "21:45 dinner, Korunni 1 - the Namesti Miru end, so closer to both the opera and the hotel than the brewery. Open to midnight. BOOK AHEAD (9700+ reviews, Friday night). ORDER: Danek na vine a smazeny konfit - fallow deer in red wine, parsnip puree, croquette of pulled venison - 285 Kc, plus 2x Frankovka 0.15l at 99 Kc = 483 Kc total. Every wine by the glass is Moravian (Arte Vini, Znojemsko + Velkopavlovicko): Veltlinske zelene 79, Svatovavrinecke 79, rose 89, Rulandske sede 99, Frankovka 99. Alternatives: kachni prso (duck, cherry sauce) 325; jeleni kyta (red deer + unlimited dumpling and sauce degustation) 355. NO BEEF - avoid the Friday special (rozznena spicka hoveziho orechu 379), tatarak 305, hovezi rozbif 265, obri spanelsky ptacek 345, striploin 475, houbovy knedlik s hovezim zebrem 295, and the beef-rib broth. Their beer is tank Prazdroj, same as Thursday's Lokal, so wine is the better call here.\n"
+         }
+        ]
+       },
+       "startTime": "21:45",
+       "endTime": "23:00"
+      }
+     ]
+    },
+    {
+     "id": 375937585,
+     "heading": "",
+     "type": "normal",
+     "mode": "dayPlan",
+     "date": "2026-10-17",
+     "blocks": [
+      {
+       "id": 520064220,
+       "type": "place",
+       "place": {
+        "name": "Farmers' Saturday market",
+        "place_id": "ChIJ0ZrEsliUC0cRwgIt0sK2J74",
+        "geometry": {
+         "location": {
+          "lat": 50.0706661,
+          "lng": 14.4140813
+         }
+        },
+        "formatted_address": "Rašínovo nábřeží Vltavská, Náplavka, 120 00 Praha 2, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "farmers_market"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "08:15 breakfast. Saturdays 08:00-14:00, 90+ vendors. Kolace, smoked meats, fried fish, serious coffee. Ask for burcak (mid-Oct is the tail of the season). Homemade wine is marked domaci. Go early before the stalls jam.\n"
+         }
+        ]
+       },
+       "startTime": "08:15",
+       "endTime": "09:30"
+      },
+      {
+       "id": 12633652,
+       "type": "place",
+       "place": {
+        "name": "U Fleků",
+        "place_id": "ChIJ8YREnvGUC0cR8oAzZCnuSwU",
+        "geometry": {
+         "location": {
+          "lat": 50.0788023,
+          "lng": 14.416997799999999
+         }
+        },
+        "formatted_address": "Křemencova 11, 110 00 Nové Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "New Town",
+          "short_name": "New Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "czech_restaurant",
+         "brewery",
+         "brewpub",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "13:45 lunch. Dark 13 lager brewed on site since 1499, not sold anywhere else, plus a pork dish. ~400 CZK. Wave off the accordion player and the herbal shot.\n"
+         }
+        ]
+       },
+       "startTime": "13:45",
+       "endTime": "14:50"
+      },
+      {
+       "id": 908187661,
+       "type": "place",
+       "place": {
+        "name": "Crème de la Crème - zmrzlinový salon",
+        "place_id": "ChIJv-8SO-6UC0cRmcoF5qh_4Bc",
+        "geometry": {
+         "location": {
+          "lat": 50.082148499999995,
+          "lng": 14.4177726
+         }
+        },
+        "formatted_address": "Národní 23/110 00, 110 00 Staré Město, Czechia",
+        "address_components": [
+         {
+          "long_name": "Old Town",
+          "short_name": "Old Town",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "ice_cream_shop",
+         "coffee_shop",
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "14:55",
+       "endTime": "15:20"
+      },
+      {
+       "id": 651478575,
+       "type": "place",
+       "place": {
+        "name": "Grébovka (Havlíčkovy sady)",
+        "place_id": "ChIJEw1qJX6UC0cRZz0wkkTsrcg",
+        "geometry": {
+         "location": {
+          "lat": 50.0694696,
+          "lng": 14.444992099999999
+         }
+        },
+        "formatted_address": "Havlíčkovy sady, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "park",
+         "tourist_attraction"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "16:20 vineyard walk (Grebovka), 15-18 min on foot. Loop up through the vines and the grotto. West-facing slope at golden hour.\n"
+         }
+        ]
+       },
+       "startTime": "16:20",
+       "endTime": "17:00"
+      },
+      {
+       "id": 247204648,
+       "type": "place",
+       "place": {
+        "name": "Altán Grebovka",
+        "place_id": "ChIJAyxcJIGUC0cRvVg36FO0F9k",
+        "geometry": {
+         "location": {
+          "lat": 50.0686083,
+          "lng": 14.4442778
+         }
+        },
+        "formatted_address": "Havlíčkovy sady 1369, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "restaurant"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "Wine pavilion at the top of the vines, open to 22:00, west-facing. With the opera dropped you can now stay for the actual sunset at 18:10 and the twilight to ~18:45, which is the whole point of the west slope. Czech wine by the glass - ask for a Ryzlink rynsky or a Frankovka. It is outdoors and mid-October evenings run 6-8C, so bring the shell and a layer.\n"
+         }
+        ]
+       },
+       "startTime": "17:00",
+       "endTime": "18:45"
+      },
+      {
+       "id": 652498483,
+       "type": "place",
+       "place": {
+        "name": "Přátelé coffee & wine friends",
+        "place_id": "ChIJr6dN0Y6UC0cRjCanx8kcu0c",
+        "geometry": {
+         "location": {
+          "lat": 50.074462999999994,
+          "lng": 14.434111999999999
+         }
+        },
+        "formatted_address": "Rumunská 14/27, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "wine_bar",
+         "bar",
+         "wine_cellar",
+         "wine_store"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "22:15 dinner after the opera, open to midnight. Wine rather than beer: cheese and cold cuts plate with two glasses of Moravian. Ask what sparkling is open. ~450 CZK.\n"
+         }
+        ]
+       },
+       "startTime": "19:15",
+       "endTime": "21:00"
+      }
+     ]
+    },
+    {
+     "id": 135414803,
+     "heading": "",
+     "type": "normal",
+     "mode": "dayPlan",
+     "date": "2026-10-18",
+     "blocks": [
+      {
+       "id": 349719106,
+       "type": "place",
+       "place": {
+        "name": "Antonínovo pekařství",
+        "place_id": "ChIJR6CeRACVC0cR1BIz1Ivnx1Q",
+        "geometry": {
+         "location": {
+          "lat": 50.0749053,
+          "lng": 14.437722899999999
+         }
+        },
+        "formatted_address": "Náměstí Míru 585/11, 120 00 Praha 2-Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 2-Vinohrady",
+          "short_name": "Prague 2-Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "bakery",
+         "coffee_shop"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "07:30",
+       "endTime": null
+      },
+      {
+       "id": 382314359,
+       "type": "place",
+       "place": {
+        "name": "Hotel Royal Plaza",
+        "place_id": "ChIJnyXlNQCVC0cR_seVx2VNEQA",
+        "geometry": {
+         "location": {
+          "lat": 50.0781218,
+          "lng": 14.4319911
+         }
+        },
+        "formatted_address": "Římská 71/4/120 00, 120 00 Vinohrady, Czechia",
+        "address_components": [
+         {
+          "long_name": "Vinohrady",
+          "short_name": "Vinohrady",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "hotel"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "07:45",
+       "endTime": null
+      },
+      {
+       "id": 937635359,
+       "type": "place",
+       "place": {
+        "name": "Václav Havel Airport Prague",
+        "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
+        "geometry": {
+         "location": {
+          "lat": 50.101791,
+          "lng": 14.263181099999999
+         }
+        },
+        "formatted_address": "Aviatická, 161 00 Praha 6, Czechia",
+        "address_components": [
+         {
+          "long_name": "Prague 6",
+          "short_name": "Prague 6",
+          "types": [
+           "locality",
+           "political"
+          ]
+         },
+         {
+          "long_name": "Czech Republic",
+          "short_name": "CZ",
+          "types": [
+           "country",
+           "political"
+          ]
+         }
+        ],
+        "types": [
+         "international_airport"
+        ]
+       },
+       "text": {
+        "ops": [
+         {
+          "insert": "\n"
+         }
+        ]
+       },
+       "startTime": "08:30",
+       "endTime": null
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
