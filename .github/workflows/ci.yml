@@ -1,0 +1,38 @@
+# Typecheck and tests on every pull request.
+#
+# pages.yml already runs both before it builds, but only on a push to main —
+# which is after review, and after the branch protection that review is for.
+# This repository has already shipped an importer that returned nothing from a
+# real document while fourteen tests passed, so a check that reports on the
+# pull request itself is worth its forty seconds.
+#
+# Deliberately not part of pages.yml: that workflow holds `pages: write` and
+# `id-token: write` and ends in a deploy. A pull request has no business
+# running with those.
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A new push supersedes the run it interrupted; nothing here is worth
+# finishing for a commit that has already been replaced.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
