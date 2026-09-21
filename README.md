@@ -62,9 +62,13 @@ to GitHub Pages on every push to `main`. Enable Pages with **Source: GitHub
 Actions** in the repository settings; the workflow needs no secrets.
 
 ```bash
-npm run build:web    # dist/index.html + app.js, about 32 kB
+npm run build:web    # dist/index.html + app.<hash>.js, about 40 kB
 npm run preview:web  # build, then serve dist/ on :8788
 ```
+
+The bundle filename carries a hash of its own bytes. Pages serves with
+`max-age=600`, so without it a deploy leaves browsers on the previous bundle
+for ten minutes and can pair new HTML with old JS.
 
 Two things make a backend unnecessary:
 
