@@ -5,25 +5,30 @@ an Express session cookie, `connect.sid`, which is **full account access**:
 whoever holds it can read, create and delete trips and invite people. It cannot
 be scoped down and it cannot be revoked per-application.
 
-So Trip Companion never holds one.
-
-## How it actually works
+So Trip Companion never holds one — and, as it turns out, neither does the
+sync. The trip document route answers to a trip key rather than to a session,
+so there is no cookie in this design at all:
 
 ```
 your machine (or your GitHub repo)        Trip Companion
 ┌──────────────────────────────┐          ┌──────────────────┐
-│ connect.sid                  │          │                  │
+│ a trip's view key            │          │                  │
 │   ↓                          │          │                  │
-│ wlog trip get <key>          │          │                  │
+│ GET /api/tripPlans/<key>     │          │                  │
 │   ↓                          │          │                  │
 │ scripts/sync-wanderlog.ts    │──trip──▶ │ Supabase (RLS)   │
 │   + your Supabase token      │  data    │                  │
 └──────────────────────────────┘          └──────────────────┘
 ```
 
-The credential stays in a vault you control. Only trip data crosses over, and
-it arrives authenticated as you, so row-level security puts it in your account
-and nobody else's.
+Only trip data crosses over, and it arrives authenticated as you, so row-level
+security puts it in your account and nobody else's.
+
+The trade this makes is worth stating plainly rather than celebrating. A
+session cookie is a credential you can revoke; a trip key is a capability you
+cannot. Nothing here can revoke a leaked key — only Wanderlog can, by reissuing
+it. What the design buys is that there is far less to leak: a read-only key to
+one holiday, rather than a cookie that owns the whole account.
 
 A browser could not do this even if we wanted it to. `wanderlog.com` sends no
 `Access-Control-Allow-Origin`, so a page on another origin cannot read the
@@ -44,23 +49,38 @@ https://wanderlog.com/api/tripPlans/<key>?clientSchemaVersion=2
 Save the JSON and skip to the `-f` form below. Nothing leaves your browser but
 the trip itself.
 
-The CLI does the same fetch, and is what the scheduled sync uses:
+Or hand the key straight to the sync, which fetches the same document itself:
 
 ```bash
-go install github.com/KRamdath/wanderlog-cli/cmd/wlog@latest
-wlog auth login --email you@example.com     # or --cookie for SSO accounts
-wlog trip list                              # find the key
+node scripts/sync-wanderlog.ts <key> --dry-run
 ```
 
-> Two things about that line. The path is `KRamdath/wanderlog-cli` even though
-> the repository lives at `minormending/wanderlog-cli`: Go resolves by the
-> module path in `go.mod`, which still names the original owner, not by the URL
-> you cloned from.
->
-> And it fails regardless — the module has no `cmd/wlog` package. `internal/cli`
-> exports `Run` and nothing calls it. Until a `main.go` lands, use the browser
-> route above; `.github/workflows/sync-wanderlog.yml` installs the same path and
-> will fail at the same step.
+**This needs no Wanderlog credential.** The document route serves a trip to
+whoever presents its key, signed in or not, so the key is the authorisation.
+That is worth knowing in both directions: it is why the scheduled sync holds no
+cookie, and it is why a trip key should be treated as a secret. Anyone who has
+one can read the whole document — every note, and the budget with it.
+
+There are three keys per trip, and they are not equivalent:
+
+| key | where | what it gives |
+| --- | --- | --- |
+| view | Share menu | the itinerary, `editKey: null` |
+| suggest | Share menu | the same, plus the ability to suggest |
+| edit | your address bar while editing | everything, including edit rights |
+
+**Use the view key.** On the trip this was built against it returns an
+identical itinerary — every day, every time, same places — and differs only in
+dropping an empty Notes section, a Flights section the import does not read,
+and a hotel already listed on three days. A leaked view key costs you a read;
+a leaked edit key costs you the trip.
+
+> The `wlog` CLI is no longer involved. It could not be: `go install
+> github.com/KRamdath/wanderlog-cli/cmd/wlog@latest` names a package the module
+> does not contain — `internal/cli` exports `Run` and nothing calls it. Note the
+> path is `KRamdath` even though the repository lives at `minormending`, because
+> Go resolves by the module path in `go.mod`, not the URL you cloned. If a
+> `main.go` ever lands, nothing here needs it.
 
 Then, in this repo:
 
