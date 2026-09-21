@@ -1,0 +1,20 @@
+{
+  "name": "trip-companion",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Turns an itinerary into an enriched trip graph and renders it as a shareable, printable briefing.",
+  "scripts": {
+    "brief": "node src/cli.ts",
+    "serve": "node src/server.ts",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}
