@@ -27,13 +27,18 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # Both ends of what package.json claims to support. The floor was wrong
-    # for months — `>=22.6`, which cannot run an unflagged .ts file — precisely
-    # because nothing ever ran on it. A claim no job tests is a guess.
+    # What package.json claims to support: the exact floor, the latest of that
+    # line, and the ceiling. The floor was wrong for months — `>=22.6`, which
+    # cannot run an unflagged .ts file — precisely because nothing ever ran on
+    # it. A claim no job tests is a guess.
+    #
+    # 22.18.0 is pinned rather than floated because it is the boundary itself:
+    # the release that unflagged type stripping on the 22 line. `22` floats on
+    # purpose, since that is what somebody installing Node 22 today gets.
     strategy:
       fail-fast: false
       matrix:
-        node: ['22', '24']
+        node: ['22.18.0', '22', '24']
     name: test (node ${{ matrix.node }})
     steps:
       - uses: actions/checkout@v4
