@@ -15,7 +15,7 @@ import { photoCard } from './photo.ts'
 import type { CardContext, CardProvider, CardRequest } from './providers/types.ts'
 import { checkVoice, violationsAreFatal } from './voice.ts'
 
-const PLACE_KINDS: CardKind[] = ['caution', 'orientation', 'history']
+const PLACE_KINDS: CardKind[] = ['caution', 'how_to_pay', 'hours', 'orientation', 'history']
 const LEG_KINDS: CardKind[] = ['how_to_pay', 'boarding', 'watch_for', 'phrase']
 
 export interface Refusal {
@@ -32,6 +32,8 @@ export interface GenerationReport {
   fromCache: number
   refusals: Refusal[]
   voiceRejections: Array<{ kind: CardKind; rules: string[] }>
+  /** A source that could not be reached. Distinct from one with nothing to say. */
+  sourceProblems: Array<{ provider: string; reason: string }>
 }
 
 export interface GenerateOptions {
@@ -133,9 +135,21 @@ export async function generateCards(
     fromCache: 0,
     refusals: [],
     voiceRejections: [],
+    sourceProblems: [],
   }
   const cards: Card[] = []
   const photoDate = opts.photoDate ?? (trip.departsOn ? new Date(trip.departsOn) : new Date())
+
+  // Remote sources are asked once for the whole trip, not once per card. A
+  // provider that cannot be reached must not look like one with nothing to
+  // say, so the failure is recorded rather than swallowed.
+  for (const provider of opts.providers) {
+    try {
+      await provider.prime?.(trip)
+    } catch (err) {
+      report.sourceProblems.push({ provider: provider.name, reason: (err as Error).message })
+    }
+  }
 
   for (const place of trip.places) {
     const attachesTo: CardAttachment = { kind: 'place', placeId: place.id }

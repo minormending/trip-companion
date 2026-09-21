@@ -67,12 +67,23 @@ const { build, fill, content } = result.reports
 console.log(`Wrote ${outPath}`)
 console.log(`  places   ${build.resolved} resolved, ${build.unresolved.length} unresolved`)
 if (build.needsConfirmation.length > 0) {
-  console.log(`  confirm  ${build.needsConfirmation.length} ambiguous: ${build.needsConfirmation.map((c) => c.query).join(', ')}`)
+  // The CLI has no confirmation step, so it takes the geocoder's first answer.
+  // Since cards are now sourced against whatever was picked, a wrong pick
+  // yields confidently-cited content about the wrong place — say so plainly.
+  console.log(`  CONFIRM  ${build.needsConfirmation.length} ambiguous; the briefing describes the first match:`)
+  for (const item of build.needsConfirmation) {
+    const others = item.alternatives.map((a) => a.name).slice(0, 2).join(', ')
+    console.log(`    - "${item.query}" -> ${item.chosen.name}${others ? ` (not: ${others})` : ''}`)
+  }
+  console.log('    Use the web app to choose, or the cards will cite the wrong place.')
 }
 console.log(`  legs     ${fill.routed} routed, ${fill.walkFallback} walk-fallback, ${fill.inferred} inferred`)
 console.log(`  cards    ${content.generated} generated, ${content.fromCache} from cache`)
 if (content.refusals.length > 0) {
   console.log(`  refused  ${content.refusals.length} operational cards could not be substantiated`)
+}
+for (const problem of content.sourceProblems) {
+  console.log(`  SOURCE   ${problem.provider} unreachable: ${problem.reason}`)
 }
 if (content.voiceRejections.length > 0) {
   console.log(`  voice    ${content.voiceRejections.length} rejected: ${content.voiceRejections.map((v) => v.rules.join('/')).join(', ')}`)

@@ -26,6 +26,7 @@ const KIND_LABEL: Record<string, string> = {
   how_to_pay: 'Paying',
   boarding: 'Boarding',
   orientation: 'Orientation',
+  hours: 'Opening hours',
   watch_for: 'Watch for',
   phrase: 'Say it',
   history: 'Background',

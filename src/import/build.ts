@@ -99,6 +99,9 @@ export async function buildTrip(
 
       const id = slugId('place', entry.name, index++)
       const place: Place = { id, name: entry.name, coords: result.best.coords, dayIndex: day.index }
+      if (result.best.name && result.best.name !== entry.name) place.canonicalName = result.best.name
+      if (result.best.osmId !== undefined) place.osmId = result.best.osmId
+      if (result.best.osmKind) place.osmKind = result.best.osmKind
       if (result.best.countryCode) {
         place.region = result.best.countryCode
         const tz = timezoneForCountry(result.best.countryCode)
@@ -157,6 +160,14 @@ export function applyChoices(
       const pick = byId.get(place.id)
       if (!pick) return place
       const next: Place = { ...place, coords: pick.coords }
+      // The identity has to move with the choice, or the facts we look up
+      // afterwards still describe the building the traveller rejected.
+      if (pick.name && pick.name !== place.name) next.canonicalName = pick.name
+      else delete next.canonicalName
+      if (pick.osmId !== undefined) next.osmId = pick.osmId
+      else delete next.osmId
+      if (pick.osmKind) next.osmKind = pick.osmKind
+      else delete next.osmKind
       if (pick.countryCode) {
         next.region = pick.countryCode
         const tz = timezoneForCountry(pick.countryCode)

@@ -1,6 +1,8 @@
 import { EntityCache } from '../src/cache/entityCache.ts'
 import { LocalStorageStore } from '../src/cache/webStore.ts'
 import { DeterministicProvider } from '../src/content/providers/deterministic.ts'
+import { OverpassProvider } from '../src/content/providers/overpass.ts'
+import { WikipediaProvider } from '../src/content/providers/wikipedia.ts'
 import type { Refusal } from '../src/content/generate.ts'
 import type { Trip } from '../src/domain/types.ts'
 import { haversineKm, PhotonGeocoder, type GeocodeCandidate } from '../src/geo/geocode.ts'
@@ -40,7 +42,8 @@ function deps(): PipelineDeps {
   return {
     geocoder: new PhotonGeocoder({ minIntervalMs: 1100 }),
     routers: [new OsrmProvider(), new NullTransitProvider()],
-    providers: [new DeterministicProvider()],
+    // Sourced providers first: a recorded fact always beats generic guidance.
+    providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
     ...(cache ? { cache } : {}),
   }
 }

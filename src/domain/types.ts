@@ -9,6 +9,7 @@ export type CardKind =
   | 'photo'
   | 'caution'
   | 'orientation'
+  | 'hours'
 
 export type TransportMode =
   | 'walk'
@@ -64,6 +65,12 @@ export interface Place {
   facadeBearing?: number
   /** IANA zone. Absent means photo timings fall back to a longitude estimate. */
   timezone?: string
+  /** The geocoder's own name for this place. Shown nowhere; used for lookups,
+   *  because a traveller writes "Sensoji Temple" and the article is "Sensō-ji". */
+  canonicalName?: string
+  /** OSM element behind this place, if any. The key to its recorded facts. */
+  osmId?: number
+  osmKind?: 'node' | 'way' | 'relation'
 }
 
 export interface Leg {
@@ -133,6 +140,7 @@ export const CARD_TIER: Record<CardKind, Tier> = {
   how_to_pay: 'operational',
   boarding: 'operational',
   orientation: 'operational',
+  hours: 'operational',
   watch_for: 'practical',
   phrase: 'practical',
   history: 'colour',

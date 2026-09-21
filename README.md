@@ -51,7 +51,9 @@ Everything below runs today with no API keys.
 | Voice enforcement | Working | The spec's "never" list, enforced in code |
 | Entity cache | Working | File-backed, keyed to the place rather than the trip |
 | Briefing render | Working | Screen and print, with source footnotes |
-| Card prose (tiers 2–3) | Deterministic stub | The LLM provider is an interface with a working offline implementation |
+| Operational cards | Working | Recorded OpenStreetMap tags via Overpass, cited per element |
+| Background cards | Working | Wikipedia summaries, cited |
+| Card prose (remaining kinds) | Deterministic stub | The LLM provider is an interface with a working offline implementation |
 
 ## Deploying
 
@@ -107,6 +109,30 @@ verifications.
 implements the "never" list. Violations are fatal for safety and operational
 cards and advisory for colour, because the cost of being wrong differs by two
 orders of magnitude between them.
+
+**Tier-1 cards come from recorded facts, not from a model.** `OverpassProvider`
+reads OpenStreetMap tags for the exact element Photon resolved (`fee`, `charge`,
+`payment:*`, `opening_hours`, `wheelchair`) and cites the element's OSM URL.
+Nothing is inferred from what is usually true elsewhere: no tag means no card,
+and the briefing says the fact could not be confirmed. On the Tokyo fixture this
+produces twelve sourced operational cards that check out against reality.
+
+**Overpass is not dependable enough to sit on the request path.** It is donated
+community capacity and sheds load hard — 504s lasting tens of minutes are
+routine. Mirrors are tried in turn with one retry, but the real answer is the
+entity cache: once a place's facts are cached they survive the source being
+down, which turns the spec's pre-launch cache warming from a growth tactic into
+an operational requirement.
+
+**A source that is unreachable must not look like one with nothing to say.**
+An early version swallowed a 406 from Overpass, and the result was
+indistinguishable from "this place has no recorded facts" — the tier policy
+correctly refused the cards, and the reason was invisible. `prime` failures are
+now caught in `generateCards` and reported as `sourceProblems`.
+
+**OSM data is ODbL.** Attribution is required and is in the page footer. The
+share-alike terms bite on a derived *database*, which the entity cache arguably
+becomes. This needs legal review before shipping commercially.
 
 **The OSRM demo server lies about walking time.** Its public instance is built
 with a single car profile and ignores the profile in the URL: `/foot`,

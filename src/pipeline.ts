@@ -2,6 +2,8 @@ import { EntityCache } from './cache/entityCache.ts'
 import type { CacheStore } from './cache/store.ts'
 import { generateCards, type GenerationReport } from './content/generate.ts'
 import { DeterministicProvider } from './content/providers/deterministic.ts'
+import { OverpassProvider } from './content/providers/overpass.ts'
+import { WikipediaProvider } from './content/providers/wikipedia.ts'
 import type { CardProvider } from './content/providers/types.ts'
 import { staleCards } from './domain/graph.ts'
 import type { Tier, Trip } from './domain/types.ts'
@@ -122,7 +124,9 @@ export async function defaultDeps(
   return {
     geocoder: new PhotonGeocoder(opts.contact ? { contact: opts.contact } : {}),
     routers: [new OsrmProvider(), new NullTransitProvider()],
-    providers: [new DeterministicProvider()],
+    // Order matters: sourced providers are asked before the fallback, so a
+    // real recorded fact always beats generic guidance.
+    providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
     cache: await EntityCache.open(opts.cacheStore),
   }
 }

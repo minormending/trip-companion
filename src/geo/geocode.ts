@@ -7,6 +7,9 @@ export interface GeocodeCandidate {
   countryCode?: string
   label?: string
   osmType?: string
+  /** OSM element identity, which is what lets us look up its real tags. */
+  osmId?: number
+  osmKind?: 'node' | 'way' | 'relation'
 }
 
 export interface GeocodeResult {
@@ -64,6 +67,11 @@ function toCandidate(f: PhotonFeature): GeocodeCandidate | null {
   if (typeof props['countrycode'] === 'string') candidate.countryCode = props['countrycode']
   if (parts.length) candidate.label = parts.join(', ')
   if (typeof props['osm_value'] === 'string') candidate.osmType = props['osm_value']
+  if (typeof props['osm_id'] === 'number') candidate.osmId = props['osm_id']
+  const kind = props['osm_type']
+  if (kind === 'N') candidate.osmKind = 'node'
+  else if (kind === 'W') candidate.osmKind = 'way'
+  else if (kind === 'R') candidate.osmKind = 'relation'
   return candidate
 }
 
