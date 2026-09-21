@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js'
+import type { AppClient } from './client.ts'
 import type { CacheSnapshot, CacheStore } from '../cache/store.ts'
 import type { CorrectionPersistence, CorrectionSnapshot, Correction } from '../corrections/store.ts'
 import type { Tier } from '../domain/types.ts'
@@ -21,9 +21,9 @@ interface EntityCardRow {
 }
 
 export class SupabaseCacheStore implements CacheStore {
-  readonly #db: SupabaseClient
+  readonly #db: AppClient
 
-  constructor(db: SupabaseClient) {
+  constructor(db: AppClient) {
     this.#db = db
   }
 
@@ -72,12 +72,10 @@ interface CorrectionRow {
 }
 
 export class SupabaseCorrections implements CorrectionPersistence {
-  readonly #db: SupabaseClient
-  readonly #userId: string
+  readonly #db: AppClient
 
-  constructor(db: SupabaseClient, userId: string) {
+  constructor(db: AppClient) {
     this.#db = db
-    this.#userId = userId
   }
 
   async load(): Promise<CorrectionSnapshot> {
@@ -103,24 +101,28 @@ export class SupabaseCorrections implements CorrectionPersistence {
   }
 
   /**
-   * Only new reports are pushed. Resolution goes through accept_correction,
-   * which is a reviewer action — a traveller cannot accept their own report,
-   * and that is what stops one person rewriting a shared card unilaterally.
+   * Reports go through report_card(), not a table insert: there is no insert
+   * grant on corrections at all. The function rate limits per account and per
+   * address, refuses suspended accounts, and collapses a repeat report from the
+   * same person on the same card — without which one account reporting twice
+   * reaches the two-report suppression threshold on its own.
+   *
+   * Resolution is a moderator action through accept_correction(), so a
+   * traveller cannot accept their own report.
    */
   async save(snapshot: CorrectionSnapshot): Promise<void> {
-    const rows = Object.values(snapshot)
-      .filter((c) => c.status === 'open')
-      .map((c) => ({
-        id: c.id,
-        entity_key: c.entityKey,
-        card_kind: c.cardKind,
-        claim: c.claim,
-        saw_body: c.sawBody,
-        status: c.status,
-        submitted_by: this.#userId,
-        submitted_at: c.submittedAt,
-      }))
-    if (rows.length === 0) return
-    await this.#db.from('corrections').upsert(rows, { onConflict: 'id', ignoreDuplicates: true })
+    for (const correction of Object.values(snapshot)) {
+      if (correction.status !== 'open') continue
+      const { error } = await this.#db.rpc('report_card', {
+        p_id: correction.id,
+        p_entity_key: correction.entityKey,
+        p_card_kind: correction.cardKind,
+        p_claim: correction.claim,
+        p_saw_body: correction.sawBody,
+      })
+      // A rejected report is the rate limiter or a suspension doing its job.
+      // It must not take the rest of the batch down with it.
+      if (error) console.warn(`report not accepted: ${error.message}`)
+    }
   }
 }

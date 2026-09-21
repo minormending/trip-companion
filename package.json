@@ -13,7 +13,12 @@
     "preview:web": "node scripts/build-web.ts && node --run serve:dist",
     "serve:dist": "node scripts/serve-dist.ts",
     "review": "node scripts/review.ts",
-    "sync": "node scripts/sync-wanderlog.ts"
+    "sync": "node scripts/sync-wanderlog.ts",
+    "db:status": "node scripts/db.mjs status",
+    "db:migrate": "node scripts/db.mjs migrate",
+    "db:queue": "node scripts/db.mjs queue",
+    "db:query": "node scripts/db.mjs query",
+    "gen:platform": "node scripts/gen-platform.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
@@ -24,6 +29,7 @@
     "node": ">=22.6"
   },
   "dependencies": {
+    "@minormending/map-kit": "github:minormending/map-kit",
     "@supabase/supabase-js": "^2.116.0"
   }
 }

@@ -59,7 +59,7 @@ async function openStores(force = false): Promise<void> {
   }
   if (db && signedInUserId) {
     cache ??= await EntityCache.open(new SupabaseCacheStore(db))
-    corrections ??= await CorrectionStore.open(new SupabaseCorrections(db, signedInUserId))
+    corrections ??= await CorrectionStore.open(new SupabaseCorrections(db))
     return
   }
   cache ??= await EntityCache.open(new LocalStorageStore())

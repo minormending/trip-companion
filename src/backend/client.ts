@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient, type User } from '@supabase/supabase-js'
+import { createClient, type User } from '@supabase/supabase-js'
 
 /**
  * Injected at build time. Both blank means no backend is configured, and the
@@ -9,13 +9,26 @@ import { createClient, type SupabaseClient, type User } from '@supabase/supabase
 declare const __SUPABASE_URL__: string
 declare const __SUPABASE_ANON_KEY__: string
 
-let client: SupabaseClient | null | undefined
+function make(url: string, key: string) {
+  return createClient(url, key, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    // This app owns the `trip` schema. `public` holds the shared platform layer
+    // that every app in this database uses: profiles, rate_limit, moderation.
+    db: { schema: 'trip' },
+  })
+}
 
-export function supabase(): SupabaseClient | null {
-  if (client !== undefined) return client
-  const url = typeof __SUPABASE_URL__ === 'string' ? __SUPABASE_URL__ : ''
-  const key = typeof __SUPABASE_ANON_KEY__ === 'string' ? __SUPABASE_ANON_KEY__ : ''
-  client = url && key ? createClient(url, key, { auth: { persistSession: true } }) : null
+/** Inferred rather than hand-written: the client's type carries its schema. */
+export type AppClient = ReturnType<typeof make>
+
+let client: AppClient | null | undefined
+
+export function supabase(): AppClient | null {
+  if (client === undefined) {
+    const url = typeof __SUPABASE_URL__ === 'string' ? __SUPABASE_URL__ : ''
+    const key = typeof __SUPABASE_ANON_KEY__ === 'string' ? __SUPABASE_ANON_KEY__ : ''
+    client = url && key ? make(url, key) : null
+  }
   return client
 }
 

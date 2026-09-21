@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js'
+import type { AppClient } from './client.ts'
 import type { CheckIn } from '../companion/now.ts'
 import type { Trip } from '../domain/types.ts'
 
@@ -35,10 +35,10 @@ function toSaved(row: TripRow): SavedTrip {
 }
 
 export class TripRepository {
-  readonly #db: SupabaseClient
+  readonly #db: AppClient
   readonly #userId: string
 
-  constructor(db: SupabaseClient, userId: string) {
+  constructor(db: AppClient, userId: string) {
     this.#db = db
     this.#userId = userId
   }

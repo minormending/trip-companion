@@ -14,8 +14,10 @@ await mkdir(dist, { recursive: true })
  * what protects the data, not the secrecy of this key. Both blank builds the
  * local-only app, which is a supported mode rather than a broken one.
  */
-const supabaseUrl = process.env['SUPABASE_URL'] ?? ''
-const supabaseAnonKey = process.env['SUPABASE_ANON_KEY'] ?? ''
+// PUBLIC_ prefix matches the convention in orchard-map and restroom-map.
+const supabaseUrl = process.env['PUBLIC_SUPABASE_URL'] ?? process.env['SUPABASE_URL'] ?? ''
+const supabaseAnonKey =
+  process.env['PUBLIC_SUPABASE_ANON_KEY'] ?? process.env['SUPABASE_ANON_KEY'] ?? ''
 
 const built = await esbuild.build({
   entryPoints: [join(root, 'web/main.ts')],

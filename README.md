@@ -71,11 +71,20 @@ that were stuck: corrections reach somebody, the entity cache compounds across
 travellers rather than per browser, and a warmed cache survives Overpass being
 down.
 
+Several apps share one Supabase project: a shared layer in `public` and a
+schema per app, because the free plan allows two projects per account and a
+schema is cheaper than a project. See [docs/PLATFORM.md](docs/PLATFORM.md).
+
 ```bash
-supabase link --project-ref <ref>
-supabase db push
-SUPABASE_URL=... SUPABASE_ANON_KEY=... npm run build:web
+npm run db:migrate platform   # once per database
+npm run db:migrate trip
+PUBLIC_SUPABASE_URL=... PUBLIC_SUPABASE_ANON_KEY=... npm run build:web
 ```
+
+The shared layer is generated from [map-kit](https://github.com/minormending/map-kit)
+rather than reinvented, which is also how reporting got a rate limiter: two
+reports withdraw a card, so unlimited reporting was a suppression attack, and
+`rl_take` was already written.
 
 **Wanderlog connects without us ever holding a Wanderlog credential.** Its
 session cookie is full account access and cannot be scoped or revoked per app,
