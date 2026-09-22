@@ -26,6 +26,7 @@ import { tripUrl } from '../src/import/wanderlogApi.ts'
 import type { CardProvider } from '../src/content/providers/types.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
 import { mountAuth } from './auth.ts'
+import { mountBuildTag } from './build.ts'
 import { decodeTrip, encodeTrip } from './share.ts'
 
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T
@@ -846,6 +847,8 @@ authView = mountAuth(
     setStatus(`Opened ${trip.title} from your account.`)
   },
 )
+
+mountBuildTag($<HTMLDivElement>('build'))
 
 // Registered last so a failure here never blocks the app starting.
 if ('serviceWorker' in navigator) {
