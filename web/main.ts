@@ -17,6 +17,7 @@ import { OsrmProvider } from '../src/routing/osrm.ts'
 import { ValhallaProvider } from '../src/routing/valhalla.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
 import { supabase } from '../src/backend/client.ts'
+import { TripRepository } from '../src/backend/trips.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
 import { mountAuth } from './auth.ts'
 import { decodeTrip, encodeTrip } from './share.ts'
@@ -46,6 +47,7 @@ let checkIns: CheckIn[] = []
 let companionMode = false
 
 let signedInUserId: string | null = null
+let authView: { refresh(): Promise<void> } | null = null
 
 /**
  * Signed in, the shared Supabase stores back the same interfaces the local
@@ -139,8 +141,28 @@ function show(trip: Trip, refusals: Refusal[], interactive: boolean): void {
     // Saved so the companion opens on a platform with no signal, which is the
     // only situation in which it is actually needed.
     writeLocal(TRIP_KEY, { trip, refusals })
+    // And, signed in, to the account — which is what makes the offer in the
+    // sign-in panel true. Before this the web app never wrote a trip anywhere
+    // but this device: signing in moved the fact cache and the corrections,
+    // and left the trips behind.
+    void saveToAccount(trip)
   }
   render(interactive)
+}
+
+/** The trips table, when there is somebody to own the row. */
+function trips(): TripRepository | null {
+  const db = supabase()
+  return db && signedInUserId ? new TripRepository(db, signedInUserId) : null
+}
+
+async function saveToAccount(trip: Trip): Promise<void> {
+  const repo = trips()
+  if (!repo) return
+  // Keyed on the trip's own id so re-rendering one does not pile up copies,
+  // which is what the (owner, source, source_key) index is for.
+  await repo.save(trip, 'paste', trip.id)
+  void authView?.refresh()
 }
 
 /** Corrections are re-applied on every render, so a flag takes effect at once. */
@@ -589,15 +611,25 @@ void (async () => {
   if (!(await restoreFromHash())) offerSavedTrip()
 })()
 
-mountAuth(authPane, (user) => {
-  const next = user?.id ?? null
-  if (next === signedInUserId) return
-  signedInUserId = next
-  // Swapping identity swaps which stores are in play, so they are reopened.
-  void openStores(true).then(() => {
-    if (baseTrip) render(true)
-  })
-})
+authView = mountAuth(
+  authPane,
+  (user) => {
+    const next = user?.id ?? null
+    if (next === signedInUserId) return
+    signedInUserId = next
+    // Swapping identity swaps which stores are in play, so they are reopened.
+    void openStores(true).then(() => {
+      if (baseTrip) render(true)
+    })
+  },
+  // Opening a saved trip is what makes "on every device" a fact rather than a
+  // promise: the account is no use if you can see a trip is there and cannot
+  // get it back.
+  (trip) => {
+    show(trip, [], true)
+    setStatus(`Opened ${trip.title} from your account.`)
+  },
+)
 
 // Registered last so a failure here never blocks the app starting.
 if ('serviceWorker' in navigator) {
