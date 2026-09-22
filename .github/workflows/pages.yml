@@ -18,7 +18,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # fetch-depth: 0 because the build stamps a version from
+      # `git rev-list --count HEAD`. The default shallow clone returns 1, which
+      # would stamp v1 on every deploy forever — a version that looks real and
+      # never changes. build-web.ts throws rather than ship that.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'

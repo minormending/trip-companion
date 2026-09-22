@@ -96,6 +96,13 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
   margin-right: 0.4rem; }
 footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   font-size: 0.8rem; color: var(--ink-faint); }
+#build { margin-top: 1rem; }
+.build-tag { font: inherit; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 6px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-faint);
+  cursor: pointer; }
+.build-tag:hover:not(:disabled) { color: var(--ink-soft); border-color: var(--ink-faint); }
+.build-tag:disabled { cursor: default; opacity: 0.7; }
 @media print { #auth, #intro, #status, #actions, #confirm, #now, #resume, .claim, footer { display: none; } }
 </style>
 </head>
@@ -148,6 +155,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
     Background from <a href="https://en.wikipedia.org">Wikipedia</a>, CC BY-SA.
     Walking routes from <a href="https://project-osrm.org">OSRM</a>.
     Light timings computed with the <a href="https://gml.noaa.gov/grad/solcalc/calcdetails.html">NOAA</a> solar algorithm.
+    <div id="build"></div>
   </footer>
 </div>
 <script src="app.js"></script>
