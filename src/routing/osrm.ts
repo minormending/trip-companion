@@ -22,10 +22,18 @@ const WALKING_KMH = 4.5
  *
  * The public demo instance is built with a single car profile and ignores the
  * profile in the URL: /foot, /driving and /cycling return byte-identical
- * routes at roughly 20km/h. Its distances follow real streets and are usable,
- * but its durations are driving times. So walking durations are derived from
- * distance here rather than taken from the response, and `trustDurations`
- * stays off until pointed at an instance actually built with a foot profile.
+ * routes at roughly 20km/h.
+ *
+ * This once said its distances were "usable". They are not, for walking.
+ * Measured against the Google walking distances inside a Wanderlog document,
+ * across 28 legs of one Prague trip, the demo's median was a tolerable 1.56x
+ * but its p90 was 4.56x and its worst 30.67x: 4.51km between two palaces on
+ * the same square, 150m apart. A car route is not a long walk, it is a
+ * different route, and deriving a walking pace from it only makes the number
+ * larger. ValhallaProvider now takes walking legs; this stays for driving.
+ *
+ * `trustDurations` remains off for walking on any instance not built with a
+ * foot profile.
  */
 export class OsrmProvider implements RoutingProvider {
   readonly name = 'osrm'

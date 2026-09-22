@@ -11,6 +11,7 @@ import { tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
 import { fetchTrip, tripUrl } from '../src/import/wanderlogApi.ts'
 import { fillLegs } from '../src/routing/fill.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
+import { ValhallaProvider } from '../src/routing/valhalla.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
 
 const { values, positionals } = parseArgs({
@@ -83,7 +84,7 @@ for (const conflict of report.regionConflicts) {
 
 // Wanderlog places already carry Google geometry, so there is no geocoding
 // step here at all — and none of the ambiguity that comes with one.
-const filled = await fillLegs(bare, [new OsrmProvider(), new NullTransitProvider()])
+const filled = await fillLegs(bare, [new ValhallaProvider(), new OsrmProvider(), new NullTransitProvider()])
 const cache = await EntityCache.open()
 
 // The document is a source in its own right, and the only one that knows the
