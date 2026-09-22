@@ -36,7 +36,9 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
 #auth input { font: inherit; font-size: 0.85rem; padding: 0.3rem 0.5rem; border-radius: 6px;
   border: 1px solid var(--rule); background: var(--card); color: var(--ink); margin-right: 0.4rem; }
 #auth input[aria-invalid="true"] { border-color: var(--stop); }
-.auth-note { margin: 0.5rem 0 0; color: var(--ink-faint); }
+.auth-note { margin: 0.5rem 0; color: var(--ink-faint); max-width: 46rem; }
+.auth-note.bad { color: var(--stop); }
+.auth-note + input { margin-top: 0.25rem; }
 #confirm { margin: 1.5rem 0; }
 #confirm h2 { margin-top: 0; }
 .choice { border: 1px solid var(--rule); border-radius: 10px; padding: 0.85rem 1rem; margin: 0.75rem 0;
@@ -85,7 +87,7 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   <div id="auth" hidden></div>
   <div id="intro">
     <h1>Trip Companion</h1>
-    <p class="sub">Paste an itinerary from anywhere. Places are located, the gaps between them are routed, and you get a briefing you can print or share. Everything runs in your browser.</p>
+    <p class="sub">Paste an itinerary from anywhere. Places are located, the gaps between them are routed, and you get a briefing you can print or share. Everything runs in your browser, and signing in is optional.</p>
     <form id="form">
       <label for="text">Itinerary</label>
       <textarea id="text" name="text" placeholder="Day 1&#10;09:00 Sensoji Temple&#10;Walk 12 min&#10;10:30 Tokyo Skytree&#10;&#10;Day 2&#10;08:00 Shibuya Crossing"></textarea>
