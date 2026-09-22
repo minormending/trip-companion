@@ -88,17 +88,19 @@ const filled = await fillLegs(bare, [new ValhallaProvider(), new OsrmProvider(),
 const cache = await EntityCache.open()
 
 // The document is a source in its own right, and the only one that knows the
-// opening hours of a Prague bakery. It goes first: Overpass answers for the
-// handful of places with an OSM identity, this answers for the rest.
+// opening hours of a Prague bakery or what kind of pub Lokál U Bílé kuželky
+// is. It goes after Overpass and Wikipedia, not before: those two have OSM
+// tags and whole articles for the landmarks, and this fills the long tail
+// they have never heard of.
 const fromDocument = new WanderlogProvider(document, {
   url: values.file ? `file://${values.file}` : tripUrl(String(positionals[0])),
   title: `Wanderlog: ${bare.title}`,
   retrieved: new Date().toISOString().slice(0, 10),
 })
-console.log(`  hours  ${fromDocument.known} places in the document state opening hours`)
+console.log(`  doc    ${fromDocument.known} places state hours, ${fromDocument.described} are described`)
 
 const generated = await generateCards(filled.trip, {
-  providers: [fromDocument, new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
+  providers: [new OverpassProvider(), new WikipediaProvider(), fromDocument, new DeterministicProvider()],
   cache,
 })
 

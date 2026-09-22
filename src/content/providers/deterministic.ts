@@ -14,9 +14,12 @@ const MODE_GUIDANCE: Record<string, string> = {
 }
 
 /**
- * Runs with no API key. It produces colour and practical cards only — it
- * never fabricates an operational one, because the refuse-rather-than-guess
- * rule applies to every provider equally, including this one.
+ * Runs with no API key. It produces practical cards only — it never fabricates
+ * an operational one, because the refuse-rather-than-guess rule applies to
+ * every provider equally, including this one.
+ *
+ * What it says about a leg is genuinely derivable from the mode. What it once
+ * said about a place's history was derivable from nothing.
  */
 export class DeterministicProvider implements CardProvider {
   readonly name = 'deterministic'
@@ -36,14 +39,14 @@ export class DeterministicProvider implements CardProvider {
       return null
     }
 
-    if (kind === 'history') {
-      return {
-        title: context.place.name,
-        body: `No verified history is on file for ${context.place.name} yet.`,
-        sources: [],
-      }
-    }
-
+    // No history branch. This used to answer every `history` request with "No
+    // verified history is on file for X yet", which is not a card: it is the
+    // absence of one, printed. Twenty of Prague's thirty-three places carried
+    // it, three lines each, between cards that had something to say.
+    //
+    // An absent card is recoverable — the same reason refusals exist — and a
+    // briefing that says nothing about a bakery is shorter and no less
+    // informative than one that says nothing at length.
     return null
   }
 }
