@@ -87,6 +87,7 @@ export async function resolvePlaces(
   opts: LookupOptions & { minIntervalMs?: number; onProgress?: ResolveProgress } = {},
 ): Promise<Map<string, ResolvedPlace>> {
   const wait = opts.minIntervalMs ?? 1100
+  const pause = (): Promise<void> => new Promise((r) => setTimeout(r, wait))
   const out = new Map<string, ResolvedPlace>()
   // The same place can appear on several days; ask about it once.
   const seen = new Map<string, ResolvedPlace | null>()
@@ -104,9 +105,12 @@ export async function resolvePlaces(
       continue
     }
 
-    if (done > 0) await new Promise((r) => setTimeout(r, wait))
+    if (done > 0) await pause()
 
-    const identity = await findOsmIdentity(place, opts)
+    // A place the reverse lookup cannot name is searched for by name, which is
+    // a second Photon request. It is paced like the first: the limit is a
+    // request a second from this client, not a place a second.
+    const identity = await findOsmIdentity(place, { ...opts, pause })
     let resolved: ResolvedPlace | null = null
     if (identity) {
       const tags = await fetchOsmTags(identity, opts)
