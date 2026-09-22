@@ -21,7 +21,15 @@ const KEY_STORE = 'trip-companion:wanderlog-key'
  */
 
 export type ImportResult =
-  | { ok: true; trip: Trip; report: WanderlogReport; scheduled: number }
+  | {
+      ok: true
+      trip: Trip
+      report: WanderlogReport
+      scheduled: number
+      /** Kept so the document can go on serving the trip as a source. */
+      document: unknown
+      key: string
+    }
   | { ok: false; reason: string }
 
 export function savedKey(): string | null {
@@ -107,5 +115,12 @@ export async function importTrip(pasted: string): Promise<ImportResult> {
     return { ok: false, reason: 'That trip has no scheduled days yet, so there is nothing to brief.' }
   }
 
-  return { ok: true, trip: { ...trip, places: scheduled }, report, scheduled: scheduled.length }
+  return {
+    ok: true,
+    trip: { ...trip, places: scheduled },
+    report,
+    scheduled: scheduled.length,
+    document: interpreted.document,
+    key,
+  }
 }
