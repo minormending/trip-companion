@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 import { EntityCache } from '../src/cache/entityCache.ts'
 import { DeterministicProvider } from '../src/content/providers/deterministic.ts'
 import { OverpassProvider } from '../src/content/providers/overpass.ts'
+import { WanderlogProvider } from '../src/content/providers/wanderlog.ts'
 import { WikipediaProvider } from '../src/content/providers/wikipedia.ts'
 import { generateCards } from '../src/content/generate.ts'
 import { tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
@@ -84,8 +85,19 @@ for (const conflict of report.regionConflicts) {
 // step here at all — and none of the ambiguity that comes with one.
 const filled = await fillLegs(bare, [new OsrmProvider(), new NullTransitProvider()])
 const cache = await EntityCache.open()
+
+// The document is a source in its own right, and the only one that knows the
+// opening hours of a Prague bakery. It goes first: Overpass answers for the
+// handful of places with an OSM identity, this answers for the rest.
+const fromDocument = new WanderlogProvider(document, {
+  url: values.file ? `file://${values.file}` : tripUrl(String(positionals[0])),
+  title: `Wanderlog: ${bare.title}`,
+  retrieved: new Date().toISOString().slice(0, 10),
+})
+console.log(`  hours  ${fromDocument.known} places in the document state opening hours`)
+
 const generated = await generateCards(filled.trip, {
-  providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
+  providers: [fromDocument, new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
   cache,
 })
 
