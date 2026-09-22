@@ -5751,5 +5751,229 @@
     }
    ]
   }
+ },
+ "resources": {
+  "placeMetadata": [
+   {
+    "name": "National Gallery Prague - Convent of St. Agnes",
+    "placeId": "ChIJ-_yAZoUUc0ERO6HHbIUkp7Y",
+    "description": "Museum showcasing a collection of medieval paintings & statues in a 13th-century Gothic monastery."
+   },
+   {
+    "name": "Farmers' Saturday market",
+    "placeId": "ChIJ0ZrEsliUC0cRwgIt0sK2J74",
+    "description": "Down-to-earth farmer's market popular for local produce, baked goods, pottery & crafts."
+   },
+   {
+    "name": "Ferdinanda",
+    "placeId": "ChIJ2aiF-JKUC0cR4EVXRfMHjYM",
+    "description": "Traditionally-styled restaurant featuring classic Czech dishes & a selection of local beers."
+   },
+   {
+    "name": "St Barbara's Church",
+    "placeId": "ChIJ6QpxzaZBDEcR26HsPg_tnKE",
+    "description": "Spectacular, cathedral-esque church decorated with sharp spines, flying buttresses & frescoes."
+   },
+   {
+    "name": "House of the Black Madonna",
+    "placeId": "ChIJ79swveuUC0cRs9LdalPGnAs",
+    "description": "5-story historic building with Cubist architecture offering works of Czech Cubism & an opulent cafe."
+   },
+   {
+    "name": "U Fleků",
+    "placeId": "ChIJ8YREnvGUC0cR8oAzZCnuSwU",
+    "description": "Famous historic venue with 8 separate dining halls dishing out traditional local dishes & beer."
+   },
+   {
+    "name": "The Powder Tower",
+    "placeId": "ChIJBfIPBeuUC0cRphNG7F-4SZM",
+    "description": "City gate built in the 15th century and restored after being damaged in the Battle of Prague."
+   },
+   {
+    "name": "Loreto",
+    "placeId": "ChIJC5zY0RuVC0cRUQlKCL3UIoI",
+    "description": "Historic pilgrimage destination with a church, a cloister, a clock tower & rare liturgical objects."
+   },
+   {
+    "name": "State Opera",
+    "placeId": "ChIJE5AKFJKUC0cRY2EE_Oh9MhY",
+    "description": "Elegant gilded stage with an illustrious history & a world class opera & ballet program."
+   },
+   {
+    "name": "Šternberský Palace",
+    "placeId": "ChIJEaVWxx6VC0cRuYeLPYsks4E",
+    "description": "Art museum in a palace, home to ancient Greek & Roman works, Renaissance and 19th-century paintings."
+   },
+   {
+    "name": "Grébovka (Havlíčkovy sady)",
+    "placeId": "ChIJEw1qJX6UC0cRZz0wkkTsrcg",
+    "description": "Peaceful Italian Renaissance–style park with a pond, fountain, statues & a charming artificial cave."
+   },
+   {
+    "name": "Italian Court Kutna Hora",
+    "placeId": "ChIJH0XgwadBDEcR-3l0JcZCGWI",
+    "description": "Museum of coin minting in a 1400s former royal palace with elegant chapel & ornate Audience Hall."
+   },
+   {
+    "name": "Lobkowicz Palace",
+    "placeId": "ChIJH3y4L-CUC0cRxLvVqnWQK2Q",
+    "description": "Baroque palace containing the art collection of the Lobkowicz family, including many Old Masters."
+   },
+   {
+    "name": "Old Town Square",
+    "placeId": "ChIJIfpRNOmUC0cRxHIewgck75c",
+    "description": "Oldest square in the historic center with 10th-century origins, site of many Gothic buildings."
+   },
+   {
+    "name": "Vinohradský Parlament Restaurant",
+    "placeId": "ChIJJQeVZI-UC0cREeV8jNifDCs",
+    "description": "Airy bar & restaurant for modern takes on classic Czech specialties, plus beer & craft beverages."
+   },
+   {
+    "name": "Old Royal Palace",
+    "placeId": "ChIJK6ulKxyVC0cRsRQZ5ZzlOEA",
+    "description": "Late Gothic palace in Prague Castle, with Renaissance elements & Vladislav Hall for royal events."
+   },
+   {
+    "name": "The Estates Theatre",
+    "placeId": "ChIJKatTv-iUC0cRCTSHs2hbV3Q",
+    "description": "Continuously running since 1783, an elegant theater presenting opera, ballet & dramatic works."
+   },
+   {
+    "name": "National Theatre",
+    "placeId": "ChIJKatTv-iUC0cR_ptOFAQG8Z0",
+    "description": "Magnificent venue for nationally sponsored new & classical ballet, opera & theater performances."
+   },
+   {
+    "name": "Municipal house",
+    "placeId": "ChIJL0C4HuuUC0cREJonDZJQMWo",
+    "description": "Art nouveau venue hosting classical concerts, opera & ballet plus events including fashion shows."
+   },
+   {
+    "name": "Café Savoy",
+    "placeId": "ChIJL8LeE_uUC0cRj_E1IjqlnKc",
+    "description": "Refined cafe/restaurant with a lavish wooden interior evoking the First Czechoslovakian Republic."
+   },
+   {
+    "name": "Klementinum",
+    "placeId": "ChIJNUIyNe-UC0cRnw1-EJKuNLI",
+    "description": "Complex comprised of the Mirror Chapel & Baroque Library, with Atlas atop the Astronomical Tower."
+   },
+   {
+    "name": "Holešovice Market",
+    "placeId": "ChIJNdK6c7qUC0cRIDJjoyBB2Z8",
+    "description": "Lively marketplace with stalls for fruit, vegetables, flowers, herbs, spices, cheese & baked goods."
+   },
+   {
+    "name": "Jerusalem Synagogue",
+    "placeId": "ChIJO_W-fZOUC0cRramNCQnVkuA",
+    "description": "Early 20th-century synagogue demonstrating elements of art nouveau & Moorish design."
+   },
+   {
+    "name": "Kino Lucerna",
+    "placeId": "ChIJPfrSysuVC0cR4JolCQsOVfc",
+    "description": "Elegant historic mall with a lavish shopping arcade, choice of Czech dining options & a grand hall."
+   },
+   {
+    "name": "Zahrádky Letná Beer Garden",
+    "placeId": "ChIJQ-gQ9cOUC0cRKjt0E674sks",
+    "description": "Leafy outdoor venue for a small range of beers & extensive views over the river & the city beyond."
+   },
+   {
+    "name": "John F. Kennedy International Airport",
+    "placeId": "ChIJR0lA1VBmwokR8BGfSBOyT-w",
+    "description": "New York City hub offering flights from 80+ airlines, plus a variety of shops & eateries."
+   },
+   {
+    "name": "Golden Lane",
+    "placeId": "ChIJS7rJFh-VC0cR6yEQX6AGf9U",
+    "description": "This street is lined with charming houses built in the 16th century for the guards of Prague Castle."
+   },
+   {
+    "name": "Vinohradský pivovar",
+    "placeId": "ChIJSS5HtsGTC0cRd2-ab7U-9Tw",
+    "description": "Compact restaurant in a venerable brewery offering house beers on tap & traditional Czech fare."
+   },
+   {
+    "name": "Prague Astronomical Clock",
+    "placeId": "ChIJSS_AOemUC0cRlgaiWrJEe_E",
+    "description": "Medieval timepiece on the facade of city hall displaying the twelve apostles as the clock strikes."
+   },
+   {
+    "name": "Franz Kafka - Rotating Head by David Cerny",
+    "placeId": "ChIJSfv87u2UC0cRMLvFpMvuPNY",
+    "description": "Metallic, rotating sculpture of Franz Kafka’s head, created by artist David Černý."
+   },
+   {
+    "name": "Sedlec Ossuary",
+    "placeId": "ChIJT8VaY_xADEcRjlDxpcrJDDI",
+    "description": "Garlands of human skulls, plus a bone chandelier & chalices decorate this small Gothic chapel."
+   },
+   {
+    "name": "Strahov Library",
+    "placeId": "ChIJTaiY3xqVC0cRs0KSAKWl-WU",
+    "description": "Premonstratensian monastery & historical library offering ceiling frescoes, exhibits & guided tours."
+   },
+   {
+    "name": "St. Vitus Cathedral",
+    "placeId": "ChIJW08COB6VC0cRoonZ8lA4rWk",
+    "description": "Gothic resting place of saints including Vitus, Wenceslas & Adalbert as well as the state treasury."
+   },
+   {
+    "name": "National Gallery Prague – Trade Fair Palace",
+    "placeId": "ChIJXxfnk8iUC0cRrg0wjivvhdQ",
+    "description": "Classic & modern art displayed in the Fair Trade Palace, an extension of the National Gallery."
+   },
+   {
+    "name": "National Gallery Prague – Schwarzenberg Palace",
+    "placeId": "ChIJYVARJByVC0cRsrDlS6ur2dY",
+    "description": "Museum with Czech baroque paintings, decorative arts & historic weapons in a Renaissance palace."
+   },
+   {
+    "name": "National Monument at Vítkov",
+    "placeId": "ChIJZ5ERZaKUC0cRry0Q82U8Sr0",
+    "description": "National war memorial & history museum offering panoramic city views & a chic rooftop cafe."
+   },
+   {
+    "name": "Strahov Monastery Brewery",
+    "placeId": "ChIJe8lQ7hqVC0cR3EOY08YhPhc",
+    "description": "A 17th-century brewery restored & reopened as a craft brewery in 2000, with restaurant & courtyard."
+   },
+   {
+    "name": "St. George's Basilica",
+    "placeId": "ChIJjzZaLB6VC0cRxNlBNtYnc9s",
+    "description": "Part of Prague Castle, a 10th-century basilica rebuilt in 1142, with baroque facade & Bohemian art."
+   },
+   {
+    "name": "Charles Bridge",
+    "placeId": "ChIJn7WO5eWUC0cRJrHT0TiXIHU",
+    "description": "Landmark stone bridge linking Prague's Old & New Towns, with street artists & entertainers."
+   },
+   {
+    "name": "Baráčnická rychta",
+    "placeId": "ChIJtUZY7h2VC0cRYFBpxTBtzhU",
+    "description": "Classical Czech cuisine served in a dining room with a regular program of traditional folk customs."
+   },
+   {
+    "name": "Strahov Monastery",
+    "placeId": "ChIJu2niIWeTC0cR8Bp28z1iNc8",
+    "description": "Hilltop, medieval monastery with a stucco-panelled theological hall, vast library & Baroque church."
+   },
+   {
+    "name": "Lokál U Bílé kuželky",
+    "placeId": "ChIJuVem_OOUC0cRoOO82yHgp6k",
+    "description": "This lively pub is known for its pilsner & simple Czech cooking, as well as its atmospheric cellar."
+   },
+   {
+    "name": "ENERGY PUB Riegrovy sady",
+    "placeId": "ChIJxVEGjZqUC0cR2NIcdyBK-fA",
+    "description": "Sprawling, tree-lined garden at a tavern known for classic pale lager & hefty, meaty sandwiches."
+   },
+   {
+    "name": "Václav Havel Airport Prague",
+    "placeId": "ChIJyw1526e_C0cRrPakrNGArS8",
+    "description": "Airport for domestic & international flights, plus an express bus to Prague train station."
+   }
+  ]
  }
 }

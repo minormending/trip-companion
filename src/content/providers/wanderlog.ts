@@ -28,6 +28,49 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+/**
+ * Google's one-line editorial summary of a place, where the document has one.
+ *
+ * Deliberately **not** `generatedDescription`, which sits in the same object
+ * and covers far more places. That field is what another system's model wrote
+ * about the reviews, and passing it off as a retrieved fact is the exact move
+ * the tier policy exists to prevent. It reads well, which is what makes it
+ * dangerous: nothing downstream could tell it from something somebody checked.
+ *
+ * Keyed on `placeId` being present so this only ever reads place metadata,
+ * rather than any object in the document that happens to have a description.
+ */
+export function descriptionsByName(document: unknown): Map<string, string> {
+  const out = new Map<string, string>()
+  const seen = new Set<unknown>()
+
+  const walk = (node: unknown): void => {
+    if (Array.isArray(node)) {
+      for (const item of node) walk(item)
+      return
+    }
+    if (!isRecord(node) || seen.has(node)) return
+    seen.add(node)
+
+    const name = node['name']
+    const description = node['description']
+    if (
+      typeof name === 'string' &&
+      name.trim() &&
+      typeof node['placeId'] === 'string' &&
+      typeof description === 'string' &&
+      description.trim()
+    ) {
+      if (!out.has(name.trim())) out.set(name.trim(), description.trim())
+    }
+
+    for (const value of Object.values(node)) walk(value)
+  }
+
+  walk(document)
+  return out
+}
+
 /** Collect every place in the document that states its opening hours. */
 export function hoursByName(document: unknown): Map<string, WanderlogHours> {
   const out = new Map<string, WanderlogHours>()
@@ -62,10 +105,12 @@ export function hoursByName(document: unknown): Map<string, WanderlogHours> {
 export class WanderlogProvider implements CardProvider {
   readonly name = 'wanderlog'
   readonly #hours: Map<string, WanderlogHours>
+  readonly #descriptions: Map<string, string>
   readonly #source: Source
 
   constructor(document: unknown, source: Source) {
     this.#hours = hoursByName(document)
+    this.#descriptions = descriptionsByName(document)
     this.#source = source
   }
 
@@ -74,8 +119,24 @@ export class WanderlogProvider implements CardProvider {
     return this.#hours.size
   }
 
+  /** How many places the document describes. */
+  get described(): number {
+    return this.#descriptions.size
+  }
+
   async draft(req: CardRequest): Promise<CardDraft | null> {
-    if (req.kind !== 'hours' || req.context.subject !== 'place') return null
+    if (req.context.subject !== 'place') return null
+
+    if (req.kind === 'history') {
+      // Last word rather than first: Wikipedia runs before this and has whole
+      // articles on the landmarks. This answers for the pub and the museum
+      // wing that Wikipedia has never heard of.
+      const description = this.#descriptions.get(req.context.place.name)
+      if (!description) return null
+      return { title: req.context.place.name, body: description, sources: [this.#source] }
+    }
+
+    if (req.kind !== 'hours') return null
     const found = this.#hours.get(req.context.place.name)
     if (!found) return null
 
