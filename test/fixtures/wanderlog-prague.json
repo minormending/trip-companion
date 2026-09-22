@@ -5749,7 +5749,151 @@
       }
      ]
     }
-   ]
+   ],
+   "budget": {
+    "expenses": [
+     {
+      "id": 466714407,
+      "amount": {
+       "amount": 850,
+       "currencyCode": "CZK"
+      },
+      "category": "activities",
+      "description": "Church of St Giles",
+      "blockId": 1746859
+     },
+     {
+      "id": 553119866,
+      "amount": {
+       "amount": 890,
+       "currencyCode": "CZK"
+      },
+      "category": "activities",
+      "description": "State Opera",
+      "blockId": 988846450
+     },
+     {
+      "id": 19182746,
+      "amount": {
+       "amount": 6257,
+       "currencyCode": "CZK"
+      },
+      "category": "lodging",
+      "description": "Hotel Royal Plaza",
+      "blockId": 5155764
+     },
+     {
+      "id": 321764264,
+      "amount": {
+       "amount": 50,
+       "currencyCode": "CZK"
+      },
+      "category": "publicTransit",
+      "description": "Václav Havel Airport Prague",
+      "blockId": 93141433
+     },
+     {
+      "id": 2791975,
+      "amount": {
+       "amount": 200,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Antonínovo pekařství",
+      "blockId": 293390416
+     },
+     {
+      "id": 57451616,
+      "amount": {
+       "amount": 200,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Antonínovo pekařství",
+      "blockId": 349719106
+     },
+     {
+      "id": 626791373,
+      "amount": {
+       "amount": 22,
+       "currencyCode": "USD"
+      },
+      "category": "activities",
+      "description": "St. Vitus Cathedral",
+      "blockId": 556844235
+     },
+     {
+      "id": 710752114,
+      "amount": {
+       "amount": 200,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Mr. Banh Mi",
+      "blockId": 343802639
+     },
+     {
+      "id": 387433837,
+      "amount": {
+       "amount": 150,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Kolacherie Kampus Hybernská",
+      "blockId": 737838645
+     },
+     {
+      "id": 363197806,
+      "amount": {
+       "amount": 18,
+       "currencyCode": "EUR"
+      },
+      "category": "activities",
+      "description": "Prague Boats",
+      "blockId": 432541795
+     },
+     {
+      "id": 253721281,
+      "amount": {
+       "amount": 650,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Lokál U Bílé kuželky",
+      "blockId": 244518546
+     },
+     {
+      "id": 172848578,
+      "amount": {
+       "amount": 400,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Albert",
+      "blockId": 782177223
+     },
+     {
+      "id": 4268055,
+      "amount": {
+       "amount": 250,
+       "currencyCode": "CZK"
+      },
+      "category": "sightseeing",
+      "description": "National Gallery Prague - Convent of St. Agnes",
+      "blockId": 743327353
+     },
+     {
+      "id": 764476583,
+      "amount": {
+       "amount": 150,
+       "currencyCode": "CZK"
+      },
+      "category": "food",
+      "description": "Crème de la Crème - zmrzlinový salon",
+      "blockId": 908187661
+     }
+    ]
+   }
   }
  },
  "resources": {

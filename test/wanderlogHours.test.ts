@@ -1,7 +1,9 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { descriptionsByName, hoursByName, WanderlogProvider } from '../src/content/providers/wanderlog.ts'
+import { costsByName, descriptionsByName, dominantCurrency, hoursByName, WanderlogProvider } from '../src/content/providers/wanderlog.ts'
+import { checkVoice } from '../src/content/voice.ts'
+import { CARD_TIER, TIER_PERSONALITY } from '../src/domain/types.ts'
 import type { CardRequest } from '../src/content/providers/types.ts'
 
 const PRAGUE = JSON.parse(
@@ -62,14 +64,14 @@ test('a place open around the clock says so, rather than saying nothing', async 
   assert.match(card?.body ?? '', /^Monday: Open 24 hours$/m)
 })
 
-test('the provider answers for hours and history, and nothing else', async () => {
+test('the provider answers for hours, history and paying, and nothing else', async () => {
   const provider = new WanderlogProvider(PRAGUE, SOURCE)
   assert.ok(await provider.draft(ask('St. Vitus Cathedral', 'hours')))
   assert.ok(await provider.draft(ask('St. Vitus Cathedral', 'history')))
-  // The operational tier needs more than a one-line summary, and a document
-  // that does not state a fare must not be made to imply one.
-  assert.equal(await provider.draft(ask('St. Vitus Cathedral', 'how_to_pay')), null)
+  assert.ok(await provider.draft(ask('St. Vitus Cathedral', 'how_to_pay')))
+  // Boarding and caution are about the world, and the document states neither.
   assert.equal(await provider.draft(ask('St. Vitus Cathedral', 'caution')), null)
+  assert.equal(await provider.draft(ask('St. Vitus Cathedral', 'orientation')), null)
 })
 
 test('the real document supplies hours for most of the trip', () => {
@@ -133,4 +135,68 @@ test('only place metadata is read, not anything with a description', () => {
 test('the document describes a useful share of the trip', () => {
   const found = descriptionsByName(PRAGUE)
   assert.ok(found.size >= 40, `expected a useful number, got ${found.size}`)
+})
+
+// ── what the trip records paying ────────────────────────────────────────────
+
+test('a place the budget prices gets a paying card', async () => {
+  const provider = new WanderlogProvider(PRAGUE, SOURCE)
+  const card = await provider.draft(ask('State Opera', 'how_to_pay'))
+
+  assert.ok(card)
+  assert.equal(card.body, 'Recorded in the trip budget as 890 CZK.')
+  assert.deepEqual(card.sources, [SOURCE])
+})
+
+test('a cost in another currency says which one the trip uses', async () => {
+  const provider = new WanderlogProvider(PRAGUE, SOURCE)
+  // The traveller recorded the cathedral in dollars and everything else in
+  // koruna. They will not be charged in dollars.
+  const card = await provider.draft(ask('St. Vitus Cathedral', 'how_to_pay'))
+  assert.ok(card)
+  assert.match(card.body, /22 USD/)
+  assert.match(card.body, /The rest of this trip is budgeted in CZK/)
+})
+
+test('the same amount recorded twice is said once', async () => {
+  const provider = new WanderlogProvider(PRAGUE, SOURCE)
+  // Two visits to the bakery, 200 CZK each. "200 CZK and 200 CZK" is worse
+  // than useless.
+  const card = await provider.draft(ask('Antonínovo pekařství', 'how_to_pay'))
+  assert.ok(card)
+  assert.equal(card.body, 'Recorded in the trip budget as 200 CZK.')
+})
+
+test('a place with nothing budgeted gets no paying card', async () => {
+  const provider = new WanderlogProvider(PRAGUE, SOURCE)
+  assert.equal(await provider.draft(ask('Charles Bridge', 'how_to_pay')), null)
+})
+
+test('expenses are joined by blockId, not by matching a description', () => {
+  const costs = costsByName(PRAGUE)
+  assert.equal(costs.size, 13)
+  assert.deepEqual(costs.get('State Opera'), [{ amount: 890, currency: 'CZK' }])
+  assert.equal(dominantCurrency(costs), 'CZK')
+})
+
+test('a budget with no clear currency claims none', () => {
+  const costs = new Map([
+    ['A', [{ amount: 10, currency: 'EUR' }]],
+    ['B', [{ amount: 10, currency: 'GBP' }]],
+  ])
+  assert.equal(dominantCurrency(costs), undefined)
+  assert.equal(dominantCurrency(new Map()), undefined)
+})
+
+test('a paying card fits the quiet voice the operational tier demands', async () => {
+  const provider = new WanderlogProvider(PRAGUE, SOURCE)
+  for (const name of ['State Opera', 'St. Vitus Cathedral', 'Prague Boats']) {
+    const card = await provider.draft(ask(name, 'how_to_pay'))
+    if (!card) continue
+    assert.deepEqual(
+      checkVoice(card.body, TIER_PERSONALITY[CARD_TIER['how_to_pay']]),
+      [],
+      `${name}: ${card.body}`,
+    )
+  }
 })
