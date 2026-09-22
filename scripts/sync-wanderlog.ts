@@ -100,7 +100,7 @@ const fromDocument = new WanderlogProvider(document, {
   title: `Wanderlog: ${bare.title}`,
   retrieved: new Date().toISOString().slice(0, 10),
 })
-console.log(`  doc    ${fromDocument.known} places state hours, ${fromDocument.described} are described`)
+console.log(`  doc    ${fromDocument.known} state hours, ${fromDocument.described} described, ${fromDocument.priced} priced`)
 
 const generated = await generateCards(filled.trip, {
   providers: [new OverpassProvider(), new WikipediaProvider(), fromDocument, new DeterministicProvider()],

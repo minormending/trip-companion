@@ -102,15 +102,100 @@ export function hoursByName(document: unknown): Map<string, WanderlogHours> {
   return out
 }
 
+export interface RecordedCost {
+  amount: number
+  currency: string
+}
+
+function formatAmount(cost: RecordedCost): string {
+  // Whole koruna and whole dollars alike: the document stores integers, and
+  // inventing decimal places would imply a precision it does not have.
+  return `${cost.amount} ${cost.currency}`
+}
+
+/**
+ * What the trip's own budget records against each place.
+ *
+ * The document keeps expenses in a structured list, each carrying the `blockId`
+ * of the itinerary entry it belongs to, so this is a join rather than a guess:
+ * thirteen of this trip's fourteen expenses resolve to a named place. The
+ * fourteenth is the hotel, whose block the view-key document does not carry.
+ *
+ * It is a fact about the trip rather than about the world — the traveller wrote
+ * it — which is exactly why it can be stated. What a museum charges today is
+ * something nobody here has checked; what this trip has budgeted for it is on
+ * the page.
+ */
+export function costsByName(document: unknown): Map<string, RecordedCost[]> {
+  const out = new Map<string, RecordedCost[]>()
+  if (!isRecord(document)) return out
+
+  const root = isRecord(document['tripPlan']) ? document['tripPlan'] : document
+  const itinerary = isRecord(root['itinerary']) ? root['itinerary'] : undefined
+  if (!itinerary) return out
+
+  // blockId -> place name, from the itinerary the expenses point into.
+  const blocks = new Map<number, string>()
+  const sections = itinerary['sections']
+  if (Array.isArray(sections)) {
+    for (const section of sections) {
+      if (!isRecord(section) || !Array.isArray(section['blocks'])) continue
+      for (const block of section['blocks']) {
+        if (!isRecord(block)) continue
+        const place = block['place']
+        const id = block['id']
+        if (typeof id === 'number' && isRecord(place) && typeof place['name'] === 'string') {
+          blocks.set(id, place['name'].trim())
+        }
+      }
+    }
+  }
+
+  const budget = isRecord(itinerary['budget']) ? itinerary['budget'] : undefined
+  const expenses = budget && Array.isArray(budget['expenses']) ? budget['expenses'] : []
+  for (const expense of expenses) {
+    if (!isRecord(expense)) continue
+    const name = typeof expense['blockId'] === 'number' ? blocks.get(expense['blockId']) : undefined
+    const amount = expense['amount']
+    if (!name || !isRecord(amount)) continue
+    const value = amount['amount']
+    const currency = amount['currencyCode']
+    if (typeof value !== 'number' || value <= 0 || typeof currency !== 'string') continue
+    const list = out.get(name) ?? []
+    list.push({ amount: value, currency: currency.toUpperCase() })
+    out.set(name, list)
+  }
+
+  return out
+}
+
+/** The currency most of the trip is budgeted in, if there is a clear one. */
+export function dominantCurrency(costs: Map<string, RecordedCost[]>): string | undefined {
+  const tally = new Map<string, number>()
+  for (const list of costs.values()) {
+    for (const cost of list) tally.set(cost.currency, (tally.get(cost.currency) ?? 0) + 1)
+  }
+  const ranked = [...tally].sort((a, b) => b[1] - a[1])
+  const top = ranked[0]
+  if (!top) return undefined
+  // A tie says nothing about which currency is the trip's.
+  if (ranked[1] && ranked[1][1] === top[1]) return undefined
+  return top[0]
+}
+
 export class WanderlogProvider implements CardProvider {
   readonly name = 'wanderlog'
   readonly #hours: Map<string, WanderlogHours>
   readonly #descriptions: Map<string, string>
+  readonly #costs: Map<string, RecordedCost[]>
+  readonly #currency: string | undefined
   readonly #source: Source
 
   constructor(document: unknown, source: Source) {
     this.#hours = hoursByName(document)
     this.#descriptions = descriptionsByName(document)
+    this.#costs = costsByName(document)
+    this.#currency = dominantCurrency(this.#costs)
     this.#source = source
   }
 
@@ -124,6 +209,11 @@ export class WanderlogProvider implements CardProvider {
     return this.#descriptions.size
   }
 
+  /** How many places the trip's budget records a cost against. */
+  get priced(): number {
+    return this.#costs.size
+  }
+
   async draft(req: CardRequest): Promise<CardDraft | null> {
     if (req.context.subject !== 'place') return null
 
@@ -134,6 +224,23 @@ export class WanderlogProvider implements CardProvider {
       const description = this.#descriptions.get(req.context.place.name)
       if (!description) return null
       return { title: req.context.place.name, body: description, sources: [this.#source] }
+    }
+
+    if (req.kind === 'how_to_pay') {
+      const costs = this.#costs.get(req.context.place.name)
+      if (!costs || costs.length === 0) return null
+
+      const distinct = [...new Set(costs.map(formatAmount))]
+      const parts = [`Recorded in the trip budget as ${distinct.join(' and ')}.`]
+
+      // A line in another currency is a conversion somebody did in advance,
+      // and the charge will not arrive in that currency. Saying so is a fact
+      // about the document, not a claim about the country's money.
+      if (this.#currency && costs.some((c) => c.currency !== this.#currency)) {
+        parts.push(`The rest of this trip is budgeted in ${this.#currency}.`)
+      }
+
+      return { title: req.context.place.name, body: parts.join(' '), sources: [this.#source] }
     }
 
     if (req.kind !== 'hours') return null
