@@ -46,6 +46,10 @@ const authPane = $<HTMLDivElement>('auth')
 const wlKey = $<HTMLInputElement>('wl-key')
 const wlImport = $<HTMLButtonElement>('wl-import')
 const wlStatus = $<HTMLParagraphElement>('wl-status')
+const wlRemembered = $<HTMLParagraphElement>('wl-remembered')
+const wlRememberedKey = $<HTMLSpanElement>('wl-remembered-key')
+const wlResync = $<HTMLButtonElement>('wl-resync')
+const wlForget = $<HTMLButtonElement>('wl-forget')
 
 const TRIP_KEY = 'trip-companion:trip'
 const CHECKIN_KEY = 'trip-companion:checkins'
@@ -490,13 +494,13 @@ function wlSay(text: string, bad = false): void {
  */
 async function runImport(pasted: string): Promise<void> {
   const key = keyFrom(pasted)
-  wlImport.disabled = true
+  setBusy(true)
   wlSay('Fetching the trip\u2026')
 
   const result = await importTrip(pasted)
   if (!result.ok) {
     wlSay(result.reason, true)
-    wlImport.disabled = false
+    setBusy(false)
     return
   }
 
@@ -517,6 +521,10 @@ async function runImport(pasted: string): Promise<void> {
       { render: { interactive: true } },
     )
     rememberKey(key)
+    // The box has done its job; leaving the key in it is what caused the
+    // doubling in the first place.
+    wlKey.value = ''
+    offerResync()
     show(enriched.trip, enriched.reports.content.refusals, true)
     const held = result.report.places - result.scheduled
     wlSay(
@@ -524,20 +532,34 @@ async function runImport(pasted: string): Promise<void> {
         ? `Imported. ${held} places in standing lists were left out, because they are not on a day.`
         : 'Imported.',
     )
-    offerResync()
   } catch (err) {
     wlSay(`Imported, but could not finish: ${(err as Error).message}`, true)
   } finally {
-    wlImport.disabled = false
+    setBusy(false)
   }
 }
 
-/** A key on this device means the trip can be fetched again without retyping. */
+/**
+ * The remembered key gets its own line, not the input.
+ *
+ * It used to be written into the field, which reads as something waiting to be
+ * filled in and is actually state. Importing a second trip then meant noticing
+ * the box was not empty and clearing it first — and clicking into it put the
+ * cursor at the end, so typing produced "aqifgcpkvoaqifgcpkvo" and a refusal
+ * about a key nobody entered.
+ *
+ * Two jobs, two controls: resync the trip already imported, or paste a new one.
+ */
 function offerResync(): void {
   const key = savedKey()
-  if (!key) return
-  wlKey.value = key
-  wlImport.textContent = 'Resync'
+  wlRemembered.hidden = !key
+  if (key) wlRememberedKey.textContent = `Last imported ${key}.`
+}
+
+function setBusy(busy: boolean): void {
+  wlImport.disabled = busy
+  wlResync.disabled = busy
+  wlForget.disabled = busy
 }
 
 wlImport.addEventListener('click', () => {
@@ -549,11 +571,19 @@ wlImport.addEventListener('click', () => {
   void runImport(pasted)
 })
 
-wlKey.addEventListener('input', () => {
-  if (!wlKey.value.trim()) {
-    forgetKey()
-    wlImport.textContent = 'Import'
+wlResync.addEventListener('click', () => {
+  const key = savedKey()
+  if (!key) {
+    offerResync()
+    return
   }
+  void runImport(key)
+})
+
+wlForget.addEventListener('click', () => {
+  forgetKey()
+  offerResync()
+  wlSay('Forgotten. Paste a key to import a trip.')
 })
 
 offerResync()

@@ -49,6 +49,12 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
   background: transparent; color: var(--ink); cursor: pointer; }
 .wl-row button:hover:not(:disabled) { border-color: var(--ink-faint); }
 .wl-row button:disabled { opacity: 0.55; cursor: default; }
+.wl-remembered { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.wl-remembered button { font: inherit; font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-soft); cursor: pointer; }
+.wl-remembered button:hover:not(:disabled) { border-color: var(--ink-faint); color: var(--ink); }
+.wl-remembered button:disabled { opacity: 0.55; cursor: default; }
+.wl-remembered code { color: var(--ink); }
 .auth-note + input { margin-top: 0.25rem; }
 #confirm { margin: 1.5rem 0; }
 #confirm h2 { margin-top: 0; }
@@ -111,6 +117,11 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
     <div id="wanderlog">
       <label for="wl-key">Or import a Wanderlog trip</label>
       <p class="hint">Paste the trip’s link or its key. Use the <strong>view</strong> link from the Share menu, not the address bar you edit in.</p>
+      <p class="hint wl-remembered" id="wl-remembered" hidden>
+        <span id="wl-remembered-key"></span>
+        <button type="button" id="wl-resync">Resync</button>
+        <button type="button" id="wl-forget">Forget</button>
+      </p>
       <div class="wl-row">
         <input id="wl-key" type="text" placeholder="wanderlog.com/plan/… or aqifgcpkvo" autocomplete="off">
         <button type="button" id="wl-import">Import</button>
