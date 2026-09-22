@@ -183,3 +183,19 @@ test('a taxi is paid for but not boarded', async () => {
   assert.ok(kinds.includes('how_to_pay'))
   assert.ok(!kinds.includes('boarding'))
 })
+
+test('cards are appended to the trip, not swapped in', async () => {
+  // Load-bearing, and not obvious from the name: a second pass over a trip
+  // that already has cards doubles them. The browser's OSM enrichment learned
+  // this by shipping a briefing with ninety-four duplicates in it.
+  const t = trip([place('p1', 'Sensoji Temple', 35.7148, 139.7967)])
+  const once = await generateCards(t, { providers: [] })
+  const twice = await generateCards(once.trip, { providers: [] })
+
+  assert.ok(once.trip.cards.length > 0)
+  assert.equal(twice.trip.cards.length, once.trip.cards.length * 2, 'the contract is append')
+
+  // Which is why a re-run must clear them first.
+  const clean = await generateCards({ ...once.trip, cards: [] }, { providers: [] })
+  assert.equal(clean.trip.cards.length, once.trip.cards.length)
+})

@@ -12,6 +12,7 @@ import type { Trip } from '../src/domain/types.ts'
 import { haversineKm, PhotonGeocoder, type GeocodeCandidate } from '../src/geo/geocode.ts'
 import type { PendingConfirmation } from '../src/import/build.ts'
 import { applyChoices, enrichTrip, resolveTrip, type PipelineDeps } from '../src/pipeline.ts'
+import { generateCards } from '../src/content/generate.ts'
 import { renderBriefing } from '../src/render/briefing.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
 import { ValhallaProvider } from '../src/routing/valhalla.ts'
@@ -20,6 +21,7 @@ import { supabase } from '../src/backend/client.ts'
 import { TripRepository } from '../src/backend/trips.ts'
 import { forgetKey, importTrip, keyFrom, rememberKey, savedKey } from './wanderlog.ts'
 import { WanderlogProvider } from '../src/content/providers/wanderlog.ts'
+import { OsmApiProvider, osmCardCount, resolvePlaces } from '../src/content/providers/osmApi.ts'
 import { tripUrl } from '../src/import/wanderlogApi.ts'
 import type { CardProvider } from '../src/content/providers/types.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
@@ -122,8 +124,14 @@ function setFormDisabled(disabled: boolean): void {
  * out visibly worse than the same trip synced from the command line — "Paying:
  * not confirmed" on a place whose price is sitting in the file that was just
  * downloaded.
+ *
+ * `osm` is present only for the background pass, and sits deliberately low.
+ * Listed first it would outrank the document, and the document's hours come
+ * from Google by way of a human who checked them, which beats an OSM
+ * `opening_hours` string. OSM's job here is the questions nobody else answers:
+ * payment method, and step-free access.
  */
-function deps(fromDocument?: CardProvider): PipelineDeps {
+function deps(extra: { fromDocument?: CardProvider; osm?: CardProvider } = {}): PipelineDeps {
   return {
     geocoder: new PhotonGeocoder({ minIntervalMs: 1100 }),
     routers: [new ValhallaProvider(), new OsrmProvider(), new NullTransitProvider()],
@@ -133,7 +141,8 @@ function deps(fromDocument?: CardProvider): PipelineDeps {
     providers: [
       new OverpassProvider(),
       new WikipediaProvider(),
-      ...(fromDocument ? [fromDocument] : []),
+      ...(extra.fromDocument ? [extra.fromDocument] : []),
+      ...(extra.osm ? [extra.osm] : []),
       new DeterministicProvider(),
     ],
     ...(cache ? { cache } : {}),
@@ -476,6 +485,74 @@ async function restoreFromHash(): Promise<boolean> {
   return true
 }
 
+let enriching: AbortController | null = null
+
+/**
+ * Ask OpenStreetMap about the stops, after the briefing is already readable.
+ *
+ * This is the only source that knows a payment *method* — the document knows
+ * what a visit was budgeted at, OSM knows the ice cream shop takes Maestro.
+ * It is also slow: Photon is community infrastructure and gets one request at
+ * a time, so thirty-three stops take about forty seconds. Putting that in
+ * front of the briefing would trade the whole page for five cards.
+ *
+ * So it runs behind it. The briefing is on screen throughout, the line at the
+ * top says what is happening, and if nothing is found it says that too rather
+ * than leaving a promise hanging.
+ */
+async function enrichFromOsm(trip: Trip, fromDocument?: CardProvider): Promise<void> {
+  enriching?.abort()
+  const controller = new AbortController()
+  enriching = controller
+
+  const places = trip.places
+  setStatus(`Checking OpenStreetMap for payment and access details (0 of ${places.length})\u2026`)
+
+  const resolved = await resolvePlaces(places, {
+    signal: controller.signal,
+    contact: 'trip-companion, github.com/minormending/trip-companion',
+    onProgress: (done, total, found) => {
+      if (controller.signal.aborted) return
+      setStatus(`Checking OpenStreetMap (${done} of ${total}, ${found} found)\u2026`)
+    },
+  })
+
+  if (controller.signal.aborted) return
+  if (resolved.size === 0) {
+    setStatus('OpenStreetMap had nothing on file for these stops.')
+    return
+  }
+
+  const unconfirmed = baseRefusals.length
+
+  // `cards: []`, because generateCards appends to the list it is handed rather
+  // than replacing it. Passing the finished trip produced every card twice —
+  // sixty-six golden-hour cards for thirty-three stops — under a line claiming
+  // a hundred had been added.
+  const generated = await generateCards(
+    { ...trip, cards: [] },
+    deps({ ...(fromDocument ? { fromDocument } : {}), osm: new OsmApiProvider(resolved) }),
+  )
+  if (controller.signal.aborted) return
+
+  await cache?.flush()
+  show(generated.trip, generated.report.refusals, true)
+
+  const from = osmCardCount(generated.trip.cards, resolved)
+  const cleared = unconfirmed - generated.report.refusals.length
+  setStatus(
+    from === 0
+      ? `OpenStreetMap matched ${resolved.size} of ${places.length} stops and had nothing to add about them.`
+      : [
+          `${from} card${from === 1 ? '' : 's'} from OpenStreetMap`,
+          `${resolved.size} of ${places.length} stops matched`,
+          cleared > 0 ? `${cleared} fewer unconfirmed` : '',
+        ]
+          .filter(Boolean)
+          .join(' \u00b7 '),
+  )
+}
+
 form.addEventListener('submit', (e) => void build(e))
 
 function wlSay(text: string, bad = false): void {
@@ -516,7 +593,7 @@ async function runImport(pasted: string): Promise<void> {
     })
     const enriched = await enrichTrip(
       result.trip,
-      deps(fromDocument),
+      deps({ fromDocument }),
       { resolved: result.scheduled, unresolved: [], needsConfirmation: [] },
       { render: { interactive: true } },
     )
@@ -532,6 +609,9 @@ async function runImport(pasted: string): Promise<void> {
         ? `Imported. ${held} places in standing lists were left out, because they are not on a day.`
         : 'Imported.',
     )
+    // Not awaited: the briefing is finished and readable, and this takes the
+    // best part of a minute.
+    void enrichFromOsm(enriched.trip, fromDocument)
   } catch (err) {
     wlSay(`Imported, but could not finish: ${(err as Error).message}`, true)
   } finally {
