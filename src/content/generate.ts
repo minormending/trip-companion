@@ -4,6 +4,7 @@ import {
   type Card,
   type CardAttachment,
   type CardKind,
+  type Place,
   type Tier,
   type Trip,
   CARD_TIER,
@@ -138,7 +139,20 @@ export async function generateCards(
     sourceProblems: [],
   }
   const cards: Card[] = []
-  const photoDate = opts.photoDate ?? (trip.departsOn ? new Date(trip.departsOn) : new Date())
+  const tripStart = opts.photoDate ?? (trip.departsOn ? new Date(trip.departsOn) : new Date())
+
+  /**
+   * The sun on the day they are actually there.
+   *
+   * Every photo card used to be computed for the departure date, so a place
+   * on day five of a trip was told about day one's light. Over five days in
+   * October that is several minutes of golden hour; over a longer trip, or
+   * one crossing an equinox, it is more.
+   */
+  const dateFor = (place: Place): Date => {
+    if (opts.photoDate || place.dayIndex === undefined) return tripStart
+    return new Date(tripStart.getTime() + (place.dayIndex - 1) * 86_400_000)
+  }
 
   // Remote sources are asked once for the whole trip, not once per card. A
   // provider that cannot be reached must not look like one with nothing to
@@ -167,7 +181,7 @@ export async function generateCards(
       if (card) cards.push(card)
     }
 
-    const photo = photoCard(place, photoDate)
+    const photo = photoCard(place, dateFor(place))
     if (photo) {
       cards.push(photo)
       report.generated++
