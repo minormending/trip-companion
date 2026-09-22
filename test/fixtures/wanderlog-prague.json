@@ -165,6 +165,17 @@
            }
           },
           "name": "Letiště Václava Havla Praha",
+          "opening_hours": {
+           "weekday_text": [
+            "Monday: Open 24 hours",
+            "Tuesday: Open 24 hours",
+            "Wednesday: Open 24 hours",
+            "Thursday: Open 24 hours",
+            "Friday: Open 24 hours",
+            "Saturday: Open 24 hours",
+            "Sunday: Open 24 hours"
+           ]
+          },
           "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
           "types": [
            "airport",
@@ -250,6 +261,17 @@
            }
           },
           "name": "Letiště Václava Havla Praha",
+          "opening_hours": {
+           "weekday_text": [
+            "Monday: Open 24 hours",
+            "Tuesday: Open 24 hours",
+            "Wednesday: Open 24 hours",
+            "Thursday: Open 24 hours",
+            "Friday: Open 24 hours",
+            "Saturday: Open 24 hours",
+            "Sunday: Open 24 hours"
+           ]
+          },
           "place_id": "ChIJyw1526e_C0cRrPakrNGArS8",
           "types": [
            "airport",
@@ -527,6 +549,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–5 PM",
+          "Tuesday: 10 AM–5 PM",
+          "Wednesday: 10 AM–5 PM",
+          "Thursday: 10 AM–5 PM",
+          "Friday: 10 AM–5 PM",
+          "Saturday: Closed",
+          "Sunday: 10 AM–5 PM"
+         ]
+        },
         "types": [
          "synagogue",
          "ethnographic_museum",
@@ -616,6 +649,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–5 PM",
+          "Tuesday: 8 AM–5 PM",
+          "Wednesday: 8 AM–5 PM",
+          "Thursday: 8 AM–5 PM",
+          "Friday: 8 AM–5 PM",
+          "Saturday: 8 AM–2 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "market",
          "produce_market",
@@ -662,6 +706,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "monastery",
          "tourist_attraction"
@@ -706,6 +761,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "library",
          "tourist_attraction"
@@ -750,6 +816,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–10 PM",
+          "Tuesday: 10 AM–10 PM",
+          "Wednesday: 10 AM–10 PM",
+          "Thursday: 10 AM–10 PM",
+          "Friday: 10 AM–10 PM",
+          "Saturday: 10 AM–10 PM",
+          "Sunday: 10 AM–10 PM"
+         ]
+        },
         "types": [
          "brewery",
          "bistro",
@@ -796,6 +873,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–5 PM",
+          "Tuesday: 10 AM–5 PM",
+          "Wednesday: 10 AM–5 PM",
+          "Thursday: 10 AM–5 PM",
+          "Friday: 10 AM–5 PM",
+          "Saturday: 10 AM–5 PM",
+          "Sunday: 10 AM–5 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "art_gallery",
@@ -887,6 +975,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "art_gallery",
          "museum",
@@ -932,6 +1031,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "museum",
          "monastery",
@@ -977,6 +1087,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10:30 AM–9 PM",
+          "Tuesday: 10:30 AM–9 PM",
+          "Wednesday: 10:30 AM–9 PM",
+          "Thursday: 10:30 AM–9 PM",
+          "Friday: 10:30 AM–9 PM",
+          "Saturday: 11 AM–9 PM",
+          "Sunday: 11 AM–9 PM"
+         ]
+        },
         "types": [
          "vietnamese_restaurant",
          "asian_restaurant",
@@ -1067,6 +1188,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–8:30 PM",
+          "Tuesday: 9 AM–8:30 PM",
+          "Wednesday: 9 AM–8:30 PM",
+          "Thursday: 9 AM–8:30 PM",
+          "Friday: 9 AM–8:30 PM",
+          "Saturday: 9 AM–8:30 PM",
+          "Sunday: 9 AM–8:30 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "tourist_attraction"
@@ -1111,6 +1243,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–8 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "museum",
          "store",
@@ -1200,6 +1343,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–8:30 PM",
+          "Tuesday: 11 AM–8:30 PM",
+          "Wednesday: 11 AM–8:30 PM",
+          "Thursday: 11 AM–8:30 PM",
+          "Friday: 11 AM–8:30 PM",
+          "Saturday: 11 AM–8:30 PM",
+          "Sunday: 11 AM–8:30 PM"
+         ]
+        },
         "types": [
          "tourist_attraction",
          "gift_shop"
@@ -1244,6 +1398,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "tourist_attraction"
@@ -1288,6 +1453,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "basilica",
          "catholic_church",
@@ -1424,6 +1600,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9:30 AM–6 PM",
+          "Tuesday: 9:30 AM–6 PM",
+          "Wednesday: 9:30 AM–6 PM",
+          "Thursday: 9:30 AM–6 PM",
+          "Friday: 9:30 AM–6 PM",
+          "Saturday: 9:30 AM–6 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "bistro",
          "coffee_shop"
@@ -1468,6 +1655,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8:30 AM–5 PM",
+          "Tuesday: 8:30 AM–5 PM",
+          "Wednesday: 8:30 AM–5 PM",
+          "Thursday: 8:30 AM–5 PM",
+          "Friday: 8:30 AM–5 PM",
+          "Saturday: Closed",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "bakery",
          "cake_shop",
@@ -1514,6 +1712,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–10 PM",
+          "Tuesday: 8 AM–10 PM",
+          "Wednesday: 8 AM–10 PM",
+          "Thursday: 8 AM–10 PM",
+          "Friday: 8 AM–10 PM",
+          "Saturday: 9 AM–10 PM",
+          "Sunday: 9 AM–10 PM"
+         ]
+        },
         "types": [
          "restaurant",
          "bakery",
@@ -1604,6 +1813,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–6 PM",
+          "Tuesday: 9 AM–6 PM",
+          "Wednesday: 9 AM–6 PM",
+          "Thursday: 9 AM–6 PM",
+          "Friday: 9 AM–6 PM",
+          "Saturday: 9 AM–6 PM",
+          "Sunday: 9 AM–6 PM"
+         ]
+        },
         "types": [
          "art_museum",
          "art_gallery",
@@ -1653,6 +1873,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–10 PM",
+          "Tuesday: 11 AM–10 PM",
+          "Wednesday: 11 AM–10 PM",
+          "Thursday: 11 AM–10 PM",
+          "Friday: 11 AM–10 PM",
+          "Saturday: 11 AM–10 PM",
+          "Sunday: 11 AM–10 PM"
+         ]
+        },
         "types": [
          "restaurant",
          "czech_restaurant"
@@ -1697,6 +1928,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "places_of_interest",
@@ -1742,6 +1984,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–12 AM",
+          "Tuesday: 11 AM–12 AM",
+          "Wednesday: 11 AM–12 AM",
+          "Thursday: 11 AM–12 AM",
+          "Friday: 11 AM–12 AM",
+          "Saturday: 11 AM–12 AM",
+          "Sunday: 11 AM–10 PM"
+         ]
+        },
         "types": [
          "brewery",
          "restaurant"
@@ -1795,6 +2048,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–11 PM",
+          "Tuesday: 11 AM–11 PM",
+          "Wednesday: 11 AM–11 PM",
+          "Thursday: 11 AM–11 PM",
+          "Friday: 11 AM–11 PM",
+          "Saturday: 11 AM–11 PM",
+          "Sunday: 11 AM–11 PM"
+         ]
+        },
         "types": [
          "beer_garden",
          "restaurant"
@@ -1839,6 +2103,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 2–10 PM",
+          "Tuesday: 2–10 PM",
+          "Wednesday: 2–10 PM",
+          "Thursday: 2–10 PM",
+          "Friday: 2–10 PM",
+          "Saturday: 12–10 PM",
+          "Sunday: 12–10 PM"
+         ]
+        },
         "types": [
          "beer_garden",
          "bar"
@@ -1891,6 +2166,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+         ]
+        },
         "types": [
          "park"
         ]
@@ -1936,6 +2222,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6 AM–9 PM",
+          "Tuesday: 6 AM–9 PM",
+          "Wednesday: 6 AM–9 PM",
+          "Thursday: 6 AM–9 PM",
+          "Friday: 6 AM–9 PM",
+          "Saturday: 6 AM–9 PM",
+          "Sunday: 6 AM–9 PM"
+         ]
+        },
         "types": [
          "marina"
         ]
@@ -1981,6 +2278,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 1–7:30 PM",
+          "Tuesday: 1–7:30 PM",
+          "Wednesday: 1–7:30 PM",
+          "Thursday: 1–7:30 PM",
+          "Friday: 1–7:30 PM",
+          "Saturday: 11 AM–7:30 PM",
+          "Sunday: 11 AM–7:30 PM"
+         ]
+        },
         "types": [
          "winery",
          "wine_bar",
@@ -2028,6 +2336,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6 AM–9 PM",
+          "Tuesday: 6 AM–9 PM",
+          "Wednesday: 6 AM–9 PM",
+          "Thursday: 6 AM–9 PM",
+          "Friday: 6 AM–9 PM",
+          "Saturday: 6 AM–9 PM",
+          "Sunday: 6 AM–9 PM"
+         ]
+        },
         "types": [
          "marina"
         ]
@@ -2073,6 +2392,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+         ]
+        },
         "types": [
          "park"
         ]
@@ -2158,6 +2488,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–6 PM",
+          "Tuesday: 9 AM–6 PM",
+          "Wednesday: 9 AM–6 PM",
+          "Thursday: 9 AM–6 PM",
+          "Friday: 9 AM–6 PM",
+          "Saturday: 9 AM–6 PM",
+          "Sunday: 9 AM–6 PM"
+         ]
+        },
         "types": [
          "catholic_church",
          "tourist_attraction"
@@ -2194,6 +2535,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–6 PM",
+          "Tuesday: 9 AM–6 PM",
+          "Wednesday: 9 AM–6 PM",
+          "Thursday: 9 AM–6 PM",
+          "Friday: 9 AM–6 PM",
+          "Saturday: 9 AM–6 PM",
+          "Sunday: 9 AM–6 PM"
+         ]
+        },
         "types": [
          "church",
          "catholic_cathedral",
@@ -2232,6 +2584,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "tourist_attraction"
@@ -2268,6 +2631,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–11 PM",
+          "Tuesday: 11 AM–11 PM",
+          "Wednesday: 11 AM–11 PM",
+          "Thursday: 11 AM–11 PM",
+          "Friday: 11 AM–12 AM",
+          "Saturday: 11 AM–12 AM",
+          "Sunday: 11 AM–11 PM"
+         ]
+        },
         "types": [
          "czech_restaurant",
          "restaurant"
@@ -2304,6 +2678,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–5 PM",
+          "Tuesday: 10 AM–5 PM",
+          "Wednesday: 10 AM–5 PM",
+          "Thursday: 10 AM–5 PM",
+          "Friday: 10 AM–5 PM",
+          "Saturday: 10 AM–5 PM",
+          "Sunday: 10 AM–5 PM"
+         ]
+        },
         "types": [
          "historical_landmark",
          "hiking_area",
@@ -2379,6 +2764,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–6 PM",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "summer_toboggan_run",
          "tourist_attraction"
@@ -2824,6 +3220,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–8 PM",
+          "Tuesday: 8 AM–8 PM",
+          "Wednesday: 8 AM–8 PM",
+          "Thursday: 8 AM–8 PM",
+          "Friday: 8 AM–8 PM",
+          "Saturday: 9 AM–6 PM",
+          "Sunday: 9 AM–6 PM"
+         ]
+        },
         "types": [
          "bistro"
         ]
@@ -2867,6 +3274,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–7:30 PM",
+          "Tuesday: 8 AM–7:30 PM",
+          "Wednesday: 8 AM–7:30 PM",
+          "Thursday: 8 AM–7:30 PM",
+          "Friday: 8 AM–7:30 PM",
+          "Saturday: 9 AM–7:30 PM",
+          "Sunday: 9 AM–5 PM"
+         ]
+        },
         "types": [
          "restaurant"
         ]
@@ -2910,6 +3328,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–11 PM",
+          "Tuesday: 11 AM–11 PM",
+          "Wednesday: 11 AM–11 PM",
+          "Thursday: 11 AM–11 PM",
+          "Friday: 11 AM–11 PM",
+          "Saturday: 11 AM–11 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "restaurant"
         ]
@@ -2953,6 +3382,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 5 PM–2 AM",
+          "Tuesday: 5 PM–2 AM",
+          "Wednesday: 5 PM–2 AM",
+          "Thursday: 5 PM–2 AM",
+          "Friday: 5 PM–2 AM",
+          "Saturday: 5 PM–2 AM",
+          "Sunday: 5 PM–2 AM"
+         ]
+        },
         "types": [
          "bar",
          "cocktail_bar",
@@ -2999,6 +3439,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–9:30 PM",
+          "Tuesday: 11 AM–9:30 PM",
+          "Wednesday: 11 AM–9:30 PM",
+          "Thursday: 11 AM–9:30 PM",
+          "Friday: 11 AM–9:30 PM",
+          "Saturday: 12–9:30 PM",
+          "Sunday: 12–9:30 PM"
+         ]
+        },
         "types": [
          "vietnamese_restaurant"
         ]
@@ -3042,6 +3493,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–8 PM",
+          "Tuesday: 11 AM–8 PM",
+          "Wednesday: 11 AM–8 PM",
+          "Thursday: 11 AM–8 PM",
+          "Friday: 11 AM–8 PM",
+          "Saturday: 11:30 AM–8 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "vietnamese_restaurant",
          "asian_restaurant",
@@ -3087,6 +3549,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–6 PM",
+          "Tuesday: 8 AM–6 PM",
+          "Wednesday: 8 AM–6 PM",
+          "Thursday: 8 AM–6 PM",
+          "Friday: 8 AM–6 PM",
+          "Saturday: Closed",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "deli"
         ]
@@ -3130,6 +3603,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6:30 AM–7:30 PM",
+          "Tuesday: 6:30 AM–7:30 PM",
+          "Wednesday: 6:30 AM–7:30 PM",
+          "Thursday: 6:30 AM–7:30 PM",
+          "Friday: 6:30 AM–7:30 PM",
+          "Saturday: 8 AM–7 PM",
+          "Sunday: 8 AM–7 PM"
+         ]
+        },
         "types": [
          "deli"
         ]
@@ -3173,6 +3657,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6:30 AM–7 PM",
+          "Tuesday: 6:30 AM–7 PM",
+          "Wednesday: 6:30 AM–7 PM",
+          "Thursday: 6:30 AM–7 PM",
+          "Friday: 6:30 AM–7 PM",
+          "Saturday: 8 AM–6 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "deli",
          "bakery",
@@ -3218,6 +3713,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6:30 AM–7 PM",
+          "Tuesday: 6:30 AM–7 PM",
+          "Wednesday: 6:30 AM–7 PM",
+          "Thursday: 6:30 AM–7 PM",
+          "Friday: 6:30 AM–7 PM",
+          "Saturday: 8 AM–6 PM",
+          "Sunday: 8 AM–6 PM"
+         ]
+        },
         "types": [
          "deli"
         ]
@@ -3261,6 +3767,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6:30 AM–7 PM",
+          "Tuesday: 6:30 AM–7 PM",
+          "Wednesday: 6:30 AM–7 PM",
+          "Thursday: 6:30 AM–7 PM",
+          "Friday: 6:30 AM–7 PM",
+          "Saturday: 8 AM–6 PM",
+          "Sunday: 8 AM–5 PM"
+         ]
+        },
         "types": [
          "deli"
         ]
@@ -3304,6 +3821,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–11 PM",
+          "Tuesday: 11 AM–11 PM",
+          "Wednesday: 11 AM–11 PM",
+          "Thursday: 11 AM–11 PM",
+          "Friday: 11 AM–11 PM",
+          "Saturday: 11 AM–11 PM",
+          "Sunday: 11 AM–11 PM"
+         ]
+        },
         "types": [
          "czech_restaurant"
         ]
@@ -3347,6 +3875,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–10 PM",
+          "Tuesday: 8 AM–10 PM",
+          "Wednesday: 8 AM–10 PM",
+          "Thursday: 8 AM–10 PM",
+          "Friday: 8 AM–10 PM",
+          "Saturday: 8 AM–10 PM",
+          "Sunday: 8 AM–10 PM"
+         ]
+        },
         "types": [
          "bakery",
          "coffee_shop",
@@ -3548,6 +4087,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–8 PM",
+          "Tuesday: 11 AM–8 PM",
+          "Wednesday: 11 AM–8 PM",
+          "Thursday: 11 AM–8 PM",
+          "Friday: 11 AM–8 PM",
+          "Saturday: 11:30 AM–8 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "vietnamese_restaurant",
          "asian_restaurant",
@@ -3641,6 +4191,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–8 PM",
+          "Tuesday: 9 AM–8 PM",
+          "Wednesday: 9 AM–8 PM",
+          "Thursday: 9 AM–8 PM",
+          "Friday: 9 AM–8 PM",
+          "Saturday: 9 AM–8 PM",
+          "Sunday: 9 AM–8 PM"
+         ]
+        },
         "types": [
          "tourist_attraction",
          "places_of_interest"
@@ -3687,6 +4248,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "museum",
          "monastery",
@@ -3734,6 +4306,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 8 AM–6 PM",
+          "Tuesday: 8 AM–6 PM",
+          "Wednesday: 8 AM–6 PM",
+          "Thursday: 8 AM–6 PM",
+          "Friday: 8 AM–6 PM",
+          "Saturday: 9 AM–6 PM",
+          "Sunday: 9 AM–6 PM"
+         ]
+        },
         "types": [
          "bakery",
          "cafe"
@@ -3780,6 +4363,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 7 AM–11 PM",
+          "Tuesday: 7 AM–11 PM",
+          "Wednesday: 7 AM–11 PM",
+          "Thursday: 7 AM–11 PM",
+          "Friday: 7 AM–11 PM",
+          "Saturday: 7 AM–11 PM",
+          "Sunday: 7 AM–11 PM"
+         ]
+        },
         "types": [
          "supermarket",
          "grocery_store",
@@ -3927,6 +4521,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–8 PM",
+          "Tuesday: 9 AM–8 PM",
+          "Wednesday: 9 AM–8 PM",
+          "Thursday: 9 AM–8 PM",
+          "Friday: 9 AM–8 PM",
+          "Saturday: 9 AM–8 PM",
+          "Sunday: 9 AM–8 PM"
+         ]
+        },
         "types": [
          "historic_site",
          "tourist_attraction"
@@ -3973,6 +4578,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–10 PM",
+          "Tuesday: 9 AM–10 PM",
+          "Wednesday: 9 AM–10 PM",
+          "Thursday: 9 AM–10 PM",
+          "Friday: 9 AM–10 PM",
+          "Saturday: 9 AM–10 PM",
+          "Sunday: 9 AM–10 PM"
+         ]
+        },
         "types": [
          "boat_tour_agency"
         ]
@@ -4024,6 +4640,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–12 AM",
+          "Tuesday: 11 AM–12 AM",
+          "Wednesday: 11 AM–12 AM",
+          "Thursday: 11 AM–12 AM",
+          "Friday: 11 AM–12 AM",
+          "Saturday: 11 AM–12 AM",
+          "Sunday: 11 AM–11 PM"
+         ]
+        },
         "types": [
          "czech_restaurant",
          "restaurant"
@@ -4070,6 +4697,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+         ]
+        },
         "types": [
          "bridge",
          "tourist_attraction"
@@ -4125,6 +4763,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 7 AM–7:30 PM",
+          "Tuesday: 7 AM–7:30 PM",
+          "Wednesday: 7 AM–7:30 PM",
+          "Thursday: 7 AM–7:30 PM",
+          "Friday: 7 AM–7:30 PM",
+          "Saturday: 7 AM–7:30 PM",
+          "Sunday: 7 AM–7:30 PM"
+         ]
+        },
         "types": [
          "bakery",
          "coffee_shop"
@@ -4171,6 +4820,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9 AM–5 PM",
+          "Tuesday: 9 AM–5 PM",
+          "Wednesday: 9 AM–5 PM",
+          "Thursday: 9 AM–5 PM",
+          "Friday: 9 AM–5 PM",
+          "Saturday: 9 AM–5 PM",
+          "Sunday: 12–5 PM"
+         ]
+        },
         "types": [
          "cathedral",
          "church",
@@ -4225,6 +4885,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "art_gallery",
          "exhibit",
@@ -4272,6 +4943,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: 10 AM–6 PM",
+          "Wednesday: 10 AM–6 PM",
+          "Thursday: 10 AM–6 PM",
+          "Friday: 10 AM–6 PM",
+          "Saturday: 10 AM–6 PM",
+          "Sunday: 10 AM–6 PM"
+         ]
+        },
         "types": [
          "art_gallery",
          "tourist_attraction"
@@ -4318,6 +5000,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 9:30 AM–6 PM",
+          "Tuesday: 9:30 AM–6 PM",
+          "Wednesday: 9:30 AM–6 PM",
+          "Thursday: 9:30 AM–6 PM",
+          "Friday: 9:30 AM–6 PM",
+          "Saturday: 9:30 AM–6 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "bistro",
          "coffee_shop"
@@ -4364,6 +5057,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 4–10 PM",
+          "Tuesday: 4–10 PM",
+          "Wednesday: 4–10 PM",
+          "Thursday: 4–10 PM",
+          "Friday: 4–10 PM",
+          "Saturday: Closed",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "wine_bar",
          "beer_garden",
@@ -4506,6 +5210,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10:45 AM–11 PM",
+          "Tuesday: 10:45 AM–11:30 PM",
+          "Wednesday: 10:45 AM–11:30 PM",
+          "Thursday: 10:45 AM–12 AM",
+          "Friday: 10:45 AM–12 AM",
+          "Saturday: 11:30 AM–12 AM",
+          "Sunday: 11:30 AM–11 PM"
+         ]
+        },
         "types": [
          "restaurant",
          "gastropub",
@@ -4562,6 +5277,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: Closed",
+          "Tuesday: Closed",
+          "Wednesday: Closed",
+          "Thursday: Closed",
+          "Friday: Closed",
+          "Saturday: 8 AM–2 PM",
+          "Sunday: Closed"
+         ]
+        },
         "types": [
          "farmers_market"
         ]
@@ -4607,6 +5333,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10 AM–11 PM",
+          "Tuesday: 10 AM–11 PM",
+          "Wednesday: 10 AM–11 PM",
+          "Thursday: 10 AM–11 PM",
+          "Friday: 10 AM–11 PM",
+          "Saturday: 10 AM–11 PM",
+          "Sunday: 10 AM–11 PM"
+         ]
+        },
         "types": [
          "czech_restaurant",
          "brewery",
@@ -4655,6 +5392,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 10:30 AM–10:30 PM",
+          "Tuesday: 10:30 AM–10:30 PM",
+          "Wednesday: 10:30 AM–10:30 PM",
+          "Thursday: 10:30 AM–10:30 PM",
+          "Friday: 10:30 AM–10:30 PM",
+          "Saturday: 10:30 AM–10:30 PM",
+          "Sunday: 10:30 AM–10:30 PM"
+         ]
+        },
         "types": [
          "ice_cream_shop",
          "coffee_shop",
@@ -4702,6 +5450,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 6 AM–12 AM",
+          "Tuesday: 6 AM–12 AM",
+          "Wednesday: 6 AM–12 AM",
+          "Thursday: 6 AM–12 AM",
+          "Friday: 6 AM–12 AM",
+          "Saturday: 6 AM–12 AM",
+          "Sunday: 6 AM–12 AM"
+         ]
+        },
         "types": [
          "park",
          "tourist_attraction"
@@ -4748,6 +5507,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 11 AM–10 PM",
+          "Tuesday: 11 AM–10 PM",
+          "Wednesday: 11 AM–10 PM",
+          "Thursday: 11 AM–10 PM",
+          "Friday: 11 AM–10 PM",
+          "Saturday: 10 AM–10 PM",
+          "Sunday: 10 AM–10 PM"
+         ]
+        },
         "types": [
          "restaurant"
         ]
@@ -4793,6 +5563,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 4 PM–12 AM",
+          "Tuesday: 4 PM–12 AM",
+          "Wednesday: 4 PM–12 AM",
+          "Thursday: 4 PM–12 AM",
+          "Friday: 4 PM–12 AM",
+          "Saturday: 4 PM–12 AM",
+          "Sunday: 4 PM–12 AM"
+         ]
+        },
         "types": [
          "wine_bar",
          "bar",
@@ -4850,6 +5631,17 @@
           ]
          }
         ],
+        "opening_hours": {
+         "weekday_text": [
+          "Monday: 7 AM–7:30 PM",
+          "Tuesday: 7 AM–7:30 PM",
+          "Wednesday: 7 AM–7:30 PM",
+          "Thursday: 7 AM–7:30 PM",
+          "Friday: 7 AM–7:30 PM",
+          "Saturday: 7 AM–7:30 PM",
+          "Sunday: 7 AM–7:30 PM"
+         ]
+        },
         "types": [
          "bakery",
          "coffee_shop"
