@@ -18,6 +18,7 @@ import { ValhallaProvider } from '../src/routing/valhalla.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
 import { supabase } from '../src/backend/client.ts'
 import { TripRepository } from '../src/backend/trips.ts'
+import { forgetKey, importTrip, keyFrom, rememberKey, savedKey } from './wanderlog.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
 import { mountAuth } from './auth.ts'
 import { decodeTrip, encodeTrip } from './share.ts'
@@ -39,6 +40,9 @@ const nowPane = $<HTMLDivElement>('now')
 const resumePane = $<HTMLDivElement>('resume')
 
 const authPane = $<HTMLDivElement>('auth')
+const wlKey = $<HTMLInputElement>('wl-key')
+const wlImport = $<HTMLButtonElement>('wl-import')
+const wlStatus = $<HTMLParagraphElement>('wl-status')
 
 const TRIP_KEY = 'trip-companion:trip'
 const CHECKIN_KEY = 'trip-companion:checkins'
@@ -451,6 +455,85 @@ async function restoreFromHash(): Promise<boolean> {
 }
 
 form.addEventListener('submit', (e) => void build(e))
+
+function wlSay(text: string, bad = false): void {
+  wlStatus.textContent = text
+  wlStatus.className = bad ? 'hint bad' : 'hint'
+}
+
+/**
+ * Import a Wanderlog trip, then take it through the same enrichment the pasted
+ * path uses — routing, cards, corrections — so a trip that arrives this way is
+ * not a lesser one.
+ *
+ * The key is remembered on this device so the next visit can offer to fetch it
+ * again. It is never uploaded: it stays in local storage even when signed in,
+ * which does mean pasting it once per device.
+ */
+async function runImport(pasted: string): Promise<void> {
+  const key = keyFrom(pasted)
+  wlImport.disabled = true
+  wlSay('Fetching the trip\u2026')
+
+  const result = await importTrip(pasted)
+  if (!result.ok) {
+    wlSay(result.reason, true)
+    wlImport.disabled = false
+    return
+  }
+
+  await openStores()
+  checkIns = readLocal<CheckIn[]>(CHECKIN_KEY, [])
+  wlSay(`Imported ${result.scheduled} stops. Routing and writing cards\u2026`)
+
+  try {
+    const enriched = await enrichTrip(
+      result.trip,
+      deps(),
+      { resolved: result.scheduled, unresolved: [], needsConfirmation: [] },
+      { render: { interactive: true } },
+    )
+    rememberKey(key)
+    show(enriched.trip, enriched.reports.content.refusals, true)
+    const held = result.report.places - result.scheduled
+    wlSay(
+      held > 0
+        ? `Imported. ${held} places in standing lists were left out, because they are not on a day.`
+        : 'Imported.',
+    )
+    offerResync()
+  } catch (err) {
+    wlSay(`Imported, but could not finish: ${(err as Error).message}`, true)
+  } finally {
+    wlImport.disabled = false
+  }
+}
+
+/** A key on this device means the trip can be fetched again without retyping. */
+function offerResync(): void {
+  const key = savedKey()
+  if (!key) return
+  wlKey.value = key
+  wlImport.textContent = 'Resync'
+}
+
+wlImport.addEventListener('click', () => {
+  const pasted = wlKey.value.trim()
+  if (!pasted) {
+    wlSay('Paste the trip link or key first.', true)
+    return
+  }
+  void runImport(pasted)
+})
+
+wlKey.addEventListener('input', () => {
+  if (!wlKey.value.trim()) {
+    forgetKey()
+    wlImport.textContent = 'Import'
+  }
+})
+
+offerResync()
 
 /**
  * A flag without a claim is nearly useless to whoever reviews it: "wrong" does

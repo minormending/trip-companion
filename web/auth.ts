@@ -1,5 +1,5 @@
 import type { User } from '@supabase/supabase-js'
-import { backendConfigured, currentUser, signIn, signOut, supabase } from '../src/backend/client.ts'
+import { backendConfigured, currentUser, signInWithGoogle, signOut, supabase } from '../src/backend/client.ts'
 import { TripRepository, type SavedTrip } from '../src/backend/trips.ts'
 import type { Trip } from '../src/domain/types.ts'
 
@@ -125,80 +125,45 @@ export function mountAuth(
   }
 
   /**
-   * The form used to be an email box, a "Send link" button and nothing else.
+   * Why, then the button.
    *
-   * Two things went wrong with that, and both came back as "I don't understand
-   * the sign-in". Somebody who has not met a magic link before looks for a
-   * password field and finds none, with no text anywhere saying why. And the
-   * one line of context the bar did carry — that the app is working locally —
-   * vanished the moment they clicked, so the choice was presented with its
-   * reason removed.
+   * The panel this replaced asked for an email address and sent a link. The
+   * reported confusion was not its wording: a sign-in that hands you to your
+   * inbox and depends on you coming back to the same browser has three places
+   * to lose somebody, and no amount of explaining removes them. Google already
+   * owns that problem.
    *
-   * So the panel now says what signing in is for before asking for anything,
-   * and says there is no password before they go looking for one.
+   * The "why" survives the change, because it was the other half of the
+   * complaint — an offer to sync means nothing without saying what is synced,
+   * and the bar's own "working locally" line disappears the moment this opens.
    */
   function showForm(): void {
     host.replaceChildren()
 
-    const why = note(
-      'Signing in keeps your trips on every device you use, and lets the daily Wanderlog sync write to your account. It is optional: everything here works signed out.',
+    host.append(
+      note(
+        'Signing in keeps your briefings in your account, so they open on any device you use. It is optional: everything here works signed out.',
+      ),
     )
-    const how = note('There is no password. Enter your email and we will send you a link that signs you in.')
 
-    const field = document.createElement('input')
-    field.type = 'email'
-    field.placeholder = 'you@example.com'
-    field.setAttribute('aria-label', 'Email address')
-
-    const send = button('Email me a link')
-    const cancel = button('Not now')
-    const result = note('')
-
-    send.addEventListener('click', () => {
-      const email = field.value.trim()
-      if (!email.includes('@')) {
-        field.setAttribute('aria-invalid', 'true')
-        result.className = 'auth-note bad'
-        result.textContent = 'That does not look like an email address.'
-        return
-      }
-      field.removeAttribute('aria-invalid')
-      result.className = 'auth-note'
-      send.disabled = true
-      result.textContent = 'Sending\u2026'
-
-      // A magic link means there is no password to store and none to leak.
-      void signIn(email, location.href.split('#')[0] ?? location.href).then(({ error }) => {
-        if (error) {
-          result.className = 'auth-note bad'
-          result.textContent = error
-          send.disabled = false
-          return
-        }
-        // A line of text under a form that still looks ready to submit reads
-        // as though nothing happened. The form is replaced instead, so the
-        // only thing left to do is the thing they now have to do.
-        showSent(email)
+    const go = button('Continue with Google')
+    go.addEventListener('click', () => {
+      go.disabled = true
+      const back = location.href.split('#')[0] ?? location.href
+      void signInWithGoogle(back).then(({ error }) => {
+        if (!error) return
+        // Nothing redirected, so the panel is still here to say why.
+        go.disabled = false
+        const failed = note(error)
+        failed.className = 'auth-note bad'
+        host.append(failed)
       })
     })
-    cancel.addEventListener('click', () => void render())
 
-    host.append(why, how, field, send, cancel, result)
-    field.focus()
-  }
-
-  /** What to do next, and nothing else to click by mistake. */
-  function showSent(email: string): void {
-    host.replaceChildren()
-    host.append(
-      note(`Check ${email} for a link from us, and open it in this browser. It signs you in; there is nothing to type.`),
-    )
-
-    const again = button('Use a different address')
-    again.addEventListener('click', () => showForm())
     const cancel = button('Not now')
     cancel.addEventListener('click', () => void render())
-    host.append(again, cancel)
+
+    host.append(go, cancel)
   }
 
   /**

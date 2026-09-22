@@ -38,6 +38,17 @@ button.primary:disabled { opacity: 0.55; cursor: progress; }
 #auth input[aria-invalid="true"] { border-color: var(--stop); }
 .auth-note { margin: 0.5rem 0; color: var(--ink-faint); max-width: 46rem; }
 .auth-note.bad { color: var(--stop); }
+#wanderlog { margin: 1.75rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+#wanderlog label { display: block; font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 0.25rem; }
+#wanderlog .hint { margin: 0.25rem 0 0.6rem; font-size: 0.85rem; color: var(--ink-faint); }
+#wanderlog .hint.bad { color: var(--stop); }
+.wl-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.wl-row input { flex: 1 1 18rem; font: inherit; padding: 0.5rem 0.6rem; border-radius: 6px;
+  border: 1px solid var(--rule); background: var(--card); color: var(--ink); }
+.wl-row button { font: inherit; padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--rule);
+  background: transparent; color: var(--ink); cursor: pointer; }
+.wl-row button:hover:not(:disabled) { border-color: var(--ink-faint); }
+.wl-row button:disabled { opacity: 0.55; cursor: default; }
 .auth-note + input { margin-top: 0.25rem; }
 #confirm { margin: 1.5rem 0; }
 #confirm h2 { margin-top: 0; }
@@ -97,6 +108,15 @@ footer { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
       <input type="date" id="departs" name="departs">
       <button class="primary" type="submit">Build the briefing</button>
     </form>
+    <div id="wanderlog">
+      <label for="wl-key">Or import a Wanderlog trip</label>
+      <p class="hint">Paste the trip’s link or its key. Use the <strong>view</strong> link from the Share menu, not the address bar you edit in.</p>
+      <div class="wl-row">
+        <input id="wl-key" type="text" placeholder="wanderlog.com/plan/… or aqifgcpkvo" autocomplete="off">
+        <button type="button" id="wl-import">Import</button>
+      </div>
+      <p class="hint" id="wl-status"></p>
+    </div>
   </div>
   <p id="status" hidden></p>
   <div id="confirm" hidden></div>
