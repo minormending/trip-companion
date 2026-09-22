@@ -146,3 +146,40 @@ test('a place without a timezone says its photo times are estimated', async () =
   assert.match(photo.body, /estimated from longitude/)
   assert.ok(photo.provenance.confidence < 0.9)
 })
+
+test('a walk is not asked how it is paid for or boarded', async () => {
+  // Twenty-six of Prague's twenty-nine legs are walks. Asking each of them an
+  // operational question it cannot have an answer to produced fifty-two
+  // refusals, and a briefing saying "Paying: not confirmed" under a
+  // four-minute stroll between two palaces.
+  const t = trip(
+    [place('p1', 'A', 50.0, 14.4), place('p2', 'B', 50.001, 14.401)],
+    [leg('l1', 'p1', 'p2', { mode: 'walk', durationMinutes: 4, distanceMetres: 300 })],
+  )
+  const { report } = await generateCards(t, { providers: [] })
+  const kinds = report.refusals.filter((r) => r.attachesTo.kind === 'leg').map((r) => r.kind)
+  assert.ok(!kinds.includes('how_to_pay'), `walks were asked about paying: ${kinds.join(', ')}`)
+  assert.ok(!kinds.includes('boarding'))
+})
+
+test('a leg you board is still asked both', async () => {
+  const t = trip(
+    [place('p1', 'A', 50.0, 14.4), place('p2', 'B', 50.2, 14.6)],
+    [leg('l1', 'p1', 'p2', { mode: 'ferry' })],
+  )
+  const { report } = await generateCards(t, { providers: [] })
+  const kinds = report.refusals.filter((r) => r.attachesTo.kind === 'leg').map((r) => r.kind)
+  assert.ok(kinds.includes('how_to_pay'), 'a ferry has a fare')
+  assert.ok(kinds.includes('boarding'), 'a ferry is boarded')
+})
+
+test('a taxi is paid for but not boarded', async () => {
+  const t = trip(
+    [place('p1', 'A', 50.0, 14.4), place('p2', 'B', 50.05, 14.45)],
+    [leg('l1', 'p1', 'p2', { mode: 'taxi' })],
+  )
+  const { report } = await generateCards(t, { providers: [] })
+  const kinds = report.refusals.filter((r) => r.attachesTo.kind === 'leg').map((r) => r.kind)
+  assert.ok(kinds.includes('how_to_pay'))
+  assert.ok(!kinds.includes('boarding'))
+})

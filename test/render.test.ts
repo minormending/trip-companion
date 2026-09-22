@@ -60,19 +60,42 @@ test('safety cards render in their own tier so the guide can be suppressed', () 
   assert.ok(html.includes('data-tone="absent"'))
 })
 
+const refusal = (kind: Refusal['kind'], reason = 'no provider could confirm this'): Refusal => ({
+  attachesTo: { kind: 'place', placeId: 'p1' },
+  kind,
+  tier: 'operational',
+  reason,
+  subjectName: 'Station',
+})
+
 test('refusals appear in the briefing rather than being hidden', () => {
-  const refusals: Refusal[] = [
-    {
-      attachesTo: { kind: 'place', placeId: 'p1' },
-      kind: 'how_to_pay',
-      tier: 'operational',
-      reason: 'no provider could confirm this',
-      subjectName: 'Station',
-    },
-  ]
-  const html = renderBriefing(trip([place('p1', 'Station', 0, 0)]), { refusals, now: NOW })
-  assert.ok(html.includes('not confirmed'))
+  const html = renderBriefing(trip([place('p1', 'Station', 0, 0)]), {
+    refusals: [refusal('how_to_pay')],
+    now: NOW,
+  })
+  assert.ok(html.includes('Not confirmed'))
   assert.ok(html.includes('Check locally'))
+})
+
+test('refusals sharing a reason are one line, not one line each', () => {
+  const html = renderBriefing(trip([place('p1', 'Station', 0, 0)]), {
+    refusals: [refusal('how_to_pay'), refusal('hours'), refusal('orientation')],
+    now: NOW,
+  })
+  // A Prague briefing carried two hundred of these, each ending in the same
+  // sentence. Repetition on that scale teaches a reader to skip all of them.
+  assert.equal(html.match(/Not confirmed/g)?.length, 1)
+  assert.ok(html.includes('Paying, Opening hours and Orientation'))
+  assert.equal(html.match(/Check locally/g)?.length, 1)
+})
+
+test('a different reason still gets its own line', () => {
+  const html = renderBriefing(trip([place('p1', 'Station', 0, 0)]), {
+    refusals: [refusal('hours'), refusal('how_to_pay', 'overpass could not substantiate this from a source')],
+    now: NOW,
+  })
+  assert.equal(html.match(/Not confirmed/g)?.length, 2)
+  assert.ok(html.includes('overpass could not substantiate this from a source'))
 })
 
 test('interactive controls appear only when asked for', () => {
