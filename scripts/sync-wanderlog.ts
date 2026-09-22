@@ -74,6 +74,9 @@ console.log(`${bare.title}: ${report.places} places across ${report.sections} se
 if (report.unscheduled > 0) {
   console.log(`  ${report.unscheduled} in standing lists rather than on a day`)
 }
+for (const fix of report.regionCorrections) {
+  console.log(`  FIXED   ${fix.name} — tagged ${fix.stated}, but its own address says ${fix.corrected}`)
+}
 // Both of these want a human, so they are said out loud rather than counted.
 for (const name of report.skipped) {
   console.log(`  SKIPPED ${name} — no coordinates in the document`)
