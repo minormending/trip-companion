@@ -84,6 +84,7 @@ if (build.needsConfirmation.length > 0) {
   console.log('    Use the web app to choose, or the cards will cite the wrong place.')
 }
 console.log(`  legs     ${fill.routed} routed, ${fill.walkFallback} walk-fallback, ${fill.inferred} inferred`)
+if (fill.overnight > 0) console.log(`  nights   ${fill.overnight} gap(s) between days, left unrouted`)
 console.log(`  cards    ${content.generated} generated, ${content.fromCache} from cache`)
 if (content.refusals.length > 0) {
   console.log(`  refused  ${content.refusals.length} operational cards could not be substantiated`)

@@ -4,7 +4,7 @@ import { fillLegs, guessMode } from '../src/routing/fill.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
 import { FixedTransitProvider, NullTransitProvider } from '../src/routing/transit.ts'
 import type { RouteRequest, RouteResult, RoutingProvider } from '../src/routing/types.ts'
-import type { TransportMode } from '../src/domain/types.ts'
+import type { Place, TransportMode } from '../src/domain/types.ts'
 import { place, trip } from './helpers.ts'
 
 class FakeWalker implements RoutingProvider {
@@ -182,4 +182,65 @@ test('a very short walk still reports at least a minute', async () => {
   } finally {
     globalThis.fetch = original
   }
+})
+
+/**
+ * A day boundary is not a journey. These were being routed as walks: Charles
+ * Bridge at 20:30 to a bakery at 07:45 the next morning, 62 minutes on foot.
+ */
+const overnightTrip = (over: Partial<Place> = {}) => ({
+  id: 't',
+  title: 'Two days',
+  legs: [],
+  cards: [],
+  places: [
+    { id: 'a', name: 'Evening bar', coords: { lat: 50.086, lon: 14.411 }, dayIndex: 1 },
+    { id: 'b', name: 'Morning bakery', coords: { lat: 50.075, lon: 14.438 }, dayIndex: 2, ...over },
+  ] as Place[],
+})
+
+test('a gap between two days is left empty rather than walked', async () => {
+  const { trip, report } = await fillLegs(overnightTrip(), [
+    { name: 'never', supports: () => true, route: async () => ({ ok: true, mode: 'walk', durationMinutes: 62, distanceMetres: 4700 }) },
+  ] as RoutingProvider[])
+
+  assert.equal(trip.legs.length, 0, 'nobody walks from last night to this morning')
+  assert.equal(report.overnight, 1)
+  assert.equal(report.routed, 0)
+  assert.match(report.notes[0] ?? '', /different days, no leg/)
+})
+
+test('an overnight journey is still a journey', async () => {
+  // New York to Prague, arriving the next day. You cannot sleep at home
+  // between the gate and the plane.
+  const trip = {
+    id: 't', title: 'Long haul', legs: [], cards: [],
+    places: [
+      { id: 'a', name: 'JFK', coords: { lat: 40.641, lon: -73.778 }, dayIndex: 1 },
+      { id: 'b', name: 'PRG', coords: { lat: 50.102, lon: 14.263 }, dayIndex: 2 },
+    ] as Place[],
+  }
+  const { trip: filled, report } = await fillLegs(trip, [])
+  assert.equal(report.overnight, 0)
+  assert.equal(filled.legs.length, 1, 'the flight survives the day boundary')
+  assert.equal(filled.legs[0]?.mode, 'flight')
+})
+
+test('a trip with no day structure keeps every gap', async () => {
+  const trip = {
+    id: 't', title: 'Pasted', legs: [], cards: [],
+    places: [
+      { id: 'a', name: 'One', coords: { lat: 50.086, lon: 14.411 } },
+      { id: 'b', name: 'Two', coords: { lat: 50.075, lon: 14.438 } },
+    ] as Place[],
+  }
+  const { report } = await fillLegs(trip, [])
+  assert.equal(report.overnight, 0, 'the paste path has no days to span')
+})
+
+test('two stops on the same day are still joined', async () => {
+  const same = overnightTrip({ dayIndex: 1 })
+  const { report } = await fillLegs(same, [])
+  assert.equal(report.overnight, 0)
+  assert.equal(report.inferred, 1)
 })

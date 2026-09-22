@@ -14,6 +14,8 @@ export interface FillReport {
   inferred: number
   /** Legs where transit was wanted but only a walking route could be had. */
   walkFallback: number
+  /** Gaps between days that nobody travels, because they sleep instead. */
+  overnight: number
   notes: string[]
 }
 
@@ -33,16 +35,45 @@ function legId(from: Place, to: Place): string {
   return `leg:${from.id}>${to.id}`
 }
 
+/**
+ * Is this gap a night rather than a journey?
+ *
+ * The last stop of one day and the first of the next are adjacent in the list
+ * and nowhere near each other in time. The Prague briefing routed Charles
+ * Bridge at half past eight in the evening to a bakery at quarter to eight the
+ * next morning, and called it a 62-minute walk. Nobody walks it; they go to
+ * bed. The itinerary simply does not record where they sleep.
+ *
+ * The exception is a journey that is itself overnight. A flight or a long
+ * rail leg between two days is real — you cannot sleep at home between the
+ * gate and the plane — so those are kept. Only the local modes are dropped,
+ * which is the same distinction `guessMode` already draws.
+ */
+function spansANight(from: Place, to: Place, mode: TransportMode): boolean {
+  // A trip with no day structure at all — the paste path — has nothing to
+  // span, and every gap stays a journey.
+  if (from.dayIndex === undefined || to.dayIndex === undefined) return false
+  if (from.dayIndex === to.dayIndex) return false
+  return mode === 'walk' || mode === 'transit'
+}
+
 export async function fillLegs(
   trip: Trip,
   providers: RoutingProvider[],
 ): Promise<{ trip: Trip; report: FillReport }> {
   const gaps = missingLegs(trip)
   const added: Leg[] = []
-  const report: FillReport = { routed: 0, inferred: 0, walkFallback: 0, notes: [] }
+  const report: FillReport = { routed: 0, inferred: 0, walkFallback: 0, overnight: 0, notes: [] }
 
   for (const { from, to } of gaps) {
     const mode = guessMode(from, to)
+
+    if (spansANight(from, to, mode)) {
+      report.overnight++
+      report.notes.push(`${from.name} to ${to.name}: different days, no leg`)
+      continue
+    }
+
     const candidates = providers.filter((p) => p.supports(mode))
     let placed = false
 

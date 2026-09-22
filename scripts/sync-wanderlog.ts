@@ -105,6 +105,9 @@ const generated = await generateCards(filled.trip, {
 console.log(
   `  legs   ${filled.report.routed} routed, ${filled.report.walkFallback} walk-fallback, ${filled.report.inferred} inferred`,
 )
+if (filled.report.overnight > 0) {
+  console.log(`  nights ${filled.report.overnight} gap(s) between days, left unrouted`)
+}
 console.log(`  cards  ${generated.report.generated} generated`)
 for (const problem of generated.report.sourceProblems) {
   console.log(`  SOURCE ${problem.provider} unreachable: ${problem.reason}`)
