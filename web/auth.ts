@@ -1,5 +1,7 @@
 import type { User } from '@supabase/supabase-js'
 import { backendConfigured, currentUser, signIn, signOut, supabase } from '../src/backend/client.ts'
+import { TripRepository, type SavedTrip } from '../src/backend/trips.ts'
+import type { Trip } from '../src/domain/types.ts'
 
 export interface AuthView {
   user: User | null
@@ -26,7 +28,11 @@ function note(text: string): HTMLParagraphElement {
  * backend existed — everything local, nothing shared — and that mode has to
  * keep working, because it is what the Pages deploy ran on for several phases.
  */
-export function mountAuth(host: HTMLElement, onChange: (user: User | null) => void): AuthView {
+export function mountAuth(
+  host: HTMLElement,
+  onChange: (user: User | null) => void,
+  onOpenTrip?: (trip: Trip) => void,
+): AuthView {
   const view: AuthView = { user: null, refresh: async () => {} }
 
   if (!backendConfigured()) {
@@ -75,8 +81,47 @@ export function mountAuth(host: HTMLElement, onChange: (user: User | null) => vo
       void signOut().then(() => render())
     })
 
-    host.append(who, token, out)
+    // "Signed in as you@…" was the whole confirmation, which answers the one
+    // question nobody was asking. What people wanted to know is whether
+    // anything of theirs is actually up there.
+    const summary = note('Reading your account\u2026')
+
+    host.append(who, token, out, summary)
     onChange(user)
+
+    const db = supabase()
+    if (!db) return
+    const saved = await new TripRepository(db, user.id).list()
+    if (mine !== generation) return
+    showSaved(summary, saved)
+  }
+
+  /**
+   * What is in the account, by name.
+   *
+   * An empty account says so rather than staying silent, because "nothing
+   * synced" and "we did not check" look identical to somebody who has just
+   * signed in wondering whether it worked.
+   */
+  function showSaved(host_: HTMLElement, saved: SavedTrip[]): void {
+    host_.replaceChildren()
+    if (saved.length === 0) {
+      host_.textContent = 'Nothing saved to your account yet. The next briefing you build is saved here, and so is anything the daily sync uploads.'
+      return
+    }
+
+    const count = saved.length === 1 ? '1 trip' : `${saved.length} trips`
+    host_.append(document.createTextNode(`${count} in your account: `))
+
+    saved.slice(0, 6).forEach((trip, index) => {
+      if (index > 0) host_.append(document.createTextNode(' '))
+      const open = button(trip.title || 'Untitled trip')
+      open.title = `Saved ${trip.updatedAt.slice(0, 10)} from ${trip.source}`
+      open.addEventListener('click', () => onOpenTrip?.(trip.graph))
+      host_.append(open)
+    })
+
+    if (saved.length > 6) host_.append(document.createTextNode(` and ${saved.length - 6} more.`))
   }
 
   /**
