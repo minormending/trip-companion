@@ -43,15 +43,53 @@ export async function currentUser(): Promise<User | null> {
   return data.user ?? null
 }
 
-/** Magic link: no password to store, and no password to leak. */
-export async function signIn(email: string, redirectTo: string): Promise<{ error?: string }> {
+/**
+ * Google, and only Google.
+ *
+ * This replaced a magic link. The link was the thing people reported being
+ * confused by, and the confusion was structural rather than a wording problem:
+ * a sign-in that asks for an address, sends you to another application, and
+ * depends on you returning to the same browser has three places to lose
+ * somebody. OAuth hands that entire problem to a party who has solved it.
+ *
+ * There is no password here either way. The difference is that nobody has to
+ * be told so.
+ */
+export async function signInWithGoogle(redirectTo: string): Promise<{ error?: string }> {
   const db = supabase()
   if (!db) return { error: 'No backend configured.' }
-  const { error } = await db.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: redirectTo },
+  const { error } = await db.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo },
   })
   return error ? { error: error.message } : {}
+}
+
+/**
+ * Call an edge function, which is where anything the browser is not allowed to
+ * reach has to happen. The anon key goes in both headers it might be wanted
+ * in, so the call works whether or not the function was deployed with JWT
+ * verification on.
+ */
+export async function callFunction(
+  name: string,
+  params: Record<string, string>,
+  signal?: AbortSignal,
+): Promise<Response | null> {
+  const url = typeof __SUPABASE_URL__ === 'string' ? __SUPABASE_URL__ : ''
+  const key = typeof __SUPABASE_ANON_KEY__ === 'string' ? __SUPABASE_ANON_KEY__ : ''
+  if (!url || !key) return null
+
+  const query = new URLSearchParams(params).toString()
+  // A signed-in caller's own token is better than the anon key: a function
+  // that later starts checking who is asking then keeps working unchanged.
+  const { data } = (await supabase()?.auth.getSession()) ?? { data: { session: null } }
+  const bearer = data.session?.access_token ?? key
+
+  return fetch(`${url}/functions/v1/${name}?${query}`, {
+    headers: { apikey: key, authorization: `Bearer ${bearer}` },
+    ...(signal ? { signal } : {}),
+  })
 }
 
 export async function signOut(): Promise<void> {

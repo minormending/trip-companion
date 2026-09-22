@@ -126,6 +126,67 @@ but given no day. Their notes are often the record of a decision *against*
 going, so staging them as if they were stops would put rejected candidates
 ahead of the real itinerary.
 
+## Importing from the site
+
+The site cannot call Wanderlog. `wanderlog.com` returns no
+`Access-Control-Allow-Origin` on any route, and its preflight answers
+`allow: GET,HEAD,DELETE` with no CORS headers at all, so a browser refuses to
+hand the page the response body whatever it presents. That is a property of the
+browser rather than of the HTTP client — writing the request in JavaScript
+instead of Go changes nothing, which is worth knowing before anybody tries.
+
+So a function asks on the page's behalf:
+
+```
+browser ──key──▶ wanderlog-trip ──▶ wanderlog.com
+        ◀─json──               ◀──
+```
+
+It takes a trip key and nothing else. There is no URL parameter, because a
+proxy that forwards a caller's URL is a server-side request forgery with extra
+steps, and the key is matched against `^[a-z0-9]{6,40}$` before any request is
+made.
+
+Deploy it with the Supabase CLI, from this repository:
+
+```bash
+npx supabase login
+npx supabase link --project-ref <your project ref>
+npx supabase functions deploy wanderlog-trip --no-verify-jwt
+```
+
+`--no-verify-jwt` leaves it open to anonymous callers, which is deliberate:
+importing a trip is something the app does before anybody signs in, and a key
+the caller already holds is not a secret this function is protecting. Drop the
+flag to require a session instead — nothing in the page needs changing, because
+it already sends whichever token it has.
+
+The key is stored in local storage on the device that imported, and nowhere
+else. That means pasting it once per device, and it means nothing
+Wanderlog-related is ever written to the database.
+
+## Signing in
+
+Google, and only Google. It replaced a magic link that people reported being
+confused by, and the confusion was structural rather than a wording problem: a
+sign-in that asks for an address, sends you to your inbox, and depends on you
+returning to the same browser has three places to lose somebody.
+
+The provider has to be turned on before the button does anything, and neither
+step is visible from this repository:
+
+1. In Google Cloud, create an OAuth 2.0 client (type: web application) and add
+   `https://<project ref>.supabase.co/auth/v1/callback` as an authorised
+   redirect URI.
+2. In the Supabase dashboard, under Authentication → Providers → Google, paste
+   the client id and secret and enable it.
+3. Under Authentication → URL Configuration, add the site's own origin to the
+   redirect allow list, or the round trip lands on a Supabase error page rather
+   than back on the app.
+
+Until that is done the button reports the provider is not enabled, which is
+what Supabase returns, rather than failing silently.
+
 ## Daily sync
 
 `.github/workflows/sync-wanderlog.yml` runs the same script on a schedule from
