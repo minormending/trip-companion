@@ -1,4 +1,4 @@
-import type { CardDraft, CardProvider, CardRequest } from './types.ts'
+import type { CardDraft, CardProvider, CardRequest, LegContext } from './types.ts'
 
 const MODE_GUIDANCE: Record<string, string> = {
   walk: 'On foot the whole way. Follow the street network rather than the straight line.',
@@ -11,6 +11,54 @@ const MODE_GUIDANCE: Record<string, string> = {
   taxi: 'Door to door by car.',
   drive: 'By car. Parking near the destination is the usual constraint.',
   unknown: 'Mode not established for this leg.',
+}
+
+/**
+ * Above this a walk is worth naming as a walk. Prague's itinerary implies four
+ * of them — 32, 40, 60 and 64 minutes — and the old card described all four in
+ * the same words as a two-minute hop between adjacent palaces.
+ */
+const LONG_WALK_MINUTES = 30
+
+/**
+ * What can honestly be said about a leg, from the leg.
+ *
+ * Every one of thirty-two legs used to get a sentence chosen by mode alone, so
+ * twenty-nine of them were identical. Nothing here is a new source: duration,
+ * distance and whether a router answered are all already on the leg, and were
+ * simply never read.
+ *
+ * Null means there is nothing to watch for, which is a real answer.
+ */
+function legAdvice(context: LegContext): string | null {
+  const { leg, mode } = context
+  const minutes = leg.durationMinutes
+  const parts: string[] = []
+
+  if (mode === 'walk' && !leg.inferred) {
+    // A routed walk needs no card of its own. The briefing already prints
+    // "Walk, 12 min, 900 m" beside the leg, and "on foot the whole way" under
+    // it is the same fact in a box. Seventeen of Prague's walks got that
+    // sentence verbatim; none of them learned anything from it.
+    //
+    // Length is the exception, because length is the thing somebody would
+    // otherwise discover at the wrong end of it.
+    if (minutes === undefined || minutes < LONG_WALK_MINUTES) return null
+    parts.push(
+      `About ${minutes} minutes on foot. Worth checking whether local transport covers it before setting out.`,
+    )
+  } else {
+    parts.push(MODE_GUIDANCE[mode] ?? (MODE_GUIDANCE['unknown'] as string))
+  }
+
+  // An inferred leg has a straight-line distance and no time at all. Saying so
+  // matters more than the mode advice above it: a number that looks routed and
+  // is not will be planned around.
+  if (leg.inferred) {
+    parts.push('No router served this leg, so the distance is a straight line and the time is not established.')
+  }
+
+  return parts.join(' ')
 }
 
 /**
@@ -29,10 +77,11 @@ export class DeterministicProvider implements CardProvider {
 
     if (context.subject === 'leg') {
       if (kind === 'watch_for') {
-        const guidance = MODE_GUIDANCE[context.mode] ?? MODE_GUIDANCE['unknown']
+        const body = legAdvice(context)
+        if (!body) return null
         return {
           title: `${context.from.name} to ${context.to.name}`,
-          body: guidance ?? 'Mode not established for this leg.',
+          body,
           sources: [],
         }
       }
