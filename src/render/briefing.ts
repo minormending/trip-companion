@@ -139,16 +139,44 @@ function renderLeg(trip: Trip, leg: Leg, notes: Footnotes, opts: RenderOptions):
   return `<div class="leg">${bits.join(' · ')}</div>${cards}`
 }
 
+/**
+ * What could not be substantiated here, in one line per reason.
+ *
+ * This printed a line per refusal, each ending in the same sentence, and a
+ * Prague briefing carried two hundred of them. That is not transparency, it is
+ * camouflage: a reader who meets "not confirmed — no provider could confirm
+ * this. Check locally." four times under every stop stops reading it, and the
+ * one place it mattered goes past with the rest.
+ *
+ * Nothing is dropped. The kinds are collected against the reason they share,
+ * so a refusal for a different reason still gets its own line and still says
+ * which reason.
+ */
 function renderRefusals(refusals: Refusal[], subject: string): string {
   const mine = refusals.filter((r) => r.subjectName === subject)
   if (mine.length === 0) return ''
-  const items = mine
+
+  const byReason = new Map<string, string[]>()
+  for (const refusal of mine) {
+    const label = KIND_LABEL[refusal.kind] ?? refusal.kind
+    const kinds = byReason.get(refusal.reason) ?? []
+    if (!kinds.includes(label)) kinds.push(label)
+    byReason.set(refusal.reason, kinds)
+  }
+
+  const items = [...byReason]
     .map(
-      (r) =>
-        `<strong>${escapeHtml(KIND_LABEL[r.kind] ?? r.kind)}:</strong> not confirmed — ${escapeHtml(r.reason)}. Check locally.`,
+      ([reason, kinds]) =>
+        `<strong>Not confirmed:</strong> ${escapeHtml(joinList(kinds))} — ${escapeHtml(reason)}. Check locally.`,
     )
     .join('<br>')
   return `<div class="gap">${items}</div>`
+}
+
+/** "a, b and c" — an Oxford-less list, because these are read at a glance. */
+function joinList(parts: string[]): string {
+  if (parts.length <= 1) return parts[0] ?? ''
+  return `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`
 }
 
 export function renderBriefing(trip: Trip, opts: RenderOptions = {}): string {

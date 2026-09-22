@@ -6,6 +6,7 @@ import {
   type CardKind,
   type Place,
   type Tier,
+  type TransportMode,
   type Trip,
   CARD_TIER,
   RETRIEVAL_REQUIRED,
@@ -17,7 +18,40 @@ import type { CardContext, CardProvider, CardRequest } from './providers/types.t
 import { checkVoice, violationsAreFatal } from './voice.ts'
 
 const PLACE_KINDS: CardKind[] = ['caution', 'how_to_pay', 'hours', 'orientation', 'history']
-const LEG_KINDS: CardKind[] = ['how_to_pay', 'boarding', 'watch_for', 'phrase']
+
+/** Modes you get on board. */
+const BOARDED: ReadonlySet<TransportMode> = new Set<TransportMode>([
+  'transit',
+  'rail',
+  'bus',
+  'metro',
+  'ferry',
+  'flight',
+])
+
+/**
+ * What a leg can even be asked about.
+ *
+ * It used to be one fixed list, so every leg was asked how it is paid for and
+ * how it is boarded — including the twenty-six walks in a Prague itinerary.
+ * Nobody buys a ticket to walk, so every one of those produced an operational
+ * refusal, and the briefing carried "Paying: not confirmed" under a four-minute
+ * stroll between two palaces.
+ *
+ * A refusal is supposed to mean "this was checked and could not be
+ * substantiated". Saying it about a question that does not apply devalues the
+ * ones that do, which is the real cost: two hundred of them teach a reader to
+ * skip all of them, including the one above a ferry they have to board.
+ */
+function legKinds(mode: TransportMode): CardKind[] {
+  const ticketed = BOARDED.has(mode) || mode === 'taxi'
+  return [
+    ...(ticketed ? (['how_to_pay'] as CardKind[]) : []),
+    ...(BOARDED.has(mode) ? (['boarding'] as CardKind[]) : []),
+    'watch_for',
+    'phrase',
+  ]
+}
 
 export interface Refusal {
   attachesTo: CardAttachment
@@ -193,7 +227,7 @@ export async function generateCards(
     const context: CardContext = { subject: 'leg', leg, from, to, mode: leg.mode }
     const entityKey = legKey(leg, from, to)
 
-    for (const kind of LEG_KINDS) {
+    for (const kind of legKinds(leg.mode)) {
       const card = await buildCard(
         { kind, context, entityKey },
         attachesTo,
