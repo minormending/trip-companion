@@ -19,6 +19,9 @@ import { NullTransitProvider } from '../src/routing/transit.ts'
 import { supabase } from '../src/backend/client.ts'
 import { TripRepository } from '../src/backend/trips.ts'
 import { forgetKey, importTrip, keyFrom, rememberKey, savedKey } from './wanderlog.ts'
+import { WanderlogProvider } from '../src/content/providers/wanderlog.ts'
+import { tripUrl } from '../src/import/wanderlogApi.ts'
+import type { CardProvider } from '../src/content/providers/types.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
 import { mountAuth } from './auth.ts'
 import { decodeTrip, encodeTrip } from './share.ts'
@@ -108,12 +111,27 @@ function setFormDisabled(disabled: boolean): void {
   })
 }
 
-function deps(): PipelineDeps {
+/**
+ * `fromDocument` is present only for an imported trip, and it matters more than
+ * its size suggests: the trip document states opening hours for most places and
+ * a recorded cost for some, and without it a trip imported in the browser came
+ * out visibly worse than the same trip synced from the command line — "Paying:
+ * not confirmed" on a place whose price is sitting in the file that was just
+ * downloaded.
+ */
+function deps(fromDocument?: CardProvider): PipelineDeps {
   return {
     geocoder: new PhotonGeocoder({ minIntervalMs: 1100 }),
     routers: [new ValhallaProvider(), new OsrmProvider(), new NullTransitProvider()],
     // Sourced providers first: a recorded fact always beats generic guidance.
-    providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
+    // The document answers after Overpass and Wikipedia, which have OSM tags
+    // and whole articles for the landmarks, and before the generic fallback.
+    providers: [
+      new OverpassProvider(),
+      new WikipediaProvider(),
+      ...(fromDocument ? [fromDocument] : []),
+      new DeterministicProvider(),
+    ],
     ...(cache ? { cache } : {}),
     // Corrections are deliberately NOT passed here. The browser re-applies
     // them on every render so a flag takes effect immediately; letting the
@@ -487,9 +505,14 @@ async function runImport(pasted: string): Promise<void> {
   wlSay(`Imported ${result.scheduled} stops. Routing and writing cards\u2026`)
 
   try {
+    const fromDocument = new WanderlogProvider(result.document, {
+      url: tripUrl(result.key),
+      title: `Wanderlog: ${result.trip.title}`,
+      retrieved: new Date().toISOString().slice(0, 10),
+    })
     const enriched = await enrichTrip(
       result.trip,
-      deps(),
+      deps(fromDocument),
       { resolved: result.scheduled, unresolved: [], needsConfirmation: [] },
       { render: { interactive: true } },
     )
