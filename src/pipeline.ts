@@ -20,6 +20,7 @@ import {
 import { renderBriefing, type RenderOptions } from './render/briefing.ts'
 import { fillLegs, type FillReport } from './routing/fill.ts'
 import { OsrmProvider } from './routing/osrm.ts'
+import { ValhallaProvider } from './routing/valhalla.ts'
 import { NullTransitProvider } from './routing/transit.ts'
 import type { RoutingProvider } from './routing/types.ts'
 
@@ -136,7 +137,7 @@ export async function defaultDeps(
 ): Promise<PipelineDeps> {
   return {
     geocoder: new PhotonGeocoder(opts.contact ? { contact: opts.contact } : {}),
-    routers: [new OsrmProvider(), new NullTransitProvider()],
+    routers: [new ValhallaProvider(), new OsrmProvider(), new NullTransitProvider()],
     // Order matters: sourced providers are asked before the fallback, so a
     // real recorded fact always beats generic guidance.
     providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],

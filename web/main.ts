@@ -14,6 +14,7 @@ import type { PendingConfirmation } from '../src/import/build.ts'
 import { applyChoices, enrichTrip, resolveTrip, type PipelineDeps } from '../src/pipeline.ts'
 import { renderBriefing } from '../src/render/briefing.ts'
 import { OsrmProvider } from '../src/routing/osrm.ts'
+import { ValhallaProvider } from '../src/routing/valhalla.ts'
 import { NullTransitProvider } from '../src/routing/transit.ts'
 import { supabase } from '../src/backend/client.ts'
 import { SupabaseCacheStore, SupabaseCorrections } from '../src/backend/stores.ts'
@@ -104,7 +105,7 @@ function setFormDisabled(disabled: boolean): void {
 function deps(): PipelineDeps {
   return {
     geocoder: new PhotonGeocoder({ minIntervalMs: 1100 }),
-    routers: [new OsrmProvider(), new NullTransitProvider()],
+    routers: [new ValhallaProvider(), new OsrmProvider(), new NullTransitProvider()],
     // Sourced providers first: a recorded fact always beats generic guidance.
     providers: [new OverpassProvider(), new WikipediaProvider(), new DeterministicProvider()],
     ...(cache ? { cache } : {}),
