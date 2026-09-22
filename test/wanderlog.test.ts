@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { coordsFrom, noteText, tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
+import { coordsFrom, countryNamesToCodes, noteText, tripFromWanderlog, wanderlogKey } from '../src/import/wanderlog.ts'
 
 /**
  * A verbatim excerpt of a real trip, fetched from
@@ -82,17 +82,37 @@ test('country and timezone are derived from the place, not looked up', () => {
   assert.equal(clock?.timezone, 'Europe/Prague')
 })
 
-test('a country that disagrees with the trip is reported, never corrected', () => {
-  const { report } = tripFromWanderlog(PRAGUE)
-  const names = report.regionConflicts.map((c) => c.name)
+test('a record that contradicts itself is corrected from its own address', () => {
+  const { trip, report } = tripFromWanderlog(PRAGUE)
 
-  // Genuine: the trip leaves from New York.
-  assert.ok(names.includes('John F. Kennedy International Airport'))
-  // An upstream data error: Google tags this Prague garden US. Reported so a
-  // human can see it, and left alone, because guessing which of the two kinds
-  // this is would be inventing a fact about somebody's trip.
-  assert.ok(names.includes('South Gardens of Prague Castle'))
-  assert.ok(report.regionConflicts.every((c) => c.region === 'us'))
+  // Four Prague places carry a US country component while their own
+  // formatted_address ends in Czechia. The address wins: the locality, the
+  // postcode and the coordinates all agree with it, and only the country
+  // field does not.
+  const corrected = report.regionCorrections.map((c) => c.name)
+  assert.ok(corrected.includes('South Gardens of Prague Castle'))
+  assert.ok(corrected.includes('Vyšehradská vyhlídka'))
+  assert.ok(report.regionCorrections.every((c) => c.stated === 'us' && c.corrected === 'cz'))
+
+  const garden = trip.places.find((p) => p.name === 'South Gardens of Prague Castle')
+  assert.equal(garden?.region, 'cz')
+  // The point of the correction: a timezone, so the sun is computed rather
+  // than estimated from longitude.
+  assert.equal(garden?.timezone, 'Europe/Prague')
+})
+
+test('a country with nothing contradicting it is left alone', () => {
+  const { trip, report } = tripFromWanderlog(PRAGUE)
+
+  // JFK's address ends in a postcode with no country after it, so there is
+  // nothing to disagree with and the trip genuinely does leave the country.
+  const jfk = trip.places.find((p) => p.name === 'John F. Kennedy International Airport')
+  assert.equal(jfk?.region, 'us')
+  assert.equal(report.regionCorrections.some((c) => c.name.includes('Kennedy')), false)
+  // Still reported as unlike the rest of the trip, which it is.
+  assert.deepEqual(report.regionConflicts.map((c) => c.name), [
+    'John F. Kennedy International Airport',
+  ])
 })
 
 test('an explicit title overrides the document', () => {
@@ -185,4 +205,57 @@ test('the walk does not reach into an unrelated section', () => {
     ['A', 1],
     ['B', 2],
   ])
+})
+
+test('country names are learned from the document, not from a shipped table', () => {
+  const names = countryNamesToCodes(PRAGUE)
+  // This trip writes the same country both ways, and says so itself.
+  assert.equal(names.get('czech republic'), 'cz')
+  assert.equal(names.get('czechia'), 'cz')
+  assert.equal(names.get('united states'), 'us')
+  assert.equal(names.get('united states of america'), 'us')
+  // Nothing is invented: a country the document never names is unknown.
+  assert.equal(names.get('japan'), undefined)
+  assert.equal(countryNamesToCodes(null).size, 0)
+})
+
+test('a contradiction is only acted on when the document defines the name', () => {
+  const doc = (formatted: string) => ({
+    tripPlan: {
+      itinerary: {
+        sections: [
+          {
+            heading: 'Day 1',
+            mode: 'dayPlan',
+            blocks: [
+              {
+                place: {
+                  name: 'Somewhere',
+                  geometry: { location: { lat: 1, lng: 2 } },
+                  formatted_address: formatted,
+                  address_components: [{ types: ['country'], short_name: 'US', long_name: 'United States of America' }],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  })
+
+  // Nothing in this document says what "Ruritania" is, so the stated country
+  // stands rather than being overridden by a string nobody can resolve.
+  const unknown = tripFromWanderlog(doc('Main Street, Ruritania'))
+  assert.equal(unknown.trip.places[0]?.region, 'us')
+  assert.deepEqual(unknown.report.regionCorrections, [])
+
+  // A two-letter tail is an ISO code on its face.
+  const coded = tripFromWanderlog(doc('Main Street, CZ'))
+  assert.equal(coded.trip.places[0]?.region, 'cz')
+  assert.equal(coded.report.regionCorrections.length, 1)
+
+  // An address that agrees with the component corrects nothing.
+  const agreeing = tripFromWanderlog(doc('Queens, NY 11430, US'))
+  assert.equal(agreeing.trip.places[0]?.region, 'us')
+  assert.deepEqual(agreeing.report.regionCorrections, [])
 })
